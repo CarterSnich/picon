@@ -1,14 +1,15 @@
 # Game "Lunar Module" by Kuba & Stepan
 # Source code from https://github.com/Hellmole/Raspberry-pi-pico-games.git
 
-from machine import Pin, I2C, PWM
+from machine import Pin, I2C
 from ssd1306 import SSD1306_I2C
 import time
 import random
+from main import Pins
 
 def pico_lunar_module_main():
     # OLED Screen connected to GP14 (SDA) and GP15 (SCL)
-    i2c = I2C(1, sda = Pin(14), scl = Pin(15), freq = 400000)
+    i2c = I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq = 400000)
     oled = SSD1306_I2C(128, 64, i2c)
 
     oled.fill(0)  
@@ -32,8 +33,8 @@ def pico_lunar_module_main():
     fuel = 25
     fire = 0
     
-    button1 = Pin(6, Pin.IN, Pin.PULL_UP)
-    button2 = Pin(7, Pin.IN, Pin.PULL_UP)
+    button1 = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
+    button2 = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
     
     shift = 0
 
