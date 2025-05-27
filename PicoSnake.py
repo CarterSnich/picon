@@ -2,6 +2,7 @@
 
 from machine import Pin, PWM, I2C, Timer
 from ssd1306 import SSD1306_I2C
+from main import Pins
 import time
 import random
 
@@ -15,13 +16,13 @@ SEGMENTS_HIGH = int(SCREEN_HEIGHT/SEGMENT_WIDTH)
 SEGMENTS_WIDE = int(SCREEN_WIDTH/SEGMENT_WIDTH)
 VALID_RANGE = [[int(i /SEGMENTS_HIGH), i % SEGMENTS_HIGH] for i in range(SEGMENTS_WIDE * SEGMENTS_HIGH -1)]
 
-speaker = PWM(Pin(18))
+speaker = PWM(Pin(Pins.SPEAKER))
 game_timer = Timer()
 player = None
 food = None
 
 # OLED Screen
-i2c = I2C(1, sda=Pin(14), scl=Pin(15), freq=400000)
+i2c = I2C(0, sda = Pin(4), scl = Pin(5), freq = 400000)
 oled = SSD1306_I2C(SCREEN_WIDTH, SCREEN_HEIGHT, i2c)
 oled.fill(0)
 
@@ -38,6 +39,7 @@ class Snake:
         self.y = y
         self.dir = random.randint(0,3)
         self.state = True
+        self.segments.append([self.x, self.y])
         
     def reset(self, x=int(SEGMENTS_WIDE/2), y=int(SEGMENTS_HIGH/2) + 1):
         self.segments = [[x, y]]
@@ -126,27 +128,27 @@ def pico_snake_main():
     game_timer.init(freq=5, mode=Timer.PERIODIC, callback=update_game)
     
     # Buttons
-    up = Pin(2, Pin.IN, Pin.PULL_UP)
-    down = Pin(3, Pin.IN, Pin.PULL_UP)
-    left = Pin(4, Pin.IN, Pin.PULL_UP)
-    right = Pin(5, Pin.IN, Pin.PULL_UP)
-    button1 = Pin(6, Pin.IN, Pin.PULL_UP)
-    button2 = Pin(7, Pin.IN, Pin.PULL_UP)
+    up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
+    down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
+    left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
+    right = Pin(Pins.KEYPAD_RIGHT, Pin.IN, Pin.PULL_UP)
+    button1 = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
+    button2 = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
 
     while True:
         if player.state == True:
             # If the snake is alive
             if up.value() == 0:
-                    player.change_dir(Snake.up)
+                player.change_dir(Snake.up)
                     
             elif right.value() == 0:
-                    player.change_dir(Snake.right)
+                player.change_dir(Snake.right)
                     
             elif left.value() == 0:
-                    player.change_dir(Snake.left)
+                player.change_dir(Snake.left)
                     
             elif down.value() == 0:
-                    player.change_dir(Snake.down)
+                player.change_dir(Snake.down)
         
         else:
             # The snake is dead
@@ -157,7 +159,7 @@ def pico_snake_main():
             # display Game Over
             oled.fill(0)
             oled.text("Game Over!" , int(SCREEN_WIDTH/2) - int(len("Game Over!")/2 * 8), int(SCREEN_HEIGHT/2) - 8)
-            oled.text("Snake length:" + str(len(player.segments)) , int(SCREEN_WIDTH/2) - int(len("Snake length:" + str(len(player.segments))) /2 * 8), int(SCREEN_HEIGHT/2) + 16)
+            oled.text("Snake length:" + str(len(player.segments)-2) , int(SCREEN_WIDTH/2) - int(len("Snake length:" + str(len(player.segments)-2)) /2 * 8), int(SCREEN_HEIGHT/2) + 16)
             oled.show()
             
             # wait for a button
