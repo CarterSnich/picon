@@ -4,6 +4,19 @@ from ssd1306 import SSD1306_I2C
 import time
 import random
 
+# Pin configuration
+class Pins:
+    KEYPAD_A = 28
+    KEYPAD_B = 27
+    KEYPAD_UP = 29
+    KEYPAD_RIGHT = 26
+    KEYPAD_DOWN = 15
+    KEYPAD_LEFT = 14
+    SPEAKER = 9
+    I2C = 0
+    SDA = 4
+    SCL = 5
+
 if __name__ == "__main__":
     # To avoid strange errors at startup
     # I don't know why but it works!
@@ -17,18 +30,18 @@ if __name__ == "__main__":
     GAMELIST=["Pong","Snake","Space Invaders", "Dino", "2048", "Tetris","Full Speed","Lunar Module"]
 
     # Buttons connected to GP2 to GP7
-    up = Pin(2, Pin.IN, Pin.PULL_UP)
-    down = Pin(3, Pin.IN, Pin.PULL_UP)
-    left = Pin(4, Pin.IN, Pin.PULL_UP)
-    right = Pin(5, Pin.IN, Pin.PULL_UP)
-    button1 = Pin(6, Pin.IN, Pin.PULL_UP)
-    button2 = Pin(7, Pin.IN, Pin.PULL_UP)
+    up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
+    down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
+    left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
+    right = Pin(Pins.KEYPAD_RIGHT, Pin.IN, Pin.PULL_UP)
+    button1 = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
+    button2 = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
     
     # Buzzer connected to GP18
-    buzzer = PWM(Pin(18))
+    buzzer = PWM(Pin(Pins.SPEAKER))
     
     # OLED Screen connected to GP14 (SDA) and GP15 (SCL)
-    i2c = machine.I2C(1, sda = Pin(14), scl = Pin(15), freq = 400000)
+    i2c = machine.I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq = 400000)
     oled = SSD1306_I2C(SCREEN_WIDTH, SCREEN_HEIGHT, i2c)
 
     current = 0
