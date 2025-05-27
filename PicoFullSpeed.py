@@ -1,15 +1,16 @@
 # Game "Full Speed" by Kuba & Stepan
 # Source code from https://github.com/Hellmole/Raspberry-pi-pico-games.git
 
-from machine import Pin, I2C, PWM
+from machine import Pin, I2C
 from ssd1306 import SSD1306_I2C
 import time
 import random
+from main import Pins
 
 def pico_full_speed_main():
     
     # OLED Screen connected to GP14 (SDA) and GP15 (SCL)
-    i2c = I2C(1, sda = Pin(14), scl = Pin(15), freq = 400000)
+    i2c = I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq = 400000)
     oled = SSD1306_I2C(128, 64, i2c)
 
     oled.fill(0)  
@@ -35,8 +36,8 @@ def pico_full_speed_main():
     y_rival = 0
     crasch = 0
 
-    right = Pin(4, Pin.IN, Pin.PULL_UP) # right
-    left = Pin(5, Pin.IN, Pin.PULL_UP)  # left
+    right = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
+    left = Pin(Pins.KEYPAD_RIGHT, Pin.IN, Pin.PULL_UP)
 
     while True:
     
