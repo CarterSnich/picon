@@ -16,6 +16,8 @@ class Pins:
     I2C = 0
     SDA = 4
     SCL = 5
+    FLASH = 10
+    RGB = 16
 
 if __name__ == "__main__":
     # To avoid strange errors at startup
@@ -26,7 +28,17 @@ if __name__ == "__main__":
     SCREEN_WIDTH=128                       
     SCREEN_HEIGHT=64
     
-    GAMELIST=["Pong","Snake","Space Invaders", "Dino", "2048", "Tetris","Full Speed","Lunar Module", "Bouncing Dot"]
+    GAMELIST=[
+        "Pong",
+        "Snake",
+        "Space Invaders",
+        "Dino",
+        "2048",
+        "Tetris",
+        "Full Speed",
+        "Lunar Module",
+        "DVD Logo"
+    ]
 
     # Buttons
     up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
@@ -109,8 +121,8 @@ if __name__ == "__main__":
             elif game_selected==7:
                 from PicoLunarModule import *
                 pico_lunar_module_main()
-            elif game_selected==7:
-                from BouncingDot import bouncing_dot
+            elif game_selected==8:
+                from DVDLogo import dvd_logo
                 bouncing_dot()
                 
         game_selected=-1
