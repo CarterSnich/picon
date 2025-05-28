@@ -37,7 +37,7 @@ if __name__ == "__main__":
         "Tetris",
         "Full Speed",
         "Lunar Module",
-        "DVD Logo"
+        "Flashlight"
     ]
 
     # Buttons
@@ -122,8 +122,8 @@ if __name__ == "__main__":
                 from PicoLunarModule import *
                 pico_lunar_module_main()
             elif game_selected==8:
-                from DVDLogo import dvd_logo
-                bouncing_dot()
+                from Flashlight import flashlight
+                flashlight()
                 
         game_selected=-1
 
