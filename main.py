@@ -27,7 +27,7 @@ if __name__ == "__main__":
     SCREEN_HEIGHT=64
     
     # list of games
-    GAMELIST=["Pong","Snake","Space Invaders", "Dino", "2048", "Tetris","Full Speed","Lunar Module"]
+    GAMELIST=["Pong","Snake","Space Invaders", "Dino", "2048", "Tetris","Full Speed","Lunar Module", "Bouncing Dot"]
 
     # Buttons connected to GP2 to GP7
     up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
@@ -49,29 +49,29 @@ if __name__ == "__main__":
 
     while True:
         oled.fill(0)
-        for row in range(0, len(GAMELIST)):
-            if row == current:
-                oled.fill_rect(0, row*8, SCREEN_WIDTH, 7, 1)
-                color = 0
-            else:
-                color = 1
-            
-            oled.text(GAMELIST[row], int(SCREEN_WIDTH/2)-int(len(GAMELIST[row])/2 * 8), row*8,color)
+        
+        oled.text(f"{current+1}/{len(GAMELIST)}", 0, 0, 1)
+        oled.text(GAMELIST[current], int(SCREEN_WIDTH/2 - int((len(GAMELIST[current])/2) * 8)), int(SCREEN_HEIGHT/2), 1)
         
         oled.show()
         
         time.sleep(0.2)
-        
         buttonPressed = False
         
         while not buttonPressed:
-            if (down.value() == 0 or right.value() == 0) and current < len(GAMELIST) - 1:
-                current += 1
+            if down.value() == 0:
+                if current >= len(GAMELIST) - 1:
+                    current = 0
+                else:
+                    current += 1
                 buttonPressed = True
-            elif (up.value() == 0 or left.value() == 0) and current > 0:
-                current -= 1
+            elif up.value() == 0:
+                if current <= 0:
+                    current = len(GAMELIST) - 1
+                else:
+                    current -= 1
                 buttonPressed = True
-            elif button1.value()==0 or button2.value()==0:
+            elif button1.value() == 0:
                 buttonPressed = True
                 game_selected = current
 
@@ -110,6 +110,9 @@ if __name__ == "__main__":
             elif game_selected==7:
                 from PicoLunarModule import *
                 pico_lunar_module_main()
+            elif game_selected==7:
+                from BouncingDot import bouncing_dot
+                bouncing_dot()
                 
         game_selected=-1
 
