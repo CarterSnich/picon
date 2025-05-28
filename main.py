@@ -22,14 +22,13 @@ if __name__ == "__main__":
     # I don't know why but it works!
     time.sleep(0.2)
     
-    # size of the screen
+    # Screen resolution
     SCREEN_WIDTH=128                       
     SCREEN_HEIGHT=64
     
-    # list of games
     GAMELIST=["Pong","Snake","Space Invaders", "Dino", "2048", "Tetris","Full Speed","Lunar Module", "Bouncing Dot"]
 
-    # Buttons connected to GP2 to GP7
+    # Buttons
     up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
     down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
     left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
@@ -37,10 +36,10 @@ if __name__ == "__main__":
     button1 = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
     button2 = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
     
-    # Buzzer connected to GP18
+    # Buzzer
     buzzer = PWM(Pin(Pins.SPEAKER))
     
-    # OLED Screen connected to GP14 (SDA) and GP15 (SCL)
+    # OLED Screen
     i2c = machine.I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq = 400000)
     oled = SSD1306_I2C(SCREEN_WIDTH, SCREEN_HEIGHT, i2c)
 
