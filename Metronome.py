@@ -21,18 +21,24 @@ def metronome():
         button_delta = ticks_diff(ticks_ms(), last_pressed_ms)
         
         if button_delta >= 100:
-            if game.button_up():
+            if game.button_up() and bpm < 240:
                 last_pressed_ms = ticks_ms()
                 bpm += 1
-            elif game.button_down():
+            elif game.button_down() and bpm > 1:
                 last_pressed_ms = ticks_ms()
                 bpm -= 1
             elif game.button_right():
                 last_pressed_ms = ticks_ms()
-                bpm += 5
+                if bpm >= 235:
+                    bpm = 240
+                else:
+                    bpm += 5
             elif game.button_left():
                 last_pressed_ms = ticks_ms()
-                bpm -= 5
+                if bpm <= 5:
+                    bpm = 1
+                else:
+                    bpm -= 5
         
         game.center_text(str(bpm))
         
