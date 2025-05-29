@@ -3,39 +3,86 @@ from time import sleep_ms, ticks_ms, ticks_diff
 from machine import Pin, PWM
 from main import Pins
 
+def text(game, str1, str2):
+    x = lambda s: int(game.SCREEN_WIDTH/2) - int((len(s)/2) * 8)
+    y = int(game.SCREEN_HEIGHT/2)
+    game.text(str1, x(str1), y - 8)
+    game.text(str2, x(str2), y + 8)
+    
 
 def flashlight():
     game = PicoGame()
-    led = PWM(Pin(Pins.FLASH), freq=1000, duty_u16=0)
+    
     last_pressed_ms = ticks_ms()
-    brightness = 255
+    button_debounce_ms = 200
+    
+    led = PWM(Pin(Pins.FLASH), freq=1000, duty_u16=0)
+    led_state = 0 # OFF, ON, Strobe
+    brightness = 50
+    
+    last_strobe_ms = ticks_ms()
+    strobe_delay = 300
     
     while True:
+        up = False
+        down = False
+        left = False
+        right = False
         delta = ticks_diff(ticks_ms(), last_pressed_ms)
-        
-        if game.button_A() and delta >= 300:
-            last_pressed_ms = ticks_ms()
-            if led.duty_u16() == 0:
-                led.duty_u16(brightness * 257)
-            else:
-                led.duty_u16(0)
-            last_pressed_ms = ticks_ms()
-        elif game.button_up() and brightness < 255 and delta >= 100:
-            last_pressed_ms = ticks_ms()
-            brightness += 10
-            led.duty_u16(brightness * 257)
-        elif game.button_down() and brightness > 5 and delta >= 100:
-            last_pressed_ms = ticks_ms()
-            brightness -= 10
-            led.duty_u16(brightness* 257)
-        elif game.button_B():
+    
+        if game.button_B():
+            led.duty_u16(0)
+            sleep_ms(300)
+            led.deinit()
             break
-        
-            
+        elif delta >= button_debounce_ms:
+            if game.button_A():
+                last_pressed_ms = ticks_ms()
+                led_state = (led_state + 1) % 3
+            elif game.button_up():
+                last_pressed_ms = ticks_ms()
+                up = True            
+            elif game.button_down():
+                last_pressed_ms = ticks_ms()
+                down = True
+            elif game.button_left():
+                last_pressed_ms = ticks_ms()
+                left = True
+            elif game.button_right():
+                last_pressed_ms = ticks_ms()
+                right = True
+
         game.fill(0)
-        game.center_text(f"BRIGHTNESS {brightness}" if led.duty_u16() else "FLASHLIGHT OFF")
+        
+        # LED State OFF
+        if led_state == 0:
+            led.duty_u16(0)
+            text(game, "FLASHLIGHT", "OFF")
+        # LED State ON
+        elif led_state == 1:
+            if up and brightness < 100 :
+                brightness += 5
+            elif down and brightness > 5:
+                brightness -= 5
+            led.duty_u16(int(brightness * 65535 / 100))
+            text(game, "BRIGHTNESS", str(brightness))
+        # LED State Strobe
+        elif led_state == 2:
+            if up and strobe_delay < 3000:
+                strobe_delay += 50
+            elif down and strobe_delay > 50:
+                strobe_delay -= 50
+                
+            if ticks_diff(ticks_ms(), last_strobe_ms) >= strobe_delay:
+                last_strobe_ms = ticks_ms()
+                if led.duty_u16() > 0:
+                    led.duty_u16(0)
+                else:
+                    led.duty_u16(65535)
+                    
+            text(game, "STROBE DELAY", str(strobe_delay))
+            
         game.show()
         
-    
 if __name__ == '__main__':
     flashlight()
