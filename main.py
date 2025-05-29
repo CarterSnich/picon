@@ -38,7 +38,8 @@ if __name__ == "__main__":
         "Full Speed",
         "Lunar Module",
         "Flashlight",
-        "Metronome"
+        "Metronome",
+        "Notepad"
     ]
 
     # Buttons
@@ -128,6 +129,9 @@ if __name__ == "__main__":
             elif game_selected == 9:
                 from Metronome import metronome
                 metronome()
+            elif game_selected == 10:
+                from Notepad import notepad
+                notepad()
                 
                 
         game_selected=-1
