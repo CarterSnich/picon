@@ -1,7 +1,7 @@
 # main.py: Game selection menu by Vincent Mistler (YouMakeTech)
 from machine import Pin, PWM, I2C, Timer
 from ssd1306 import SSD1306_I2C
-import time
+from time import sleep_ms
 import random
 
 # Pin configuration
@@ -22,7 +22,7 @@ class Pins:
 if __name__ == "__main__":
     # To avoid strange errors at startup
     # I don't know why but it works!
-    time.sleep(0.2)
+    sleep_ms(200)
     
     # Screen resolution
     SCREEN_WIDTH=128                       
@@ -66,7 +66,7 @@ if __name__ == "__main__":
         
         oled.show()
         
-        time.sleep(0.2)
+        sleep_ms(200)
         buttonPressed = False
         
         while not buttonPressed:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         # Make a sound
         buzzer.freq(1000)
         buzzer.duty_u16(2000)
-        time.sleep(0.100)
+        sleep_ms(100)
         buzzer.duty_u16(0)
         
         # Start the selected game
