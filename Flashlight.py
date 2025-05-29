@@ -18,7 +18,7 @@ def flashlight():
     
     led = PWM(Pin(Pins.FLASH), freq=1000, duty_u16=0)
     led_state = 0 # OFF, ON, Strobe
-    brightness = 50
+    brightness = 100
     
     last_strobe_ms = ticks_ms()
     strobe_delay = 300
@@ -58,6 +58,7 @@ def flashlight():
         if led_state == 0:
             led.duty_u16(0)
             text(game, "FLASHLIGHT", "OFF")
+            
         # LED State ON
         elif led_state == 1:
             if up and brightness < 100 :
@@ -66,6 +67,7 @@ def flashlight():
                 brightness -= 5
             led.duty_u16(int(brightness * 65535 / 100))
             text(game, "BRIGHTNESS", str(brightness))
+            
         # LED State Strobe
         elif led_state == 2:
             if up and strobe_delay < 3000:
