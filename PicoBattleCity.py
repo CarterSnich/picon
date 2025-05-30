@@ -16,6 +16,10 @@ def battle_city():
     last_button_debounce = -1
     
     while True:
+        
+        if game.button_B():
+            break
+        
         player.update()
         
         game.fill(0)
