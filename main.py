@@ -39,7 +39,8 @@ if __name__ == "__main__":
         "Lunar Module",
         "Flashlight",
         "Metronome",
-        "Notepad"
+        "Notepad",
+        "Neopixel"
     ]
 
     # Buttons
@@ -132,6 +133,9 @@ if __name__ == "__main__":
             elif game_selected == 10:
                 from Notepad import notepad
                 notepad()
+            elif game_selected == 11:
+                from NeopixelController import neopixel_controller
+                neopixel_controller()
                 
                 
         game_selected=-1

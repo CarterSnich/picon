@@ -27,6 +27,22 @@ class PicoGame(SSD1306_I2C):
         self.__h=[]
         
         self.__mute = False
+        
+    def get_center_x(self, x_offset):
+        return int(self.SCREEN_WIDTH / 2) - x_offset
+
+    def get_center_y(self, y_offset):
+        return int(self.SCREEN_HEIGHT / 2) - y_offset
+    
+    def get_center(self, x_offset, y_offset):
+        x = self.get_center_x(x_offset)
+        y = self.get_center_y(y_offset)
+        return x, y
+    
+    def get_top_left(self, width, height):
+        x = int(self.game.SCREEN_WIDTH / 2) - width
+        y = int(self.game.SCREEN_HEIGHT / 2) - height
+        return x, y
     
     def center_text(self, s, color = 1):
         x = int(self.width/2)- int(len(s)/2 * 8)
