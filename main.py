@@ -41,7 +41,7 @@ if __name__ == "__main__":
         "Metronome",
         "Notepad",
         "Neopixel",
-        "Battle City
+        "Battle City"
     ]
 
     # Buttons
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             elif game_selected == 11:
                 from NeopixelController import neopixel_controller
                 neopixel_controller()
-            elif game_Selected == 12:
+            elif game_selected == 12:
                 from PicoBattleCity import battle_city
                 battle_city()
                 
