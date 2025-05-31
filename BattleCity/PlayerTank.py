@@ -1,5 +1,6 @@
 import framebuf
 from BattleCity.Tank import Direction, Tank
+from PicoGame import PicoGame
 
 NORTH = framebuf.FrameBuffer(
     bytearray([
@@ -58,12 +59,33 @@ WEST = framebuf.FrameBuffer(
 class PlayerTank(Tank):
     
     sprites = [ NORTH, EAST, SOUTH, WEST ]
-    direction = Direction.NORTH
     
-    def __init__(self, x, y):
-        super().__init__(x, y)
+    def __init__(self, x, y, direction = Direction.NORTH):
+        super().__init__(x, y, direction)
  
+    def up(self, enemy_tanks):
+        if self.y-4 > 0 and not self.colliding(enemy_tanks):
+            self.y -= 1
+        self.direction = Direction.NORTH
+    
+    def right(self, enemy_tanks):
+        if self.x+4 < PicoGame.SCREEN_WIDTH:
+            self.x += 1
+        self.direction = Direction.EAST
+    
+    def down(self, enemy_tanks):
+        if self.y+4 < PicoGame.SCREEN_HEIGHT:
+            self.y += 1
+        self.direction = Direction.SOUTH
+    
+    def left(self, enemy_tanks):
+        if self.x-4 > 0:
+            self.x -= 1
+        self.direction = Direction.WEST
         
-        
-        
+    
+    
+if __name__ == '__main__':
+    from PicoBattleCity import battle_city
+    battle_city()
         

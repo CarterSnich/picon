@@ -1,6 +1,11 @@
+from PicoGame import PicoGame
+import framebuf
 
-SCREEN_WIDTH = 128
-SCREEN_HEIGHT = 64
+class SpawnPoint:
+    NW = 0
+    NE = 1
+    SE = 2
+    SW = 3
 
 class Direction:
     NORTH = 0
@@ -8,70 +13,74 @@ class Direction:
     SOUTH = 2
     WEST = 3
 
-
-class Tank:
-    bullets = []
+class Bullet:
+    sprite = framebuf.FrameBuffer(
+        bytearray([
+            0b11,
+            0b11,
+        ]),
+        2, 2, framebuf.MONO_VLSB
+    )
+    bullet_speed = 2
     
-    def __init__(self, x, y):
+    def __init__(self, x, y, direction):
         self.x = x
         self.y = y
+        self.direction = direction
+        
+    def update(self):
+        if self.direction == Direction.NORTH:
+            if self.y <= 0:
+                return True            
+            self.y -= self.bullet_speed
+        elif self.direction == Direction.EAST:
+            if self.x >= PicoGame.SCREEN_WIDTH:
+                return True
+            self.x += self.bullet_speed
+        elif self.direction == Direction.SOUTH:
+            if self.y >= PicoGame.SCREEN_HEIGHT:
+                return True
+            self.y += self.bullet_speed
+        elif self.direction == Direction.WEST:
+            if self.x <= 0:
+                return True
+            self.x -= self.bullet_speed
+        return False
+        
+
+class Tank:
+    
+    def __init__(self, x, y, direction):
+        self.x = x
+        self.y = y
+        self.direction = direction
+        self.bullets = []
         
     def get_sprite(self):
         return self.sprites[self.direction]
     
     def update(self):
         for b in self.bullets[:]:
-            if b[2] == Direction.NORTH:
-                if b[1] <= 0:
-                    self.bullets.remove(b)
-                else:
-                    b[1] -= 1
-            elif b[2] == Direction.EAST:
-                if b[0] >= SCREEN_WIDTH:
-                    self.bullets.remove(b)
-                else:
-                    b[0] += 1
-            elif b[2] == Direction.SOUTH:
-                if b[1] >= SCREEN_HEIGHT:
-                    self.bullets.remove(b)
-                else:
-                    b[1] += 1
-            elif b[2] == Direction.WEST:
-                if b[0] <= 0:
-                    self.bullets.remove(b)
-                else:
-                    b[0] -= 1
-                
+            if b.update():
+                self.bullets.remove(b)
     
-    def up(self):
-        if self.y > 0:
-            self.y -= 1
-        self.direction = Direction.NORTH
-    
-    def right(self):
-        if self.x+8 < SCREEN_WIDTH:
-            self.x += 1
-        self.direction = Direction.EAST
-    
-    def down(self):
-        if self.y+8 < SCREEN_HEIGHT:
-            self.y += 1
-        self.direction = Direction.SOUTH
-    
-    def left(self):
-        if self.x > 0:
-            self.x -= 1
-        self.direction = Direction.WEST
-    
-    def fire(self):
+    def render(self, game):
+        game.blit(self.get_sprite(), self.x-4, self.y-4)
+        for b in self.bullets:
+            game.blit(b.sprite, b.x, b.y)
+            
+    def shoot(self):
         if len(self.bullets) < 3:
             if self.direction == Direction.NORTH:
-                self.bullets.append([self.x+4, self.y-4, self.direction])
+                self.bullets.append(Bullet(self.x-1, self.y-6, self.direction))
             elif self.direction == Direction.EAST:
-                self.bullets.append([self.x+4, self.y+4, self.direction])
+                self.bullets.append(Bullet(self.x+4, self.y-1, self.direction))
             elif self.direction == Direction.SOUTH:
-                self.bullets.append([self.x+4, self.y+4, self.direction])
-            elif self.direction in (Direction.EAST, Direction.WEST):
-                self.bullets.append([self.x-4, self.y+4, self.direction])
-                
-        
+                self.bullets.append(Bullet(self.x-1, self.y+4, self.direction))
+            elif self.direction == Direction.WEST:
+                self.bullets.append(Bullet(self.x-6, self.y-1, self.direction))
+    
+
+if __name__ == '__main__':
+    from PicoBattleCity import battle_city
+    battle_city()
