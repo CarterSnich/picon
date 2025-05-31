@@ -8,9 +8,10 @@ import random
 from main import Pins
 
 class PicoGame(SSD1306_I2C):
+    SCREEN_WIDTH = 128
+    SCREEN_HEIGHT = 64
+    
     def __init__(self):
-        self.SCREEN_WIDTH = 128
-        self.SCREEN_HEIGHT = 64
         self.__up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
         self.__down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
         self.__left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
