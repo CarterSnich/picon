@@ -149,3 +149,5 @@ class PicoGame(SSD1306_I2C):
         
         while True:
             if self.any_button(): break
+            
+        time.sleep(500)
