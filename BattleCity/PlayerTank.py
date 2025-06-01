@@ -62,26 +62,23 @@ class PlayerTank(Tank):
     
     def __init__(self, x, y, direction = Direction.NORTH):
         super().__init__(x, y, direction)
- 
-    def up(self, enemy_tanks):
-        if self.y-4 > 0 and not self.colliding(enemy_tanks):
+        
+    def move(self, direction, enemy_tanks):
+        self.direction = direction
+        
+        # enemy tanks collision check
+        for e in enemy_tanks:
+            if self.will_collide(e.x, e.y, 8, 8):
+                return
+            
+        if direction == Direction.NORTH and self.y-4 > 0:
             self.y -= 1
-        self.direction = Direction.NORTH
-    
-    def right(self, enemy_tanks):
-        if self.x+4 < PicoGame.SCREEN_WIDTH:
+        elif direction == Direction.EAST and self.x+4 < PicoGame.SCREEN_WIDTH:
             self.x += 1
-        self.direction = Direction.EAST
-    
-    def down(self, enemy_tanks):
-        if self.y+4 < PicoGame.SCREEN_HEIGHT:
+        elif direction == Direction.SOUTH and self.y+4 < PicoGame.SCREEN_HEIGHT:
             self.y += 1
-        self.direction = Direction.SOUTH
-    
-    def left(self, enemy_tanks):
-        if self.x-4 > 0:
+        elif direction == Direction.WEST and self.x-4 > 0:
             self.x -= 1
-        self.direction = Direction.WEST
         
     
     

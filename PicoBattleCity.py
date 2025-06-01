@@ -1,6 +1,6 @@
 import framebuf
 from time import ticks_diff, ticks_ms
-from random import randint
+from random import randint, choice
 
 from PicoGame import PicoGame
 from BattleCity.PlayerTank import PlayerTank
@@ -10,32 +10,50 @@ from BattleCity.Tank import Direction
 
 def battle_city():
     game = PicoGame()
-    
+
+    score = 0    
     button_delay = 300
     last_button_debounce = -1
     
     x, y = game.get_center(0, 0)
-    player = PlayerTank(x+20, y+20)
+    player = PlayerTank(x, y)
     
-    last_enemy_deploy_ms = ticks_ms()
-    enemy_tanks = [EnemyTank(-1, x, y)]
-    
+    enemy_tanks = [EnemyTank(randint(0, 3))]
+    last_enemy_hit_ms = -1
     
     while True:
         # exit game loop
         if game.button_B():
             break
         
-        # render
+        # collision checks
+        
+        for e in enemy_tanks[:]:
+            # enemy tanks' bullet check
+            for eb in e.bullets:
+                if player.will_collide(eb.x, eb.y, 8, 8):
+                    game.over()
+                    return
+                
+            for pb in player.bullets[:]:
+                if pb.is_colliding(e.x, e.y, 8, 8):
+                    enemy_tanks.remove(e)
+                    player.bullets.remove(pb)
+                    last_enemy_hit_ms = ticks_ms()
+                    continue
+        
+        if len(enemy_tanks) < 3 and ticks_diff(ticks_ms(), last_enemy_hit_ms) >= 1000:
+            enemy_tanks.append(EnemyTank(randint(0, 3)))
+            
+            
+        
+        # render and update states
         game.fill(0)
-        # update states
         player.update()
         player.render(game)
-        game.hline(0, player.y-4, PicoGame.SCREEN_WIDTH, 1) # player
         for enemy in enemy_tanks:
-        #    enemy.update(player)
+            enemy.update(player)
             enemy.render(game)
-            game.hline(0, enemy.y+4, PicoGame.SCREEN_WIDTH, 1) # enemy
         game.show()
         
         # inputs
@@ -44,13 +62,13 @@ def battle_city():
             last_button_debounce = ticks_ms()
             player.shoot()    
         if game.button_up():
-            player.up(enemy_tanks)
+            player.move(Direction.NORTH, enemy_tanks)
         elif game.button_right():
-            player.right(enemy_tanks)
+            player.move(Direction.EAST, enemy_tanks)
         elif game.button_down():
-            player.down(enemy_tanks)
+            player.move(Direction.SOUTH, enemy_tanks)
         elif game.button_left():
-            player.left(enemy_tanks)
+            player.move(Direction.WEST, enemy_tanks)
                 
 
 

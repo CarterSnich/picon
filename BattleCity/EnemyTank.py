@@ -102,7 +102,9 @@ class EnemyTank(Tank):
             self.last_shot_ms = ticks_ms()
             self.delay_next_shot_ms = randint(300, 1000)
         
-        if self.displacement < 8:
+        if self.will_collide(player.x, player.y, 8, 8):
+            return
+        elif self.displacement < 8:
             if self.direction == Direction.NORTH:
                 if self.y-4 > 0:
                     self.displacement += 1
