@@ -19,6 +19,7 @@ def battle_city():
     player = PlayerTank(x, y)
     
     enemy_tanks = [EnemyTank(randint(0, 3))]
+    last_enemy_deploy_ms = ticks_ms()
     last_enemy_hit_ms = -1
     
     while True:
@@ -42,7 +43,11 @@ def battle_city():
                     last_enemy_hit_ms = ticks_ms()
                     continue
         
-        if len(enemy_tanks) < 3 and ticks_diff(ticks_ms(), last_enemy_hit_ms) >= 1000:
+        tick = ticks_ms()
+        new_enemy = ticks_diff(tick, last_enemy_hit_ms) >= 1000 and \
+            ticks_diff(tick, last_enemy_deploy_ms) >= 1000
+        if len(enemy_tanks) < 3 and new_enemy:
+            last_enemy_deploy_ms = tick
             enemy_tanks.append(EnemyTank(randint(0, 3)))
             
             
