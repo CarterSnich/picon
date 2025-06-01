@@ -141,3 +141,11 @@ class PicoGame(SSD1306_I2C):
             else:
                 self.__buzzer.duty_u16(0)
        
+    def over(self):        
+        y = self.get_center_y(4)
+        self.fill_rect(0, y-5, self.SCREEN_WIDTH, 9, 1)
+        self.center_text("GAME OVER", 0)
+        self.show()
+        
+        while True:
+            if self.any_button(): break
