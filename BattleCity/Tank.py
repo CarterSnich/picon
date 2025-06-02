@@ -1,12 +1,15 @@
-from PicoGame import PicoGame
-import framebuf
 from time import ticks_ms, ticks_diff
+
+from PicoGame import PicoGame
+from BattleCity.Resources import BULLET
+
 
 class SpawnPoint:
     NW = 0
     NE = 1
     SE = 2
     SW = 3
+
 
 class Direction:
     NORTH = 0
@@ -16,6 +19,7 @@ class Direction:
     
     
 class Tank:
+    SHOOT_INTERVAL = 300
     
     def __init__(self, x, y, direction):
         self.x = x
@@ -37,7 +41,9 @@ class Tank:
             b.render(game)
             
     def shoot(self):
-        if len(self.bullets) < 3:
+        delta = ticks_diff(ticks_ms(), self.last_shot_ms)
+        
+        if len(self.bullets) < 3 and delta >= self.SHOOT_INTERVAL:
             if self.direction == Direction.NORTH:
                 self.bullets.append(Bullet(self.x, self.y, self.direction))
             elif self.direction == Direction.EAST:
@@ -45,7 +51,8 @@ class Tank:
             elif self.direction == Direction.SOUTH:
                 self.bullets.append(Bullet(self.x, self.y, self.direction))
             elif self.direction == Direction.WEST:
-                self.bullets.append(Bullet(self.x, self.y, self.direction))
+                self.bullets.append(Bullet(self.x, self.y, self.direction))                
+            self.last_shot_ms = ticks_ms()
     
     def will_collide(self, enemy_x, enemy_y, enemy_w, enemy_h):
         self_x = self.x
@@ -69,13 +76,7 @@ class Tank:
     
 
 class Bullet:
-    sprite = framebuf.FrameBuffer(
-        bytearray([
-            0b11,
-            0b11,
-        ]),
-        2, 2, framebuf.MONO_VLSB
-    )
+    sprite = BULLET
     bullet_speed = 2
     
     def __init__(self, x, y, direction):
@@ -112,7 +113,6 @@ class Bullet:
             self.y < tank_y + tank_h and
             self.y + 2 > tank_y
         )
-        
         
 
 if __name__ == '__main__':

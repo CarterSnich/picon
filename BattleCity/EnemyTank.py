@@ -1,68 +1,17 @@
-import framebuf
-from BattleCity.Tank import Tank, SpawnPoint, Direction
-from PicoGame import PicoGame
 from random import choice, randint
 from time import ticks_diff, ticks_ms
 
-NORTH = framebuf.FrameBuffer(
-    bytearray([
-        0b00011000,
-        0b00011000,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11100111,
-        0b11100111,
-        0b11100111,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-
-EAST = framebuf.FrameBuffer(
-    bytearray([
-        0b11111100,
-        0b11111100,
-        0b11111100,
-        0b00011111,
-        0b00011111,
-        0b11111100,
-        0b11111100,
-        0b11111100,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-
-SOUTH = framebuf.FrameBuffer(
-    bytearray([
-        0b11100111,
-        0b11100111,
-        0b11100111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b00011000,
-        0b00011000,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-
-WEST = framebuf.FrameBuffer(
-    bytearray([
-        0b00111111,
-        0b00111111,
-        0b00111111,
-        0b11111000,
-        0b11111000,
-        0b00111111,
-        0b00111111,
-        0b00111111,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-
+from BattleCity.Tank import Tank, SpawnPoint, Direction
+from PicoGame import PicoGame
+from BattleCity.Resources import ENEMY_TANK_N, ENEMY_TANK_E, ENEMY_TANK_S, ENEMY_TANK_W
 
 class EnemyTank(Tank):
-    sprites = [NORTH, EAST, SOUTH, WEST]
+    sprites = [
+        ENEMY_TANK_N,
+        ENEMY_TANK_E,
+        ENEMY_TANK_S,
+        ENEMY_TANK_W
+    ]
     
     def __init__(self, spawn_point = None, x = 0, y = 0, direction = Direction.NORTH):
         self.displacement = 8
