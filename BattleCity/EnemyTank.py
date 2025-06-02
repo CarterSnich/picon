@@ -64,11 +64,11 @@ WEST = framebuf.FrameBuffer(
 class EnemyTank(Tank):
     sprites = [NORTH, EAST, SOUTH, WEST]
     
-    
     def __init__(self, spawn_point = None, x = 0, y = 0, direction = Direction.NORTH):
         self.displacement = 8
-        self.delay_next_shot_ms = randint(300, 1000)
+        self.delay_next_shot_ms = randint(500, 1000)
         self.last_shot_ms = ticks_ms()
+        self.last_displacement_ms = ticks_ms()
         
         if spawn_point == SpawnPoint.NW:
             x, y = 4, 4
@@ -100,15 +100,21 @@ class EnemyTank(Tank):
     def update(self, player):
         super().update()
         
-        delta = ticks_diff(ticks_ms(), self.last_shot_ms)
-        if delta >= self.delay_next_shot_ms:
-            #self.shoot()
+        if ticks_diff(ticks_ms(), self.last_shot_ms) >= self.delay_next_shot_ms:
+            self.shoot()
             self.last_shot_ms = ticks_ms()
             self.delay_next_shot_ms = randint(300, 1000)
         
+        if ticks_diff(ticks_ms(), self.last_displacement_ms) < 300:
+            return
+        
         if self.will_collide(player.x, player.y, 8, 8):
+            self.change_direction(self.direction)
+            self.displacement = 0
+            self.last_displacement_ms = ticks_ms()
             return
         elif self.displacement < 8:
+            self.last_displacement_ms = ticks_ms()
             if self.direction == Direction.NORTH:
                 if self.y-4 > 0:
                     self.displacement += 1

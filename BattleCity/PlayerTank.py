@@ -80,7 +80,6 @@ class PlayerTank(Tank):
             self.y += 1
         elif direction == Direction.WEST and self.x-4 > 0:
             self.x -= 1
-        
     
     
 if __name__ == '__main__':

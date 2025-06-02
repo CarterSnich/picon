@@ -11,12 +11,11 @@ from BattleCity.Tank import Direction
 def battle_city():
     game = PicoGame()
 
-    score = 0    
-    button_delay = 300
-    last_button_debounce = -1
+    score = 0
     
     x, y = game.get_center(0, 0)
     player = PlayerTank(x, y)
+    last_player_shoot_ms = -1
     
     enemy_tanks = [EnemyTank(randint(0, 3))]
     last_enemy_deploy_ms = ticks_ms()
@@ -27,11 +26,22 @@ def battle_city():
         if game.button_B():
             break
         
+        
+        # clear sound
+        tick = ticks_ms()
+        shoot_delta = ticks_diff(tick, last_player_shoot_ms) >= 10
+        enemy_delta = ticks_diff(tick, last_enemy_hit_ms) >= 10
+        if shoot_delta and enemy_delta:
+            game.sound(0)
+        
         # collision checks
         for e in enemy_tanks[:]:
             # enemy hits on player
             for eb in e.bullets:
-                if player.will_collide(eb.x, eb.y, 8, 8):
+                if eb.is_colliding(player.x-4, player.y-4, 9, 9):
+                    game.sound(560)
+                    sleep_ms(50)
+                    game.sound(0)
                     game.over()
                     return
                 
@@ -41,8 +51,10 @@ def battle_city():
                 # i don't get the calculations
                 # at this point
                 if pb.is_colliding(e.x-4, e.y-4, 9, 9):
+                    score += 1
                     enemy_tanks.remove(e)
                     player.bullets.remove(pb)
+                    game.sound(560)
                     last_enemy_hit_ms = ticks_ms()
         
         tick = ticks_ms()
@@ -52,8 +64,6 @@ def battle_city():
             last_enemy_deploy_ms = tick
             enemy_tanks.append(EnemyTank(randint(0, 3)))
             
-            
-        
         # render and update states
         game.fill(0)
         player.update()
@@ -61,13 +71,14 @@ def battle_city():
         for enemy in enemy_tanks:
             enemy.update(player)
             enemy.render(game)
+        game.top_right_corner_text(str(score))
         game.show()
         
         # inputs
-        debounce_delta = ticks_diff(ticks_ms(), last_button_debounce)
-        if game.button_A() and debounce_delta >= button_delay:
-            last_button_debounce = ticks_ms()
-            player.shoot()    
+        if game.button_A() and ticks_diff(ticks_ms(), last_player_shoot_ms) >= 300:
+            last_player_shoot_ms = ticks_ms()
+            player.shoot()
+            game.sound(880)
         if game.button_up():
             player.move(Direction.NORTH, enemy_tanks)
         elif game.button_right():

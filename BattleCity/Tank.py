@@ -1,5 +1,6 @@
 from PicoGame import PicoGame
 import framebuf
+from time import ticks_ms, ticks_diff
 
 class SpawnPoint:
     NW = 0
@@ -21,14 +22,14 @@ class Tank:
         self.y = y
         self.direction = direction
         self.bullets = []
+        self.last_shot_ms = -1
         
     def get_sprite(self):
         return self.sprites[self.direction]
     
     def update(self):
         for b in self.bullets[:]:
-            if b.update(): self.bullets.remove(b) 
-                
+            if b.update(): self.bullets.remove(b)
     
     def render(self, game):
         game.blit(self.get_sprite(), self.x-4, self.y-4)
