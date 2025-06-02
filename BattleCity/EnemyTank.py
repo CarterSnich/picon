@@ -9,11 +9,11 @@ NORTH = framebuf.FrameBuffer(
         0b00011000,
         0b00011000,
         0b11111111,
-        0b10111101,
-        0b11011011,
         0b11111111,
-        0b10000001,
         0b11111111,
+        0b11100111,
+        0b11100111,
+        0b11100111,
     ]),
     8, 8, framebuf.MONO_HLSB
 )
@@ -21,12 +21,12 @@ NORTH = framebuf.FrameBuffer(
 EAST = framebuf.FrameBuffer(
     bytearray([
         0b11111100,
-        0b10110100,
-        0b10101100,
-        0b10111111,
-        0b10111111,
-        0b10101100,
-        0b10110100,
+        0b11111100,
+        0b11111100,
+        0b00011111,
+        0b00011111,
+        0b11111100,
+        0b11111100,
         0b11111100,
     ]),
     8, 8, framebuf.MONO_HLSB
@@ -34,11 +34,11 @@ EAST = framebuf.FrameBuffer(
 
 SOUTH = framebuf.FrameBuffer(
     bytearray([
+        0b11100111,
+        0b11100111,
+        0b11100111,
         0b11111111,
-        0b10000001,
         0b11111111,
-        0b11011011,
-        0b10111101,
         0b11111111,
         0b00011000,
         0b00011000,
@@ -49,12 +49,12 @@ SOUTH = framebuf.FrameBuffer(
 WEST = framebuf.FrameBuffer(
     bytearray([
         0b00111111,
-        0b00101101,
-        0b00110101,
-        0b11111101,
-        0b11111101,
-        0b00110101,
-        0b00101101,
+        0b00111111,
+        0b00111111,
+        0b11111000,
+        0b11111000,
+        0b00111111,
+        0b00111111,
         0b00111111,
     ]),
     8, 8, framebuf.MONO_HLSB
@@ -98,7 +98,7 @@ class EnemyTank(Tank):
         
         delta = ticks_diff(ticks_ms(), self.last_shot_ms)
         if delta >= self.delay_next_shot_ms:
-            self.shoot()
+            #self.shoot()
             self.last_shot_ms = ticks_ms()
             self.delay_next_shot_ms = randint(300, 1000)
         
