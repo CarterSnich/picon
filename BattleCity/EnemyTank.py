@@ -64,7 +64,8 @@ WEST = framebuf.FrameBuffer(
 class EnemyTank(Tank):
     sprites = [NORTH, EAST, SOUTH, WEST]
     
-    def __init__(self, spawn_point = -1, x = -1, y = -1, direction = Direction.NORTH):
+    
+    def __init__(self, spawn_point = None, x = 0, y = 0, direction = Direction.NORTH):
         self.displacement = 8
         self.delay_next_shot_ms = randint(300, 1000)
         self.last_shot_ms = ticks_ms()
@@ -81,6 +82,9 @@ class EnemyTank(Tank):
         elif spawn_point == SpawnPoint.SW:
             x, y = 4, PicoGame.SCREEN_HEIGHT- 8
             direction = choice([Direction.NORTH, Direction.EAST])
+        else:
+            super().__init__(x, y, direction)
+            return
             
         super().__init__(x, y, direction)
     

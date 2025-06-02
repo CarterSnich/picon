@@ -1,4 +1,5 @@
 import framebuf
+from time import ticks_diff, ticks_ms
 from BattleCity.Tank import Direction, Tank
 from PicoGame import PicoGame
 

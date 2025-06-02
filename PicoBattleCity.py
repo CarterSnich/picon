@@ -1,5 +1,5 @@
 import framebuf
-from time import ticks_diff, ticks_ms
+from time import ticks_diff, ticks_ms, sleep_ms
 from random import randint, choice
 
 from PicoGame import PicoGame
@@ -28,20 +28,22 @@ def battle_city():
             break
         
         # collision checks
-        
         for e in enemy_tanks[:]:
-            # enemy tanks' bullet check
+            # enemy hits on player
             for eb in e.bullets:
                 if player.will_collide(eb.x, eb.y, 8, 8):
                     game.over()
                     return
                 
+            # player hits enemies
             for pb in player.bullets[:]:
-                if pb.is_colliding(e.x, e.y, 8, 8):
+                # this are just manually adjusted values
+                # i don't get the calculations
+                # at this point
+                if pb.is_colliding(e.x-4, e.y-4, 9, 9):
                     enemy_tanks.remove(e)
                     player.bullets.remove(pb)
                     last_enemy_hit_ms = ticks_ms()
-                    continue
         
         tick = ticks_ms()
         new_enemy = ticks_diff(tick, last_enemy_hit_ms) >= 1000 and \
