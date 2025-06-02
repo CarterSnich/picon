@@ -1,65 +1,17 @@
-import framebuf
 from time import ticks_diff, ticks_ms
-from BattleCity.Tank import Direction, Tank
-from PicoGame import PicoGame
 
-NORTH = framebuf.FrameBuffer(
-    bytearray([
-        0b00011000,
-        0b00011000,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-EAST = framebuf.FrameBuffer(
-    bytearray([
-        0b11111100,
-        0b11111100,
-        0b11111100,
-        0b11111111,
-        0b11111111,
-        0b11111100,
-        0b11111100,
-        0b11111100,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-SOUTH = framebuf.FrameBuffer(
-    bytearray([
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b11111111,
-        0b00011000,
-        0b00011000,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
-WEST = framebuf.FrameBuffer(
-    bytearray([
-        0b00111111,
-        0b00111111,
-        0b00111111,
-        0b11111111,
-        0b11111111,
-        0b00111111,
-        0b00111111,
-        0b00111111,
-    ]),
-    8, 8, framebuf.MONO_HLSB
-)
+from PicoGame import PicoGame
+from BattleCity.Tank import Direction, Tank
+from BattleCity.Resources import PLAYER_TANK_N, PLAYER_TANK_E, PLAYER_TANK_S, PLAYER_TANK_W
 
 
 class PlayerTank(Tank):
-    
-    sprites = [ NORTH, EAST, SOUTH, WEST ]
+    sprites = [
+        PLAYER_TANK_N,
+        PLAYER_TANK_E,
+        PLAYER_TANK_S,
+        PLAYER_TANK_W
+    ]
     
     def __init__(self, x, y, direction = Direction.NORTH):
         super().__init__(x, y, direction)

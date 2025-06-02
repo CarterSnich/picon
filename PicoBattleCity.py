@@ -1,11 +1,10 @@
-import framebuf
 from time import ticks_diff, ticks_ms, sleep_ms
 from random import randint, choice
 
 from PicoGame import PicoGame
+from BattleCity.Tank import Direction
 from BattleCity.PlayerTank import PlayerTank
 from BattleCity.EnemyTank import EnemyTank
-from BattleCity.Tank import Direction
 
 
 def battle_city():
@@ -15,7 +14,6 @@ def battle_city():
     
     x, y = game.get_center(0, 0)
     player = PlayerTank(x, y)
-    last_player_shoot_ms = -1
     
     enemy_tanks = [EnemyTank(randint(0, 3))]
     last_enemy_deploy_ms = ticks_ms()
@@ -26,22 +24,11 @@ def battle_city():
         if game.button_B():
             break
         
-        
-        # clear sound
-        tick = ticks_ms()
-        shoot_delta = ticks_diff(tick, last_player_shoot_ms) >= 10
-        enemy_delta = ticks_diff(tick, last_enemy_hit_ms) >= 10
-        if shoot_delta and enemy_delta:
-            game.sound(0)
-        
         # collision checks
         for e in enemy_tanks[:]:
             # enemy hits on player
             for eb in e.bullets:
                 if eb.is_colliding(player.x-4, player.y-4, 9, 9):
-                    game.sound(560)
-                    sleep_ms(50)
-                    game.sound(0)
                     game.over()
                     return
                 
@@ -54,7 +41,6 @@ def battle_city():
                     score += 1
                     enemy_tanks.remove(e)
                     player.bullets.remove(pb)
-                    game.sound(560)
                     last_enemy_hit_ms = ticks_ms()
         
         tick = ticks_ms()
@@ -75,10 +61,8 @@ def battle_city():
         game.show()
         
         # inputs
-        if game.button_A() and ticks_diff(ticks_ms(), last_player_shoot_ms) >= 300:
-            last_player_shoot_ms = ticks_ms()
+        if game.button_A():
             player.shoot()
-            game.sound(880)
         if game.button_up():
             player.move(Direction.NORTH, enemy_tanks)
         elif game.button_right():
