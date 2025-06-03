@@ -146,8 +146,6 @@ class PicoGame(SSD1306_I2C):
         self.fill_rect(0, y-5, self.SCREEN_WIDTH, 9, 1)
         self.center_text("GAME OVER", 0)
         self.show()
-        
-        while True:
-            if self.any_button(): break
-            
-        time.sleep(500)
+        self.sound(550)
+        time.sleep_ms(500)
+        self.sound(0)

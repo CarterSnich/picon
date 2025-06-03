@@ -6,17 +6,19 @@ from BattleCity.Tank import Direction
 from BattleCity.PlayerTank import PlayerTank
 from BattleCity.EnemyTank import EnemyTank
 
+MAX_ENEMY_COUNT = 4
 
 def battle_city():
     game = PicoGame()
 
     score = 0
+    bullets = []
     
     x, y = game.get_center(0, 0)
     player = PlayerTank(x, y)
     
-    enemy_tanks = [EnemyTank(randint(0, 3))]
-    last_enemy_deploy_ms = ticks_ms()
+    enemy_tanks = []
+    last_enemy_spawn_ms = ticks_ms()
     last_enemy_hit_ms = -1
     
     while True:
@@ -24,45 +26,80 @@ def battle_city():
         if game.button_B():
             break
         
-        # collision checks
-        for e in enemy_tanks[:]:
-            # enemy hits on player
-            for eb in e.bullets:
-                if eb.is_colliding(player.x-4, player.y-4, 9, 9):
+        tick = ticks_ms()
+        player_shot_delta = ticks_diff(tick, player.last_shot_ms)
+        enemy_hit_delta = ticks_diff(tick, last_enemy_hit_ms)
+        if player_shot_delta >= 50 and enemy_hit_delta >= 50:
+            game.sound(0)
+        
+        # state updates
+        for b in bullets:
+            if b.update():
+                if b.from_player:
+                    player.shots -= 1
+                bullets.remove(b)
+                continue
+            if b.from_player:
+                for et in enemy_tanks:
+                    if b.is_colliding(et.x-2, et.y-2, 9, 9):
+                        game.sound(1000)
+                        last_enemy_hit = ticks_ms()
+                        enemy_tanks.remove(et)
+                        bullets.remove(b)
+                        score += 1
+                        player.shots -= 1
+                        break
+                else:
+                    continue
+                break
+            else:
+                if b.is_colliding(player.x-2, player.y-2, 9, 9):
                     game.over()
                     return
-                
-            # player hits enemies
-            for pb in player.bullets[:]:
-                # this are just manually adjusted values
-                # i don't get the calculations
-                # at this point
-                if pb.is_colliding(e.x-4, e.y-4, 9, 9):
-                    score += 1
-                    enemy_tanks.remove(e)
-                    player.bullets.remove(pb)
-                    last_enemy_hit_ms = ticks_ms()
-        
-        tick = ticks_ms()
-        new_enemy = ticks_diff(tick, last_enemy_hit_ms) >= 1000 and \
-            ticks_diff(tick, last_enemy_deploy_ms) >= 1000
-        if len(enemy_tanks) < 3 and new_enemy:
-            last_enemy_deploy_ms = tick
-            enemy_tanks.append(EnemyTank(randint(0, 3)))
             
-        # render and update states
+        for et in enemy_tanks:
+            if et.can_shoot():
+                bullets.append(et.shoot())
+                
+            if et.will_collide(player.x, player.y, 8, 8):
+                et.change_direction()
+            else:
+                et.update()
+                
+                
+        # spawn enemy
+        delta_passed = ticks_diff(ticks_ms(), last_enemy_hit_ms) >= 1000 and \
+            ticks_diff(ticks_ms(), last_enemy_spawn_ms) >= 1000
+        if len(enemy_tanks) < MAX_ENEMY_COUNT and delta_passed:
+            last_enemy_spawn_ms = ticks_ms()
+            while True:
+                x = randint(4, game.SCREEN_WIDTH-4)
+                y = randint(4, game.SCREEN_HEIGHT-4)
+                
+                is_intersecting = game.sprites_intersection(
+                    x, y, 8, 8,
+                    player.x, player.y, 8, 8
+                )
+                
+                if not is_intersecting:
+                    break
+            enemy_tanks.append(EnemyTank(x, y, randint(0, 3)))
+        
+            
+        # render
         game.fill(0)
-        player.update()
-        player.render(game)
-        for enemy in enemy_tanks:
-            enemy.update(player)
-            enemy.render(game)
+        game.blit(player.get_sprite(), player.x-4, player.y-4)
+        for e in enemy_tanks:
+            game.blit(e.get_sprite(), e.x-4, e.y-4)
+        for b in bullets:
+            game.blit(b.get_sprite(), b.x-1, b.y-1)
         game.top_right_corner_text(str(score))
         game.show()
         
         # inputs
-        if game.button_A():
-            player.shoot()
+        if game.button_A() and player.can_shoot():
+            game.sound(880)
+            bullets.append(player.shoot())
         if game.button_up():
             player.move(Direction.NORTH, enemy_tanks)
         elif game.button_right():
