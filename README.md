@@ -25,6 +25,7 @@ Forked from [YouMakeTech](https://github.com/YouMakeTech/PicoRetroGamingSystem)
 * PicoGame.py: A class to easily write games for the Raspberry Pi Pico RetroGaming System (used by some games)
   * Modified pins to match my console.
 * ss1306py.py: Official MicroPython SSD1306 OLED driver, I2C and SPI interfaces
+* other files are written by me
 
 How to use
 ==========
