@@ -138,9 +138,9 @@ if __name__ == "__main__":
                 from NeopixelController import neopixel_controller
                 neopixel_controller()
             elif game_selected == 12:
-                from PicoBattleCity import battle_city
-                battle_city()
-                
+                from PicoBattleCity import BattleCity
+                bc = BattleCity()
+                bc.run()
                 
         game_selected=-1
 
