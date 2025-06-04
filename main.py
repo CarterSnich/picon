@@ -105,8 +105,9 @@ if __name__ == "__main__":
                 from PicoPong import *
                 pico_pong_main()
             elif game_selected==1:
-                from PicoSnake import *
-                pico_snake_main()
+                from SnakeGame import SnakeGame
+                sg = SnakeGame()
+                sg.run()
             elif game_selected==2:
                 from PicoInvaders import *
                 pico_invaders_main()
