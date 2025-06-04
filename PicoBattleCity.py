@@ -7,6 +7,7 @@ from BattleCity.PlayerTank import PlayerTank
 from BattleCity.EnemyTank import EnemyTank
 
 MAX_ENEMY_COUNT = 4
+ENEMY_SPAWN_INTERVAL = 1500
 
 def battle_city():
     game = PicoGame()
@@ -43,7 +44,7 @@ def battle_city():
                 for et in enemy_tanks:
                     if b.is_colliding(et.x-2, et.y-2, 9, 9):
                         game.sound(1000)
-                        last_enemy_hit = ticks_ms()
+                        last_enemy_hit_ms = ticks_ms()
                         enemy_tanks.remove(et)
                         bullets.remove(b)
                         score += 1
@@ -68,9 +69,10 @@ def battle_city():
                 
                 
         # spawn enemy
-        delta_passed = ticks_diff(ticks_ms(), last_enemy_hit_ms) >= 1000 and \
-            ticks_diff(ticks_ms(), last_enemy_spawn_ms) >= 1000
-        if len(enemy_tanks) < MAX_ENEMY_COUNT and delta_passed:
+        enemy_hit_delta = ticks_diff(ticks_ms(), last_enemy_hit_ms) >= ENEMY_SPAWN_INTERVAL
+        enemy_spawn_delta = ticks_diff(ticks_ms(), last_enemy_spawn_ms) >= ENEMY_SPAWN_INTERVAL
+        
+        if len(enemy_tanks) < MAX_ENEMY_COUNT and enemy_hit_delta and enemy_spawn_delta:
             last_enemy_spawn_ms = ticks_ms()
             while True:
                 x = randint(4, game.SCREEN_WIDTH-4)
