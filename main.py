@@ -36,7 +36,8 @@ if __name__ == "__main__":
     
     GAMES = [
         ["SNAKE", "SnakeGame", "SnakeGame"],
-        ["BATTLE CITY", "PicoBattleCity", "BattleCity"]
+        ["BATTLE CITY", "PicoBattleCity", "BattleCity"],
+        ["RACING GAME", "RacingGame", "RacingGame"]
     ]
     
     TOOLS = [
@@ -107,7 +108,9 @@ if __name__ == "__main__":
                     items = GAMES
                     current_item = 0
                     tab_index = not tab_index
-                elif current_item > 0:
+                elif current_item <= 0:
+                    current_item = len(items)-1
+                else:
                     current_item -= 1
             elif right.value() == 0:
                 last_press_ms = ticks_ms()
@@ -115,7 +118,9 @@ if __name__ == "__main__":
                     items = TOOLS
                     current_item = 0
                     tab_index = not tab_index
-                elif current_item < len(items)-1 :
+                elif current_item >= len(items)-1:
+                    current_item = 0
+                else:
                     current_item += 1
             elif up.value() == 0 and not is_tab_selection:
                 last_press_ms = ticks_ms()
@@ -124,8 +129,3 @@ if __name__ == "__main__":
                 last_press_ms = ticks_ms()
                 is_tab_selection = False
                 
-            
-            
-            
-
-
