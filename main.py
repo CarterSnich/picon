@@ -35,15 +35,15 @@ if __name__ == "__main__":
     SCREEN_HEIGHT=64
     
     GAMES = [
-        ["Snake", "SnakeGame", "SnakeGame"],
-        ["Battle City", "PicoBattleCity", "BattleCity"]
+        ["SNAKE", "SnakeGame", "SnakeGame"],
+        ["BATTLE CITY", "PicoBattleCity", "BattleCity"]
     ]
     
     TOOLS = [
-        ["Flashlight", "Flashlight", "Flashlight"],
-        ["Metronome", "Metronome", "Metronome"],
-        ["Notepad", "Notepad", "Notepad"],
-        ["Neopixel", "Neopixel", "Neopixel"],
+        ["FLASHLIGHT", "Flashlight", "Flashlight"],
+        ["METRONOME", "Metronome", "Metronome"],
+        ["NOTEPAD", "Notepad", "Notepad"],
+        ["NEOPIXEL", "Neopixel", "Neopixel"],
     ]
 
     # Buttons
@@ -94,7 +94,7 @@ if __name__ == "__main__":
             oled.text("GAMES", 12, 1, 1)
         
         title = items[current_item][0]
-        oled.text(title, 60-int(len(title)/2)*8, 32, 1)
+        oled.text(title, 64-int(len(title)/2)*8, 32, 1)
         oled.show()
         
         if ticks_diff(ticks_ms(), last_press_ms) >= 200:
