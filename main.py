@@ -1,10 +1,10 @@
 # main.py: Game selection menu by Vincent Mistler (YouMakeTech)
-from machine import Pin, PWM, I2C, Timer
+from machine import Pin, PWM, I2C
 from ssd1306 import SSD1306_I2C
-from time import sleep_ms
-import random
+from time import sleep_ms, ticks_ms, ticks_diff
 
-# Pin configuration
+from MenuSprites import ARROW_RIGHT, ARROW_LEFT
+
 class Pins:
     KEYPAD_A = 28
     KEYPAD_B = 27
@@ -18,6 +18,12 @@ class Pins:
     SCL = 5
     FLASH = 10
     RGB = 16
+    
+def load_and_run(path, name):
+    mod = __import__(path)
+    cls = getattr(mod, name)
+    cls().run()
+    
 
 if __name__ == "__main__":
     # To avoid strange errors at startup
@@ -28,20 +34,16 @@ if __name__ == "__main__":
     SCREEN_WIDTH=128                       
     SCREEN_HEIGHT=64
     
-    GAMELIST=[
-        "Pong",
-        "Snake",
-        "Space Invaders",
-        "Dino",
-        "2048",
-        "Tetris",
-        "Full Speed",
-        "Lunar Module",
-        "Flashlight",
-        "Metronome",
-        "Notepad",
-        "Neopixel",
-        "Battle City"
+    GAMES = [
+        ["Snake", "SnakeGame", "SnakeGame"],
+        ["Battle City", "PicoBattleCity", "BattleCity"]
+    ]
+    
+    TOOLS = [
+        ["Flashlight", "Flashlight", "Flashlight"],
+        ["Metronome", "Metronome", "Metronome"],
+        ["Notepad", "Notepad", "Notepad"],
+        ["Neopixel", "Neopixel", "Neopixel"],
     ]
 
     # Buttons
@@ -49,8 +51,8 @@ if __name__ == "__main__":
     down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
     left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
     right = Pin(Pins.KEYPAD_RIGHT, Pin.IN, Pin.PULL_UP)
-    button1 = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
-    button2 = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
+    button_A = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
+    button_B = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
     
     # Buzzer
     buzzer = PWM(Pin(Pins.SPEAKER))
@@ -59,90 +61,71 @@ if __name__ == "__main__":
     i2c = machine.I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq = 400000)
     oled = SSD1306_I2C(SCREEN_WIDTH, SCREEN_HEIGHT, i2c)
 
-    current = 0
-    game_selected = -1
-
+    # True = Games, False = Tools
+    tab_index = True
+    # True if selecting items, False when selecting tabs
+    is_tab_selection = True
+    current_item = 0
+    items = GAMES
+    last_press_ms = ticks_ms()
+    
     while True:
         oled.fill(0)
         
-        oled.text(f"{current+1}/{len(GAMELIST)}", 0, 0, 1)
-        oled.text(GAMELIST[current], int(SCREEN_WIDTH/2 - int((len(GAMELIST[current])/2) * 8)), int(SCREEN_HEIGHT/2), 1)
+        if tab_index:
+            if is_tab_selection:
+                oled.blit(ARROW_RIGHT, 4, 1)
+                oled.text("GAMES", 12, 1, 1)
+            else:            
+                oled.fill_rect(0, 0, 68, 9, 1)
+                oled.text("GAMES", 12, 1, 0)
+                oled.blit(ARROW_LEFT, 0, 32)
+                oled.blit(ARROW_RIGHT, SCREEN_WIDTH-8, 32)
+            oled.text("TOOLS", 76, 1, 1)
+        else:
+            if is_tab_selection:
+                oled.blit(ARROW_RIGHT, 68, 1)
+                oled.text("TOOLS", 76, 1, 1)
+            else:
+                oled.fill_rect(64, 0, 64, 9, 1)
+                oled.text("TOOLS", 76, 1, 0)
+                oled.blit(ARROW_LEFT, 0, 32)
+                oled.blit(ARROW_RIGHT, SCREEN_WIDTH-8, 32)
+            oled.text("GAMES", 12, 1, 1)
         
+        title = items[current_item][0]
+        oled.text(title, 60-int(len(title)/2)*8, 32, 1)
         oled.show()
         
-        sleep_ms(200)
-        buttonPressed = False
-        
-        while not buttonPressed:
-            if down.value() == 0:
-                if current >= len(GAMELIST) - 1:
-                    current = 0
-                else:
-                    current += 1
-                buttonPressed = True
-            elif up.value() == 0:
-                if current <= 0:
-                    current = len(GAMELIST) - 1
-                else:
-                    current -= 1
-                buttonPressed = True
-            elif button1.value() == 0:
-                buttonPressed = True
-                game_selected = current
-
-        # Make a sound
-        buzzer.freq(1000)
-        buzzer.duty_u16(2000)
-        sleep_ms(100)
-        buzzer.duty_u16(0)
-        
-        # Start the selected game
-        if game_selected >= 0:
-            oled.fill(0)
-            oled.show()
-            
-            if game_selected==0:
-                from PicoPong import *
-                pico_pong_main()
-            elif game_selected==1:
-                from SnakeGame import SnakeGame
-                sg = SnakeGame()
-                sg.run()
-            elif game_selected==2:
-                from PicoInvaders import *
-                pico_invaders_main()
-            elif game_selected==3:
-                from PicoDino import *
-                pico_dino_main()
-            elif game_selected==4:
-                from Pico2048 import *
-                pico_2048_main()
-            elif game_selected==5:
-                from PicoTetris import *
-                pico_tetris_main()
-            elif game_selected==6:
-                from PicoFullSpeed import *
-                pico_full_speed_main()
-            elif game_selected==7:
-                from PicoLunarModule import *
-                pico_lunar_module_main()
-            elif game_selected==8:
-                from Flashlight import flashlight
-                flashlight()
-            elif game_selected == 9:
-                from Metronome import metronome
-                metronome()
-            elif game_selected == 10:
-                from Notepad import notepad
-                notepad()
-            elif game_selected == 11:
-                from NeopixelController import neopixel_controller
-                neopixel_controller()
-            elif game_selected == 12:
-                from PicoBattleCity import BattleCity
-                bc = BattleCity()
-                bc.run()
+        if ticks_diff(ticks_ms(), last_press_ms) >= 200:
+            if button_A.value() == 0 and not is_tab_selection:
+                item = items[current_item]
+                load_and_run(item[1], item[2])
+            elif left.value() == 0:
+                last_press_ms = ticks_ms()
+                if is_tab_selection:
+                    items = GAMES
+                    current_item = 0
+                    tab_index = not tab_index
+                elif current_item > 0:
+                    current_item -= 1
+            elif right.value() == 0:
+                last_press_ms = ticks_ms()
+                if is_tab_selection:                    
+                    items = TOOLS
+                    current_item = 0
+                    tab_index = not tab_index
+                elif current_item < len(items)-1 :
+                    current_item += 1
+            elif up.value() == 0 and not is_tab_selection:
+                last_press_ms = ticks_ms()
+                is_tab_selection = True
+            elif down.value() == 0 and is_tab_selection:
+                last_press_ms = ticks_ms()
+                is_tab_selection = False
                 
-        game_selected=-1
+            
+            
+            
 
 
