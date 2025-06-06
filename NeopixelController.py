@@ -38,7 +38,6 @@ class NeopixelController(PicoGame):
         selection = 0
         last_debounce_ms = -1
         
-        
         while True:
             if self.button_B():
                 n[0] = [0,0,0]
@@ -62,7 +61,6 @@ class NeopixelController(PicoGame):
             
             x_start = 20
             x_gap = 32
-            
             for i, k in enumerate(["R", "G", "B"]):            
                 self.text(k, (i * x_gap) + x_start + 8, 10, 1)
                 self.text(f"{int(pixel[i]):03}", (i * x_gap) + x_start, 32, 1)
@@ -71,13 +69,12 @@ class NeopixelController(PicoGame):
                     self.blit(arrow_up, (i * x_gap)+ 8 + x_start, 24)
                     self.blit(arrow_down, (i * x_gap) + 8 + x_start, 44)
                     
-            
             if sequencial:
                 self.text("SEQUENCIAL", int(self.SCREEN_WIDTH / 2) - 40, 50, 1)
         
             self.show()
             
-            if ticks_diff(ticks_ms(), last_debounce_ms) >= 100:
+            if ticks_diff(ticks_ms(), last_debounce_ms) >= 125:
                 if self.button_A():
                     last_debounce_ms = ticks_ms()
                     sequencial = not sequencial
@@ -97,12 +94,18 @@ class NeopixelController(PicoGame):
                             selection = 2
                         else:
                             selection -= 1
-                    elif self.button_up() and pixel[selection] <= 250:
+                    elif self.button_up():
                         last_debounce_ms = ticks_ms()
-                        pixel[selection] += 5
-                    elif self.button_down() and pixel[selection] > 0:
+                        if pixel[selection] >= 245:
+                            pixel[selection] = 250
+                        else:
+                            pixel[selection] += 5
+                    elif self.button_down():
                         last_debounce_ms = ticks_ms()
-                        pixel[selection] -= 5
+                        if pixel[selection] <= 5:
+                            pixel[selection] = 0
+                        else:
+                            pixel[selection] -= 5
                 
 
 if __name__ == '__main__':
