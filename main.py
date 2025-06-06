@@ -43,8 +43,9 @@ if __name__ == "__main__":
     TOOLS = [
         ["FLASHLIGHT", "Flashlight", "Flashlight"],
         ["METRONOME", "Metronome", "Metronome"],
-        ["NOTEPAD", "Notepad", "Notepad"],
         ["NEOPIXEL", "NeopixelController", "NeopixelController"],
+        ["NOTEPAD", "Notepad", "Notepad"],
+        ["KEYPAD TEST", "KeypadTest", "KeypadTest"],
     ]
 
     # Buttons
@@ -105,23 +106,27 @@ if __name__ == "__main__":
             elif left.value() == 0:
                 last_press_ms = ticks_ms()
                 if is_tab_selection:
-                    items = GAMES
-                    current_item = 0
-                    tab_index = not tab_index
-                elif current_item <= 0:
-                    current_item = len(items)-1
+                    if not tab_index:
+                        items = GAMES
+                        current_item = 0
+                        tab_index = True
                 else:
-                    current_item -= 1
+                    if current_item <= 0:
+                        current_item = len(items)-1
+                    else:
+                        current_item -= 1
             elif right.value() == 0:
                 last_press_ms = ticks_ms()
-                if is_tab_selection:                    
-                    items = TOOLS
-                    current_item = 0
-                    tab_index = not tab_index
-                elif current_item >= len(items)-1:
-                    current_item = 0
+                if is_tab_selection:
+                    if tab_index:
+                        items = TOOLS
+                        current_item = 0
+                        tab_index = not tab_index
                 else:
-                    current_item += 1
+                    if current_item >= len(items)-1:
+                        current_item = 0
+                    else:
+                        current_item += 1
             elif up.value() == 0 and not is_tab_selection:
                 last_press_ms = ticks_ms()
                 is_tab_selection = True
