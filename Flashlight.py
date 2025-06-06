@@ -1,7 +1,7 @@
 from PicoGame import PicoGame
 from time import sleep_ms, ticks_ms, ticks_diff
 from machine import Pin, PWM
-from main import Pins
+from config import FLASH
 
 
 class Flashlight(PicoGame):
@@ -20,7 +20,7 @@ class Flashlight(PicoGame):
         last_pressed_ms = ticks_ms()
         button_debounce_ms = 200
         
-        led = PWM(Pin(Pins.FLASH), freq=1000, duty_u16=0)
+        led = PWM(Pin(FLASH), freq=1000, duty_u16=0)
         led_state = 0 # OFF, ON, Strobe
         brightness = 100
         

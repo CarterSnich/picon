@@ -5,22 +5,22 @@ from ssd1306 import SSD1306_I2C
 from framebuf import FrameBuffer, MONO_HLSB
 import time
 import random
-from main import Pins
+import config
 
 class PicoGame(SSD1306_I2C):
-    SCREEN_WIDTH = 128
-    SCREEN_HEIGHT = 64
+    SCREEN_WIDTH = config.SCREEN_WIDTH
+    SCREEN_HEIGHT = config.SCREEN_HEIGHT
     
     def __init__(self):
-        self.__up = Pin(Pins.KEYPAD_UP, Pin.IN, Pin.PULL_UP)
-        self.__down = Pin(Pins.KEYPAD_DOWN, Pin.IN, Pin.PULL_UP)
-        self.__left = Pin(Pins.KEYPAD_LEFT, Pin.IN, Pin.PULL_UP)
-        self.__right = Pin(Pins.KEYPAD_RIGHT, Pin.IN, Pin.PULL_UP)
-        self.__button_A = Pin(Pins.KEYPAD_A, Pin.IN, Pin.PULL_UP)
-        self.__button_B = Pin(Pins.KEYPAD_B, Pin.IN, Pin.PULL_UP)
-        self.__buzzer = PWM(Pin(Pins.SPEAKER))
+        self.__up = Pin(config.KEY_UP, Pin.IN, Pin.PULL_UP)
+        self.__down = Pin(config.KEY_DOWN, Pin.IN, Pin.PULL_UP)
+        self.__left = Pin(config.KEY_LEFT, Pin.IN, Pin.PULL_UP)
+        self.__right = Pin(config.KEY_RIGHT, Pin.IN, Pin.PULL_UP)
+        self.__button_A = Pin(config.KEY_A, Pin.IN, Pin.PULL_UP)
+        self.__button_B = Pin(config.KEY_B, Pin.IN, Pin.PULL_UP)
+        self.__buzzer = PWM(Pin(config.SPEAKER))
         
-        self.__i2c = I2C(Pins.I2C, sda = Pin(Pins.SDA), scl = Pin(Pins.SCL), freq=400000)
+        self.__i2c = I2C(config.I2C, sda = Pin(config.SDA), scl = Pin(config.SCL), freq=400000)
         super().__init__(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.__i2c)
         
         self.__fb=[] # Array of FrameBuffer objects for sprites

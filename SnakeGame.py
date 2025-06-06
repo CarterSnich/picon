@@ -34,8 +34,7 @@ class SnakeGame(PicoGame):
                 break
         
     def run(self):
-        # self.randomize_food()
-        self.food = Food(0, 0)
+        self.randomize_food()
         
         while True:
             # mute sounds
