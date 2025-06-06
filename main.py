@@ -44,7 +44,7 @@ if __name__ == "__main__":
         ["FLASHLIGHT", "Flashlight", "Flashlight"],
         ["METRONOME", "Metronome", "Metronome"],
         ["NOTEPAD", "Notepad", "Notepad"],
-        ["NEOPIXEL", "Neopixel", "Neopixel"],
+        ["NEOPIXEL", "NeopixelController", "NeopixelController"],
     ]
 
     # Buttons
