@@ -1,7 +1,8 @@
-from PicoGame import PicoGame
 from time import sleep_ms, ticks_ms, ticks_diff
 from machine import Pin, PWM
 from config import FLASH
+
+from PicoGame import PicoGame
 
 
 class Flashlight(PicoGame):
@@ -91,5 +92,4 @@ class Flashlight(PicoGame):
             self.show()
         
 if __name__ == '__main__':
-    f = Flashlight()
-    f.run()
+    Flashlight().run()

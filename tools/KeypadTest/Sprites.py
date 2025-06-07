@@ -277,8 +277,6 @@ KEYPAD_B_INVERT = framebuf.FrameBuffer(
 )
 
 
-
-
 if __name__ == '__main__':
-    from KeypadTest import KeypadTest
+    from tools.KeypadTest import KeypadTest
     KeypadTest().run()

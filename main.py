@@ -3,7 +3,7 @@ from ssd1306 import SSD1306_I2C
 from time import sleep_ms, ticks_ms, ticks_diff
 
 import config
-from MenuSprites import ARROW_LEFT, GAMES_OR_TOOLS
+from MenuSprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 
 class Picon:
@@ -20,9 +20,10 @@ class Picon:
         self.games = games
         self.tools = tools
     
-    def load_and_run(self, path, name):
+    def load_and_run(self, path, class_name):
         mod = __import__(path)
-        cls = getattr(mod, name)
+        mod = getattr(mod, path.split(".")[1])
+        cls = getattr(mod, class_name)
         cls().run()
     
     def run(self):
@@ -32,7 +33,9 @@ class Picon:
         is_inverted = False
         
         # item selection
-        current_index = 0
+        selection_index = 0
+        items_stop_index = 0
+        max_index = 0
         items = []
         
         last_press_ms = 0
@@ -49,16 +52,17 @@ class Picon:
                 self.display.invert(is_inverted)
             else:
                 self.display.invert(0)
-                for i, y in enumerate(range(0, config.SCREEN_HEIGHT-8, 8)):
-                    if i >= len(items):
-                        break
-                    if current_index == i:
-                        self.display.blit(ARROW_LEFT, config.SCREEN_WIDTH-8, y)
-                    self.display.text(items[i][0], 0, y, 1)
+                _items = items[items_stop_index-max_index:items_stop_index]
+                y = 0
+                for i, item in enumerate(_items):
+                    if i == selection_index:
+                        self.display.blit(ARROW_RIGHT, 0, y)
+                    self.display.text(item[0], 8, y)
+                    y += 8
             self.display.show()
             
             # Handle inputs
-            if ticks_diff(tick, last_press_ms) < 300:
+            if ticks_diff(tick, last_press_ms) < 200:
                 continue
             
             if is_top_level_menu:
@@ -72,27 +76,33 @@ class Picon:
                     last_press_ms = tick
                     is_top_level_menu = False
                     items = TOOLS if is_inverted else GAMES
+                    max_index = min(len(items), 8)
+                    items_stop_index = max_index
+                    selection_index = 0
             else:
-                if not self.KEY_A.value():
-                    path = items[current_index][1]
-                    mod = items[current_index][2]
+                if not self.KEY_A.value() and len(items):
+                    index = items_stop_index-(max_index-selection_index-1)-1
+                    item = items[index]
+                    path = item[1]
+                    mod = item[2]
                     self.load_and_run(path, mod)
-                    sleep_ms(300)
+                    sleep_ms(200)
                 elif not self.KEY_B.value():
                     last_press_ms = tick
                     is_top_level_menu = True
                 elif not self.KEY_UP():
                     last_press_ms = tick
-                    if current_index <= 0:
-                        current_index = len(items)-1
-                    else:
-                        current_index -= 1
+                    if selection_index > 0:
+                        selection_index -= 1
+                    elif items_stop_index > 8:
+                        items_stop_index -= 1
                 elif not self.KEY_DOWN.value():
                     last_press_ms = tick
-                    if current_index >= len(items)-1:
-                        current_index = 0
-                    else:
-                        current_index += 1
+                    if selection_index < max_index-1:
+                        selection_index += 1
+                    elif items_stop_index < len(items):
+                        items_stop_index += 1
+                        
             
 
         
@@ -101,16 +111,16 @@ if __name__ == '__main__':
     sleep_ms(200)
     
     GAMES = [
-        ["SNAKE", "SnakeGame", "SnakeGame"],
-        ["BATTLE CITY", "PicoBattleCity", "BattleCity"],
-        ["RACING GAME", "RacingGame", "RacingGame"]
+        ["SNAKE", "games.SnakeGame", "SnakeGame"],
+        ["BATTLE CITY", "games.BattleCityGame", "BattleCity"],
+        ["RACING GAME", "games.RacingGame", "RacingGame"]
     ]
     TOOLS = [
-        ["FLASHLIGHT", "Flashlight", "Flashlight"],
-        ["METRONOME", "Metronome", "Metronome"],
-        ["NEOPIXEL", "NeopixelController", "NeopixelController"],
-        ["NOTEPAD", "Notepad", "Notepad"],
-        ["KEYPAD TEST", "KeypadTest", "KeypadTest"],
+        ["FLASHLIGHT", "tools.Flashlight", "Flashlight"],
+        ["METRONOME", "tools.Metronome", "Metronome"],
+        ["NEOPIXEL CONTROLLER", "tools.NeopixelController", "NeopixelController"],
+        ["NOTEPAD", "tools.Notepad", "Notepad"],
+        ["KEYPAD TEST", "tools.KeypadTest", "KeypadTest"],
     ]
     
     i2c = machine.I2C(config.I2C, sda = Pin(config.SDA), scl = Pin(config.SCL), freq = 400000)

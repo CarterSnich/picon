@@ -13,6 +13,5 @@ class Food:
         
                         
 if __name__ == '__main__':
-    from SnakeGame import SnakeGame
-    sg = SnakeGame()
-    sg.run()
+    from games.SnakeGame import SnakeGame
+    SnakeGame().run()

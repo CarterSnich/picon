@@ -1,7 +1,6 @@
-from PicoGame import PicoGame
 from time import ticks_ms, ticks_diff
 
-
+from PicoGame import PicoGame
 
 class Notepad(PicoGame):
     

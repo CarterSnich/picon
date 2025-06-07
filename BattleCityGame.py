@@ -2,9 +2,9 @@ from time import ticks_diff, ticks_ms, sleep_ms
 from random import randint, choice
 
 from PicoGame import PicoGame
-from BattleCity.Tank import Direction
-from BattleCity.PlayerTank import PlayerTank
-from BattleCity.EnemyTank import EnemyTank
+from games.BattleCity.Tank import Direction
+from games.BattleCity.PlayerTank import PlayerTank
+from games.BattleCity.EnemyTank import EnemyTank
 
 MAX_ENEMY_COUNT = 4
 ENEMY_SPAWN_INTERVAL = 1500
@@ -123,5 +123,4 @@ class BattleCity(PicoGame):
 
 
 if __name__ == '__main__':
-    bc = BattleCity()
-    bc.run()
+    BattleCity().run()

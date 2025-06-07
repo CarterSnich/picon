@@ -1,5 +1,6 @@
-from PicoGame import PicoGame
 from time import ticks_ms, ticks_diff, sleep_ms
+
+from PicoGame import PicoGame
 
 
 class Metronome(PicoGame):
