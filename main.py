@@ -33,6 +33,7 @@ class Picon:
         is_inverted = False
         
         # item selection
+        current_index = 0
         selection_index = 0
         items_stop_index = 0
         max_index = 0
@@ -61,10 +62,11 @@ class Picon:
                     y += 8
             self.display.show()
             
-            # Handle inputs
+            # Add 200ms interval between button presses
             if ticks_diff(tick, last_press_ms) < 200:
                 continue
             
+            # Handle
             if is_top_level_menu:
                 if not self.KEY_UP.value():
                     last_press_ms = tick
@@ -81,8 +83,7 @@ class Picon:
                     selection_index = 0
             else:
                 if not self.KEY_A.value() and len(items):
-                    index = items_stop_index-(max_index-selection_index-1)-1
-                    item = items[index]
+                    item = items[current_index]
                     path = item[1]
                     mod = item[2]
                     self.load_and_run(path, mod)
@@ -96,12 +97,14 @@ class Picon:
                         selection_index -= 1
                     elif items_stop_index > 8:
                         items_stop_index -= 1
+                    current_index = items_stop_index-(max_index-selection_index-1)-1
                 elif not self.KEY_DOWN.value():
                     last_press_ms = tick
                     if selection_index < max_index-1:
                         selection_index += 1
                     elif items_stop_index < len(items):
                         items_stop_index += 1
+                    current_index = items_stop_index-(max_index-selection_index-1)-1
                         
             
 

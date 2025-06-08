@@ -1,9 +1,9 @@
-from games.Racing.Resources import BUICK
+from games.Racing.Resources import CIVILIAN
 
 class Civilian:
-    SPRITE = BUICK
-    WIDTH = 32
-    HEIGHT = 10
+    SPRITE = CIVILIAN
+    WIDTH = 20
+    HEIGHT = 12
     
     def __init__(self, x, y, speed=1):
         self.x = x
