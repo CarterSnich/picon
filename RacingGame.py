@@ -5,6 +5,7 @@ from PicoGame import PicoGame
 from games.Racing.Racer import Racer
 from games.Racing.Civilian import Civilian
 from games.Racing.Resources import BUICK
+from games.Racing.Lanes import LANES
 
 
 class RacingGame(PicoGame):
@@ -13,7 +14,8 @@ class RacingGame(PicoGame):
         super().__init__()
         
     def run(self):
-        racer = Racer(0, 5)
+        racer = Racer()
+        
         traffic = [
             Civilian(self.SCREEN_WIDTH, choice([7, 27, 47]))
         ]
@@ -25,6 +27,7 @@ class RacingGame(PicoGame):
         bg_music_on = True
         
         last_pass_ms = 0
+        last_press_ms = 0
         
         while True:
             # sound
@@ -50,16 +53,20 @@ class RacingGame(PicoGame):
                 self.fill_rect(rl_x, 20, 21, 4, 1)
                 self.fill_rect(rl_x, 40, 21, 4, 1)
             # racer
-            self.blit(racer.SPRITE, racer.x, racer.y)
+            self.blit(racer.SPRITE, racer.x, LANES[racer.lane])
+            # traffic
             for c in traffic:
                 self.blit(c.SPRITE, c.x, c.y)
             self.show()
             
             # Inputs
-            if self.button_up() and racer.y > 5:
-                racer.y -= 2
-            elif self.button_down() and racer.y < self.SCREEN_HEIGHT-15:
-                racer.y += 2
+            if ticks_diff(ticks_ms(), last_press_ms) >= 200:
+                if self.button_up() and racer.lane > 0:
+                    last_press_ms = ticks_ms()
+                    racer.up()
+                elif self.button_down() and racer.lane < 2:
+                    last_press_ms = ticks_ms()
+                    racer.down()
                     
             # State updates
             # road lines
@@ -81,7 +88,7 @@ class RacingGame(PicoGame):
                 
             if len(traffic) < 3 and traffic[-1].x < self.SCREEN_WIDTH-84:
                 x = self.SCREEN_WIDTH
-                y = choice([7, 27, 47])
+                y = choice(LANES)
                 traffic.append(Civilian(x, y, (traffic_added // 10) + 1))
                 traffic_added += 1
                 
