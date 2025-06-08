@@ -26,8 +26,8 @@ class SnakeGame(PicoGame):
     
     def randomize_food(self):
         while True:
-            x = randrange(0, self.SCREEN_WIDTH-4, 4)
-            y = randrange(0, self.SCREEN_HEIGHT-4, 4)
+            x = randrange(4, self.SCREEN_WIDTH-8, 4)
+            y = randrange(4, self.SCREEN_HEIGHT-8, 4)
             
             if [x, y] not in self.snake.segments:
                 self.food = Food(x, y)
@@ -40,25 +40,17 @@ class SnakeGame(PicoGame):
             # mute sounds
             if ticks_diff(ticks_ms(), self.last_eat_ms) >= 50:
                 self.sound(0)
-                
-            # FOOD UPDATE STATE
-            head = self.snake.head()
-            if self.food.is_intersecting(head[0], head[1]):
-                self.last_eat_ms = ticks_ms()
-                self.sound(1000)
-                self.score += 1
-                self.randomize_food()
-                self.snake.grow()
             
             # SNAKE UPDATE STATE
             if self.snake.can_move():
                 self.snake.move()
+            head = self.snake.head()
             # snake hits wall
             is_blind_AF = (
-                head[0] <= -4 or
-                head[0] >= self.SCREEN_WIDTH or
-                head[1] <= -4 or
-                head[1] >= self.SCREEN_HEIGHT
+                head[0] < 4 or
+                head[0] >= self.SCREEN_WIDTH-4 or
+                head[1] < 4 or
+                head[1] >= self.SCREEN_HEIGHT-4
             )
             # snake bites itself
             is_stupid = self.snake.intersecting_self()
@@ -66,20 +58,20 @@ class SnakeGame(PicoGame):
             if is_stupid or is_blind_AF:
                 self.over()
                 break
-                
+            
             # RENDER
             self.fill(0)
+            self.rect(3, 3, self.SCREEN_WIDTH-6, self.SCREEN_HEIGHT-6, 1)
+            # food
+            self.blit(PIXEL, self.food.x, self.food.y)
             # snake
             for s in self.snake.segments:
                 self.blit(PIXEL, s[0], s[1])
-            # food
-            self.blit(PIXEL, self.food.x, self.food.y)
-            self.top_right_corner_text(str(self.score))
             self.show()
             
             # inputs
             debounce_delta = ticks_diff(ticks_ms(), self.last_press_ms)
-            if debounce_delta >= DEBOUNCE_INTERVAL:
+            if self.snake.can_move():
                 if self.button_up()and self.snake.direction != Direction.SOUTH:
                     self.last_press_ms = ticks_ms()
                     self.snake.set_direction(Direction.NORTH)
@@ -92,10 +84,18 @@ class SnakeGame(PicoGame):
                 elif self.button_left() and self.snake.direction != Direction.EAST:
                     self.last_press_ms = ticks_ms()
                     self.snake.set_direction(Direction.WEST)
-                
+            
+            # snake head
+            head = self.snake.head()
+            # FOOD UPDATE STATE
+            if self.food.is_intersecting(head[0], head[1]):
+                self.last_eat_ms = ticks_ms()
+                self.sound(1000)
+                self.score += 1
+                self.randomize_food()
+                self.snake.grow()
                 
                 
 if __name__ == '__main__':
-    sg = SnakeGame()
-    sg.run()
+    SnakeGame().run()
     
