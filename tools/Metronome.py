@@ -52,9 +52,9 @@ class Metronome(PicoGame):
             
             for i in range(4):
                 if beat == i:
-                    self.fill_rect((20 * i)+29, 40, 10, 10, 1)
+                    self.ellipse((20 * i)+34, 44, 5, 5, 1, [True])
                 else:
-                    self.rect((20 * i)+29, 40, 10, 10, 1)
+                    self.ellipse((20 * i)+34, 44, 5, 5, 1)
 
             if beat_delta >= gap_ms:
                 last_beat_ms = ticks_ms()
