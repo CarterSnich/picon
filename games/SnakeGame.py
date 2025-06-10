@@ -5,7 +5,7 @@ from PicoGame import PicoGame
 from games.Snake.Snake import Snake
 from games.Snake.Food import Food
 from games.Snake.Direction import Direction
-from games.Snake.Resources import PIXEL
+from games.Snake.Resources import SNAKE_HEAD
 
 
 DEBOUNCE_INTERVAL = 100
@@ -63,10 +63,12 @@ class SnakeGame(PicoGame):
             self.fill(0)
             self.rect(3, 3, self.SCREEN_WIDTH-6, self.SCREEN_HEIGHT-6, 1)
             # food
-            self.blit(PIXEL, self.food.x, self.food.y)
+            if self.food.blink_state:
+                self.fill_rect(self.food.x, self.food.y, 4, 4, 1)
+            
             # snake
             for s in self.snake.segments:
-                self.blit(PIXEL, s[0], s[1])
+                self.fill_rect(s[0], s[1], 4, 4, 1)
             self.show()
             
             # inputs
@@ -94,6 +96,8 @@ class SnakeGame(PicoGame):
                 self.score += 1
                 self.randomize_food()
                 self.snake.grow()
+            # food update
+            self.food.update()
                 
                 
 if __name__ == '__main__':
