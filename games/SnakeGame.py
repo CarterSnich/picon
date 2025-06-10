@@ -5,8 +5,6 @@ from PicoGame import PicoGame
 from games.Snake.Snake import Snake
 from games.Snake.Food import Food
 from games.Snake.Direction import Direction
-from games.Snake.Resources import SNAKE_HEAD
-
 
 DEBOUNCE_INTERVAL = 100
 INITIAL_HEAD_X = 52
