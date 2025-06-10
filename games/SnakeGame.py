@@ -56,7 +56,7 @@ class SnakeGame(PicoGame):
             is_stupid = self.snake.intersecting_self()
             # game over then
             if is_stupid or is_blind_AF:
-                self.over()
+                self.game_over()
                 break
             
             # RENDER

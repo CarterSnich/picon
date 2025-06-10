@@ -61,7 +61,7 @@ class BattleCity(PicoGame):
                 else:
                     # check on player tank
                     if b.is_colliding(self.player.x-2, self.player.y-2, 9, 9):
-                        self.over()
+                        self.game_over()
                         return
             
             # state update of enemy tanks

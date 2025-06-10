@@ -140,11 +140,27 @@ class PicoGame(SSD1306_I2C):
                 self.__buzzer.duty_u16(duty_u16)
             else:
                 self.__buzzer.duty_u16(0)
-       
-    def over(self):        
-        self.fill_rect(0, int(self.SCREEN_HEIGHT/2)-5, self.SCREEN_WIDTH, 9, 1)
-        self.text("GAME OVER", int(self.SCREEN_WIDTH/2)-36, int(self.SCREEN_HEIGHT/2)-4, 0)
+                
+    def banner_text(self, t):
+        x = int(self.SCREEN_WIDTH/2)-int((len(t)/2) * 8)
+        y = int(self.SCREEN_HEIGHT/2)-4
+        self.fill_rect(0, y-1, self.SCREEN_WIDTH, 9, 1)
+        self.text(t, x, y, 0)
+        
+    def winner(self):
+        self.banner_text("WINNER")
         self.show()
         self.sound(550)
-        time.sleep_ms(500)
+        time.sleep_ms(150)
+        self.sound(550)
+        time.sleep_ms(50)
+        self.sound(880)
+        time.sleep_ms(800)
+        self.sound(0)
+       
+    def game_over(self):
+        self.banner_text("GAME OVER")
+        self.show()
+        self.sound(550)
+        time.sleep_ms(1000)
         self.sound(0)

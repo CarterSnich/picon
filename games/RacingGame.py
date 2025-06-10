@@ -82,7 +82,7 @@ class RacingGame(PicoGame):
             # check for collisions
             for c in traffic:
                 if racer.is_colliding(c.x, c.y, c.WIDTH, c.HEIGHT):
-                    self.over()
+                    self.game_over()
                     return
             
             # Inputs
