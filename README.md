@@ -16,7 +16,7 @@ Tools
  - Neopixel Controller - toy tool for controlling the neopixel LED builtin to the WaveShare RP2040 Zero
  - Notepad [WIP] - simple text editor
 
-##How to use
+## How to use
 
 * Install MicroPython on your RP2040 board
 * Copy the files to the root directory of your RP2040 board
