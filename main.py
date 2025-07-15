@@ -117,7 +117,7 @@ if __name__ == '__main__':
         ["SNAKE", "games.SnakeGame", "SnakeGame"],
         ["BATTLE CITY", "games.BattleCityGame", "BattleCity"],
         ["RACING GAME", "games.RacingGame", "RacingGame"],
-        ["SLIDING PUZZLE", "games.SlidingPuzzle", "SlidingPuzzleGame"]
+        ["SLIDING PUZZLE", "games.SlidingPuzzleGame", "SlidingPuzzleGame"]
     ]
     TOOLS = [
         ["FLASHLIGHT", "tools.Flashlight", "Flashlight"],
