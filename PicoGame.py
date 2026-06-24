@@ -1,13 +1,13 @@
 # PicoGame.py by YouMakeTech
 # A class to easily write games for the Raspberry Pi Pico RetroGaming System
-from machine import Pin, PWM, I2C, Timer
-from ssd1306 import SSD1306_I2C
+from machine import Pin, PWM, SPI, Timer
+from ssd1309 import SSD1309_SPI
 from framebuf import FrameBuffer, MONO_HLSB
 import time
 import random
 import config
 
-class PicoGame(SSD1306_I2C):
+class PicoGame(SSD1309_SPI):
     SCREEN_WIDTH = config.SCREEN_WIDTH
     SCREEN_HEIGHT = config.SCREEN_HEIGHT
     
@@ -20,8 +20,19 @@ class PicoGame(SSD1306_I2C):
         self.__button_B = Pin(config.KEY_B, Pin.IN, Pin.PULL_UP)
         self.__buzzer = PWM(Pin(config.SPEAKER))
         
-        self.__i2c = I2C(config.I2C, sda = Pin(config.SDA), scl = Pin(config.SCL), freq=400000)
-        super().__init__(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, self.__i2c)
+    
+        # Initialize display    
+        # Initialize SPI with miso=None to avoid GPIO 16 conflict
+        self.__spi = SPI(0, baudrate=10_000_000, polarity=0, phase=0,
+                         sck=Pin(config.SCK),
+                         mosi=Pin(config.SDA),
+                         miso=None)  # CRITICAL: Avoid GPIO 16 conflict
+        super().__init__(
+            self.SCREEN_WIDTH, self.SCREEN_HEIGHT,
+            spi,
+            dc=Pin(config.DC),
+            rst=Pin(config.RST),
+            cs=Pin(config.CS))
         
         self.__fb=[] # Array of FrameBuffer objects for sprites
         self.__w=[]

@@ -9,9 +9,11 @@ KEY_A = 9
 KEY_B = 8
 
 # Display
-I2C = 0
-SDA = 4
-SCL = 5
+SCK = 18
+SDA = 19
+RST = 20
+DC = 16
+CS = 17
 
 # Other
 SPEAKER = 7
