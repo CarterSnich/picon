@@ -1,5 +1,6 @@
 from machine import Pin, PWM, I2C
-from ssd1306 import SSD1306_I2C
+from ssd1309 import SSD1309_SPI
+from keypad import Keypad
 from time import sleep_ms, ticks_ms, ticks_diff
 
 import config
@@ -7,10 +8,10 @@ from MenuSprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 
 class Picon:
-    KEY_UP = Pin(config.KEY_UP, Pin.IN, Pin.PULL_UP)
-    KEY_DOWN = Pin(config.KEY_DOWN, Pin.IN, Pin.PULL_UP)
-    KEY_LEFT = Pin(config.KEY_LEFT, Pin.IN, Pin.PULL_UP)
-    KEY_RIGHT = Pin(config.KEY_RIGHT, Pin.IN, Pin.PULL_UP)
+    DPAD = Keypad(
+        [Pin(config.DPAD_ROWS[0]),Pin(config.DPAD_ROWS[1])], # rows
+        [Pin(config.DPAD_COLS[0]),Pin(config.DPAD_COLS[1])], # columns
+        [['RT', 'LT'], ['UP', 'DN']])
     KEY_A = Pin(config.KEY_A, Pin.IN, Pin.PULL_UP)
     KEY_B = Pin(config.KEY_B, Pin.IN, Pin.PULL_UP)
     BUZZER = PWM(Pin(config.SPEAKER))
@@ -68,10 +69,10 @@ class Picon:
             
             # Handle
             if is_top_level_menu:
-                if not self.KEY_UP.value():
+                if self.DPAD.read_keypad() == 'UP':
                     last_press_ms = tick
                     is_inverted = False
-                elif not self.KEY_DOWN.value():
+                elif self.DPAD.read_keypad() == 'DN':
                     last_press_ms = tick
                     is_inverted = True
                 elif not self.KEY_A.value():
@@ -91,14 +92,14 @@ class Picon:
                 elif not self.KEY_B.value():
                     last_press_ms = tick
                     is_top_level_menu = True
-                elif not self.KEY_UP():
+                elif self.DPAD.read_keypad() == 'UP':
                     last_press_ms = tick
                     if selection_index > 0:
                         selection_index -= 1
                     elif items_stop_index > 8:
                         items_stop_index -= 1
                     current_index = items_stop_index-(max_index-selection_index-1)-1
-                elif not self.KEY_DOWN.value():
+                elif self.DPAD.read_keypad() == 'DN':
                     last_press_ms = tick
                     if selection_index < max_index-1:
                         selection_index += 1
@@ -122,12 +123,24 @@ if __name__ == '__main__':
     TOOLS = [
         ["FLASHLIGHT", "tools.Flashlight", "Flashlight"],
         ["METRONOME", "tools.Metronome", "Metronome"],
-        ["NEOPIXEL CONTROLLER", "tools.NeopixelController", "NeopixelController"],
+        # ["NEOPIXEL CONTROLLER", "tools.NeopixelController", "NeopixelController"],
         ["NOTEPAD", "tools.Notepad", "Notepad"],
         ["KEYPAD TEST", "tools.KeypadTest", "KeypadTest"],
     ]
     
-    i2c = machine.I2C(config.I2C, sda = Pin(config.SDA), scl = Pin(config.SCL), freq = 400000)
-    display = SSD1306_I2C(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, i2c)
+    # Initialize SPI with miso=None to avoid GPIO 16 conflict
+    spi = machine.SPI(0,
+                      baudrate=10_000_000,
+                      polarity=0,
+                      phase=0,
+                      sck=machine.Pin(18),
+                      mosi=machine.Pin(19),
+                      miso=None)  # CRITICAL: Avoid GPIO 16 conflict
+
+    # Initialize display
+    display = SSD1309_SPI(128, 64, spi,
+                       dc=machine.Pin(16),
+                       rst=machine.Pin(20),
+                       cs=machine.Pin(17))
     
     Picon(display, GAMES, TOOLS).run()

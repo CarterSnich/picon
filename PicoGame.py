@@ -2,6 +2,7 @@
 # A class to easily write games for the Raspberry Pi Pico RetroGaming System
 from machine import Pin, PWM, SPI, Timer
 from ssd1309 import SSD1309_SPI
+from keypad import Keypad
 from framebuf import FrameBuffer, MONO_HLSB
 import time
 import random
@@ -12,10 +13,12 @@ class PicoGame(SSD1309_SPI):
     SCREEN_HEIGHT = config.SCREEN_HEIGHT
     
     def __init__(self):
-        self.__up = Pin(config.KEY_UP, Pin.IN, Pin.PULL_UP)
-        self.__down = Pin(config.KEY_DOWN, Pin.IN, Pin.PULL_UP)
-        self.__left = Pin(config.KEY_LEFT, Pin.IN, Pin.PULL_UP)
-        self.__right = Pin(config.KEY_RIGHT, Pin.IN, Pin.PULL_UP)
+        # Initialize Dpad matrix
+        self.__dpad = Keypad(
+            [Pin(config.DPAD_ROWS[0]),Pin(config.DPAD_ROWS[1])], # rows
+            [Pin(config.DPAD_COLS[0]),Pin(config.DPAD_COLS[1])], # columns
+            [['RT', 'LT'], ['UP', 'DN']])
+        
         self.__button_A = Pin(config.KEY_A, Pin.IN, Pin.PULL_UP)
         self.__button_B = Pin(config.KEY_B, Pin.IN, Pin.PULL_UP)
         self.__buzzer = PWM(Pin(config.SPEAKER))
@@ -29,7 +32,7 @@ class PicoGame(SSD1309_SPI):
                          miso=None)  # CRITICAL: Avoid GPIO 16 conflict
         super().__init__(
             self.SCREEN_WIDTH, self.SCREEN_HEIGHT,
-            spi,
+            self.__spi,
             dc=Pin(config.DC),
             rst=Pin(config.RST),
             cs=Pin(config.CS))
@@ -109,16 +112,16 @@ class PicoGame(SSD1309_SPI):
         return False
             
     def button_up(self):
-        return self.__up.value()==0
+        return self.__dpad.read_keypad() == 'UP'
     
     def button_down(self):
-        return self.__down.value()==0
+        return self.__dpad.read_keypad() == 'DN'
     
     def button_left(self):
-        return self.__left.value()==0
+        return self.__dpad.read_keypad() == 'LT'
     
     def button_right(self):
-        return self.__right.value()==0
+        return self.__dpad.read_keypad() == 'RT'
     
     def button_A(self):
         return self.__button_A.value()==0

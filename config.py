@@ -1,12 +1,12 @@
 # Buttons
-KEY_UP = 15
-KEY_RIGHT = 14
-KEY_DOWN = 13
-KEY_LEFT = 12
-SELECT = 11
-START = 10
-KEY_A = 9
-KEY_B = 8
+SELECT = 2
+START = 3
+KEY_X = 4
+KEY_Y = 5
+KEY_B = 6
+KEY_A = 7
+DPAD_ROWS = [8, 9]
+DPAD_COLS = [10, 11]
 
 # Display
 SCK = 18
@@ -16,9 +16,8 @@ DC = 16
 CS = 17
 
 # Other
-SPEAKER = 7
-FLASH = 10
-RGB = 16
+SPEAKER = 12
+FLASH = 13
 
 # Display setup
 SCREEN_WIDTH = 128
