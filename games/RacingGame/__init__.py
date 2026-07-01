@@ -2,12 +2,12 @@ from time import ticks_ms, ticks_diff, sleep_ms
 from random import choice
 
 from PicoGame import PicoGame
-from games.Racing.Racer import Racer
-from games.Racing.Civilian import Civilian
-from games.Racing.Lanes import LANES
+from games.RacingGame.Racer import Racer
+from games.RacingGame.Civilian import Civilian
+from games.RacingGame.Lanes import LANES
 
 
-class RacingGame(PicoGame):
+class Game(PicoGame):
     
     def __init__(self):
         super().__init__()

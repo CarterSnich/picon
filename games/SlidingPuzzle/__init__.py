@@ -5,7 +5,7 @@ from PicoGame import PicoGame
 from games.SlidingPuzzle.Resources import NUMBERS
 
 
-class SlidingPuzzleGame(PicoGame):
+class Game(PicoGame):
     
     def __init__(self):
         super().__init__()

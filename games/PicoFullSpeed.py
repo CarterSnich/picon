@@ -5,7 +5,7 @@ from machine import Pin, I2C
 from ssd1306 import SSD1306_I2C
 import time
 import random
-from main import Pins
+from games.SnakeGame.__init__ import Pins
 
 def pico_full_speed_main():
     

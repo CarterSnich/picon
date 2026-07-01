@@ -24,5 +24,5 @@ class Food:
             self.blink_state = not self.blink_state
                         
 if __name__ == '__main__':
-    from games.SnakeGame import SnakeGame
+    from games.SnakeGame.__init__ import SnakeGame
     SnakeGame().run()

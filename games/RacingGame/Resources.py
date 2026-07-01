@@ -38,5 +38,5 @@ CIVILIAN = framebuf.FrameBuffer(
   
         
 if __name__ == '__main__':
-    from games.RacingGame import RacingGame
+    from games.RacingGame.__init__ import RacingGame
     RacingGame().run()

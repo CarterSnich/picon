@@ -1,11 +1,10 @@
 # PicoGame.py by YouMakeTech
 # A class to easily write games for the Raspberry Pi Pico RetroGaming System
-from machine import Pin, PWM, SPI, Timer
-from ssd1309 import SSD1309_SPI
-from keypad import Keypad
+from machine import Pin, PWM, SPI
+from lib.ssd1309 import SSD1309_SPI
+from lib.keypad import Keypad
 from framebuf import FrameBuffer, MONO_HLSB
 import time
-import random
 import config
 
 class PicoGame(SSD1309_SPI):

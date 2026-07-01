@@ -1,5 +1,5 @@
 from time import sleep_ms, ticks_ms, ticks_diff
-from machine import Pin, PWM
+from machine import Pin
 from config import FLASH
 
 from PicoGame import PicoGame
@@ -21,9 +21,8 @@ class Flashlight(PicoGame):
         last_pressed_ms = ticks_ms()
         button_debounce_ms = 200
         
-        led = PWM(Pin(FLASH), freq=1000, duty_u16=0)
+        led = Pin(FLASH, Pin.OUT)
         led_state = 0 # OFF, ON, Strobe
-        brightness = 100
         
         last_strobe_ms = ticks_ms()
         strobe_delay = 300
@@ -31,14 +30,11 @@ class Flashlight(PicoGame):
         while True:
             up = False
             down = False
-            left = False
-            right = False
             delta = ticks_diff(ticks_ms(), last_pressed_ms)
         
             if self.button_B():
-                led.duty_u16(0)
+                led.off()
                 sleep_ms(300)
-                led.deinit()
                 break
             elif delta >= button_debounce_ms:
                 if self.button_A():
@@ -50,28 +46,18 @@ class Flashlight(PicoGame):
                 elif self.button_down():
                     last_pressed_ms = ticks_ms()
                     down = True
-                elif self.button_left():
-                    last_pressed_ms = ticks_ms()
-                    left = True
-                elif self.button_right():
-                    last_pressed_ms = ticks_ms()
-                    right = True
 
             self.fill(0)
             
             # LED State OFF
             if led_state == 0:
-                led.duty_u16(0)
+                led.off()
                 self.print("FLASHLIGHT", "OFF")
                 
             # LED State ON
             elif led_state == 1:
-                if up and brightness < 100 :
-                    brightness += 5
-                elif down and brightness > 5:
-                    brightness -= 5
-                led.duty_u16(int(brightness * 65535 / 100))
-                self.print("BRIGHTNESS", str(brightness))
+                led.on()
+                self.print("FLASHLIGHT", "ON")
                 
             # LED State Strobe
             elif led_state == 2:
@@ -82,14 +68,11 @@ class Flashlight(PicoGame):
                     
                 if ticks_diff(ticks_ms(), last_strobe_ms) >= strobe_delay:
                     last_strobe_ms = ticks_ms()
-                    if led.duty_u16() > 0:
-                        led.duty_u16(0)
-                    else:
-                        led.duty_u16(65535)
+                    led.value(not led.value())
                         
                 self.print("STROBE DELAY", str(strobe_delay))
                 
             self.show()
-        
+
 if __name__ == '__main__':
     Flashlight().run()

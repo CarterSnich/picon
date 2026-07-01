@@ -9,7 +9,7 @@ from games.BattleCity.EnemyTank import EnemyTank
 MAX_ENEMY_COUNT = 4
 ENEMY_SPAWN_INTERVAL = 1500
 
-class BattleCity(PicoGame):
+class Game(PicoGame):
     
     def __init__(self):
         super().__init__()

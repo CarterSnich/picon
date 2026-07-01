@@ -1,6 +1,6 @@
 from time import ticks_ms, ticks_diff
 
-from games.Snake.Direction import Direction
+from games.SnakeGame.Direction import Direction
 
 class Snake:
     MOVEMENT_INTERVAL = 100
@@ -59,7 +59,7 @@ class Snake:
             
                       
 if __name__ == '__main__':
-    from games.SnakeGame import SnakeGame
+    from games.SnakeGame.__init__ import SnakeGame
     SnakeGame().run()
     
             

@@ -1,5 +1,5 @@
-from games.Racing.Resources import RACER
-from games.Racing.Lanes import LANES
+from games.RacingGame.Resources import RACER
+from games.RacingGame.Lanes import LANES
 
 
 class Racer:
@@ -30,5 +30,5 @@ class Racer:
         
 
 if __name__ == '__main__':
-    from games.RacingGame import RacingGame
+    from games.RacingGame.__init__ import RacingGame
     RacingGame().run()

@@ -2,15 +2,15 @@ from time import ticks_ms, ticks_diff
 from random import randrange
 
 from PicoGame import PicoGame
-from games.Snake.Snake import Snake
-from games.Snake.Food import Food
-from games.Snake.Direction import Direction
+from games.SnakeGame.Snake import Snake
+from games.SnakeGame.Food import Food
+from games.SnakeGame.Direction import Direction
 
 DEBOUNCE_INTERVAL = 100
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
 
-class SnakeGame(PicoGame):
+class Game(PicoGame):
 
     def __init__(self):
         super().__init__()
