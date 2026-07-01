@@ -35,7 +35,6 @@ class Game(PicoGame):
             if valid_moves:
                 target = choice(valid_moves)
                 if puzzle[index] == 15:
-                    print()
                     blank = target
                 puzzle[index], puzzle[target] = puzzle[target], puzzle[index]
         return puzzle, blank
