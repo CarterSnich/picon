@@ -10,6 +10,7 @@ MAX_ENEMY_COUNT = 4
 ENEMY_SPAWN_INTERVAL = 1500
 
 class Main(PicoApp):
+    LAST_RENDER = ticks_ms()
     
     def __init__(self):
         super().__init__()
@@ -22,6 +23,16 @@ class Main(PicoApp):
         self.enemy_tanks = []
         self.last_enemy_spawn_ms = 0
         self.last_enemy_hit_ms = 0
+
+    def render(self):
+        self.fill(0)
+        self.blit(self.player.get_sprite(), self.player.x - 4, self.player.y - 4)
+        for e in self.enemy_tanks:
+            self.blit(e.get_sprite(), e.x - 4, e.y - 4)
+        for b in self.bullets:
+            self.blit(b.get_sprite(), b.x - 1, b.y - 1)
+        self.top_right_corner_text(str(self.score))
+        self.show()
 
     def run(self):
         while True:
@@ -98,15 +109,8 @@ class Main(PicoApp):
             
                 
             # render
-            self.fill(0)
-            self.blit(self.player.get_sprite(), self.player.x-4, self.player.y-4)
-            for e in self.enemy_tanks:
-                self.blit(e.get_sprite(), e.x-4, e.y-4)
-            for b in self.bullets:
-                self.blit(b.get_sprite(), b.x-1, b.y-1)
-            self.top_right_corner_text(str(self.score))
-            self.show()
-            
+            self.render()
+
             # inputs
             if self.button_A() and self.player.can_shoot():
                 self.sound(880)
@@ -119,8 +123,9 @@ class Main(PicoApp):
                 self.player.move(Direction.SOUTH, self.enemy_tanks)
             elif self.button_left():
                 self.player.move(Direction.WEST, self.enemy_tanks)
-                    
+
+            sleep_ms(16.666)
 
 
 if __name__ == '__main__':
-    BattleCity().run()
+    Main().run()
