@@ -33,17 +33,18 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/LovaRM/Documents/micropython-projects/picon",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "last_opened_file_path": "C:/Users/LovaRM/Desktop/micropython-projects/picon",
+    "settings.editor.selected.configurable": "dev.micropythontools.configurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\games" />
+      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\tools\KeypadTest" />
       <recent name="C:\Users\LovaRM\Documents\micropython-projects\picon\games\Racing" />
       <recent name="C:\Users\LovaRM\Documents\micropython-projects\picon\games\Snake" />
       <recent name="C:\Users\LovaRM\Documents\micropython-projects\picon\assets" />
-      <recent name="C:\Users\LovaRM\Documents\micropython-projects\picon\lib" />
     </key>
   </component>
   <component name="SharedIndexes">

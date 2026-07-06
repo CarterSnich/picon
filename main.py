@@ -22,12 +22,8 @@ class Picon:
         self.tools = tools
 
     def load_and_run(self, path):
-        mod = __import__(path)
-
-        for part in path.split(".")[1:]:
-            mod = getattr(mod, part)
-
-        mod.Game().run()
+        mod = __import__("apps." + path, None, None, ("*",))
+        mod.Main().run()
 
     def run(self):
         # top level menu
@@ -113,16 +109,16 @@ if __name__ == '__main__':
     sleep_ms(200)
 
     GAMES = [
-        ["SNAKE", "games.SnakeGame", ],
-        ["BATTLE CITY", "games.BattleCity"],
-        ["RACING GAME", "games.RacingGame"],
-        ["SLIDING PUZZLE", "games.SlidingPuzzle"]
+        ["SNAKE", "SnakeGame"],
+        ["BATTLE CITY", "BattleCity"],
+        ["RACING GAME", "RacingGame"],
+        ["SLIDING PUZZLE", "SlidingPuzzle"]
     ]
     TOOLS = [
-        ["FLASHLIGHT", "tools.Flashlight", "Flashlight"],
-        ["METRONOME", "tools.Metronome", "Metronome"],
-        ["NOTEPAD", "tools.Notepad", "Notepad"],
-        ["KEYPAD TEST", "tools.KeypadTest", "KeypadTest"],
+        ["FLASHLIGHT", "Flashlight"],
+        ["METRONOME", "Metronome"],
+        ["NOTEPAD", "Notepad"],
+        ["KEYPAD TEST", "KeypadTest"],
     ]
 
     # Initialize SPI with miso=None to avoid GPIO 16 conflict
