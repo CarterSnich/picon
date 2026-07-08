@@ -19,6 +19,7 @@
   <component name="ProjectId" id="3FrO3r9YABGFWhQ5i0SMPnYrBr8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
@@ -33,6 +34,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/LovaRM/Desktop/micropython-projects/picon",
     "settings.editor.selected.configurable": "terminal",
     "vue.rearranger.settings.migration": "true"

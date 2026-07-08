@@ -99,5 +99,5 @@ class Main(PicoApp):
                 
                 
 if __name__ == '__main__':
-    SnakeGame().run()
+    Main().run()
     
