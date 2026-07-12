@@ -1,7 +1,6 @@
 from random import choice, randint
 from time import ticks_diff, ticks_ms
 
-from PicoApp import PicoApp
 from apps.BattleCity.Tank import Tank, Direction
 from apps.BattleCity.Bullet import Bullet
 from apps.BattleCity.Resources import ENEMY_TANK_N, ENEMY_TANK_E, ENEMY_TANK_S, ENEMY_TANK_W
@@ -45,14 +44,14 @@ class EnemyTank(Tank):
             else:
                 self.change_direction()
         elif self.direction == Direction.EAST:
-            if self.x+4 < PicoApp.SCREEN_WIDTH:
+            if self.x+4 < BaseApp.SCREEN_WIDTH:
                 self.displacement += 1
                 self.x += 1
                 self.last_move_ms = ticks_ms()
             else:
                 self.change_direction()
         elif self.direction == Direction.SOUTH:
-            if self.y+4 < PicoApp.SCREEN_HEIGHT:
+            if self.y+4 < BaseApp.SCREEN_HEIGHT:
                 self.displacement += 1
                 self.y += 1
                 self.last_move_ms = ticks_ms()

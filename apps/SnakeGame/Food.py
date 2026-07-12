@@ -1,28 +1,30 @@
 from time import ticks_ms, ticks_diff
 
+from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
+
+BLINK_INTERVAL = 100
+
+
 class Food:
-    
-    BLINK_INTERVAL = 100
-    
+    x = -1
+    y = -1
+    blink_state = True
+    last_blink_ms = -1
+
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.blink_state = True
+        self.set_coordinates(x, y)
         self.last_blink_ms = ticks_ms()
-    
+
     def is_intersecting(self, x, y):
         return self.x == x and self.y == y
-    
+
     def set_coordinates(self, x, y):
         self.x = x
         self.y = y
-    
-    def update(self):
-        tick = ticks_ms()
-        if ticks_diff(tick, self.last_blink_ms) >= self.BLINK_INTERVAL:
+
+    def update(self, tick):
+        if ticks_diff(tick, self.last_blink_ms) >= BLINK_INTERVAL:
             self.last_blink_ms = tick
             self.blink_state = not self.blink_state
-                        
-if __name__ == '__main__':
-    from apps.SnakeGame.__init__ import SnakeGame
-    SnakeGame().run()
+
+

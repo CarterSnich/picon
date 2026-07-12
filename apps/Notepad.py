@@ -1,8 +1,8 @@
 from time import ticks_ms, ticks_diff
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 
-class Main(PicoApp):
+class Main(BaseApp):
     
     def __init__(self):
         super().__init__()

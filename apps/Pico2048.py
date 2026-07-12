@@ -2,7 +2,7 @@
 # A simple 2048 game migrated 
 # for the Rapsberry Pi Pico RetroGaming Console
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 from P2048.Logic import Logic
 from P2048.Resources import Resources
 import time
@@ -10,7 +10,7 @@ import time
 X_SHIFT = 32
 
 # init game
-game = PicoApp()
+game = BaseApp()
 l = Logic()
 
 sprites = []
@@ -41,9 +41,9 @@ def animate_moves(moves):
 
 def play_tune(tune):
     for el in tune:
-        game.sound(el[0])
+        game.tone(el[0])
         time.sleep_ms(int(800/el[1]) - 50)
-        game.sound(0)
+        game.tone(0)
         time.sleep_ms(50)
 
 def game_over():

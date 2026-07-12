@@ -1,20 +1,20 @@
-from PicoApp import PicoApp
 from apps.BattleCity.Tank import Direction
 from apps.BattleCity.Resources import BULLET
+
 
 class Bullet:
     sprite = BULLET
     bullet_speed = 2
-    
-    def __init__(self, x, y, direction, from_player = False):
+
+    def __init__(self, x, y, direction, from_player=False):
         self.x = x
         self.y = y
         self.direction = direction
         self.from_player = from_player
-    
+
     def get_sprite(self):
         return self.sprite
-    
+
     # returns True if out of bounds on the screen
     def update(self):
         if self.direction == Direction.NORTH:
@@ -22,11 +22,11 @@ class Bullet:
                 return True
             self.y -= self.bullet_speed
         elif self.direction == Direction.EAST:
-            if self.x >= PicoApp.SCREEN_WIDTH:
+            if self.x >= BaseApp.SCREEN_WIDTH:
                 return True
             self.x += self.bullet_speed
         elif self.direction == Direction.SOUTH:
-            if self.y >= PicoApp.SCREEN_HEIGHT:
+            if self.y >= BaseApp.SCREEN_HEIGHT:
                 return True
             self.y += self.bullet_speed
         elif self.direction == Direction.WEST:
@@ -34,21 +34,22 @@ class Bullet:
                 return True
             self.x -= self.bullet_speed
         return False
-    
+
     def is_colliding(self, tank_x, tank_y, tank_w, tank_h):
         return (
-            self.x < tank_x + tank_w and
-            self.x + 2 > tank_x and
-            self.y < tank_y + tank_h and
-            self.y + 2 > tank_y
+                self.x < tank_x + tank_w and
+                self.x + 2 > tank_x and
+                self.y < tank_y + tank_h and
+                self.y + 2 > tank_y
         )
-    
-    
+
+
 if __name__ == '__main__':
     from apps.PicoBattleCity import BattleCity
+
     BattleCity().run()
-    
-    
+
 if __name__ == '__main__':
     from apps.PicoBattleCity import BattleCity
+
     BattleCity().run()

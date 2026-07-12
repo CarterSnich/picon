@@ -1,9 +1,8 @@
 from machine import Pin
 from time import ticks_ms, ticks_diff
-from random import randint
 import neopixel, framebuf
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 
 ARROW_UP_BUF = bytearray([
     0b00000000,
@@ -23,7 +22,7 @@ arrow_up = framebuf.FrameBuffer(ARROW_UP_BUF, 8, 4, framebuf.MONO_HLSB)
 arrow_down = framebuf.FrameBuffer(ARROW_DOWN_BUF, 8, 4, framebuf.MONO_HLSB)
 
 
-class Main(PicoApp):
+class Main(BaseApp):
     
     def __init__(self):
         super().__init__()

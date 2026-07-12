@@ -4,7 +4,7 @@
 #
 # The code is far from perfect but it works!
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 import time
 import random
 
@@ -108,7 +108,7 @@ def init_aliens(ALIENS_ROWS,ALIENS_COLS,ALIENS_INIT_X,ALIENS_INIT_Y,ALIENS_SPACI
 def pico_invaders_main():
     # Pico Invaders main
     
-    game = PicoApp()
+    game = BaseApp()
     
     # Sprites graphics definition
     ALIEN1A_W = 8    # width and height of the sprite in pixels
@@ -292,7 +292,7 @@ def pico_invaders_main():
             laser.fire(player_x, PLAYER_Y)
             if not laser_active_prev and laser.active:
                 # make a sound when the laser is released
-                game.sound(1000)
+                game.tone(1000)
             
         # move the laser towards the top of the screen
         laser.move(-LASER_SPEED)
@@ -313,7 +313,7 @@ def pico_invaders_main():
                 sound_freq = 2000
             else:
                 sound_freq = 1100
-            game.sound(sound_freq)
+            game.tone(sound_freq)
         
         # move aliens left/right and bottom when they hit
         # the left or right edge of the screen
@@ -393,7 +393,7 @@ def pico_invaders_main():
                     sound_freq = 120
                 else:
                     sound_freq = 180
-                game.sound(sound_freq)
+                game.tone(sound_freq)
 
         # refresh the display
         
@@ -413,7 +413,7 @@ def pico_invaders_main():
                 game.sprite(8, int(alien.x), int(alien.y))
                 alien.state = Alien.DISAPPEARING
                 # and make explosion sound
-                game.sound(800)
+                game.tone(800)
             elif alien.state == Alien.DISAPPEARING:
                 # draw explosion slightly shifted (sprite 8)
                 game.sprite(8, int(alien.x) + 2, int(alien.y) + 2)
@@ -433,7 +433,7 @@ def pico_invaders_main():
                 # UFO is exploding => draw explosion (sprite 8)
                 game.sprite(8, int(ufo.x), int(ufo.y))
                 # and make explosion sound
-                game.sound(500)
+                game.tone(500)
                 ufo.state = Ufo.DISAPPEARING
             elif ufo.state == Ufo.DISAPPEARING:
                  # draw explosion slightly shifted (sprite 8)
@@ -447,7 +447,7 @@ def pico_invaders_main():
         game.show()
         
         # no sound
-        game.sound(0)
+        game.tone(0)
         
         # Reset aliens when they are all dead
         at_least_one_alien_alive = False
@@ -463,9 +463,9 @@ def pico_invaders_main():
         
         if game_over:
             # play an ugly sound
-            game.sound(200)
+            game.tone(200)
             time.sleep(0.5)
-            game.sound(0)
+            game.tone(0)
             
             # display Game Over screen
             game.fill(0)

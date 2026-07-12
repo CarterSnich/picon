@@ -1,9 +1,10 @@
 from time import ticks_diff, ticks_ms
 
-from PicoApp import PicoApp
 from apps.BattleCity.Tank import Direction, Tank
 from apps.BattleCity.Bullet import Bullet
 from apps.BattleCity.Resources import PLAYER_TANK_N, PLAYER_TANK_E, PLAYER_TANK_S, PLAYER_TANK_W
+
+SHOOT_INTERVAL = 300
 
 
 class PlayerTank(Tank):
@@ -13,43 +14,41 @@ class PlayerTank(Tank):
         PLAYER_TANK_S,
         PLAYER_TANK_W
     ]
-    shoot_cooldown_ms = 300
-    
-    def __init__(self, x, y, direction = Direction.NORTH):
+
+    direction = Direction.NORTH
+    last_shot_ms = -1
+    shots = 0
+
+    def __init__(self, x, y, direction=Direction.NORTH):
         super().__init__(x, y, direction)
-        self.last_shot_ms = -1
-        self.shots = 0
-        
+
     def move(self, direction, enemy_tanks):
         self.direction = direction
-        
+
         # enemy tanks collision check
         for e in enemy_tanks:
             if self.will_collide(e.x, e.y, 8, 8):
                 return
-            
-        if direction == Direction.NORTH and self.y-4 > 0:
+
+        if direction == Direction.NORTH and self.y - 4 > 0:
             self.y -= 1
-        elif direction == Direction.EAST and self.x+4 < PicoApp.SCREEN_WIDTH:
+        elif direction == Direction.EAST and self.x + 4 < BaseApp.SCREEN_WIDTH:
             self.x += 1
-        elif direction == Direction.SOUTH and self.y+4 < PicoApp.SCREEN_HEIGHT:
+        elif direction == Direction.SOUTH and self.y + 4 < BaseApp.SCREEN_HEIGHT:
             self.y += 1
-        elif direction == Direction.WEST and self.x-4 > 0:
+        elif direction == Direction.WEST and self.x - 4 > 0:
             self.x -= 1
-            
+
     def can_shoot(self):
         delta = ticks_diff(ticks_ms(), self.last_shot_ms)
         return self.shots < 3 and delta >= self.shoot_cooldown_ms
-    
+
     def shoot(self):
         if self.can_shoot():
             self.shots += 1
             self.last_shot_ms = ticks_ms()
             return Bullet(self.x, self.y, self.direction, True)
         return False
-    
-    
-if __name__ == '__main__':
-    from apps.PicoBattleCity import BattleCity
-    BattleCity().run()
-        
+
+    def update(self):
+        ...

@@ -183,7 +183,7 @@ class SSD1309_SPI(framebuf.FrameBuffer):
             cs: machine.Pin object for chip select (active LOW).
             
         Raises:
-            ValueError: If width/height don't match supported display sizes.
+            ValueError: If width/height don'text match supported display sizes.
             
         Example:
             spi = machine.SPI(0, baudrate=10_000_000, polarity=0, phase=0,

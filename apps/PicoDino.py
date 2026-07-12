@@ -2,17 +2,16 @@
 # A simple dino game
 # for the Rapsberry Pi Pico RetroGaming Console
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 from DinoGame.Resources import Resources
 from DinoGame.Dino import Dino
 from DinoGame.Cactus import Cactus
 from DinoGame.Bird import Bird
 from DinoGame.Dirt import Dirt
 import time
-import random
 
 # init game
-game = PicoApp()
+game = BaseApp()
 
 def collide(s1, s2):
     # return true if two sprites has any pixels collide
@@ -139,13 +138,13 @@ def pico_dino_main():
         game.show()
         
         # no sound
-        game.sound(0)
+        game.tone(0)
         
         if game_over:
             # play an ugly sound
-            game.sound(200)
+            game.tone(200)
             time.sleep(0.5)
-            game.sound(0)
+            game.tone(0)
             
             # display Game Over screen
             game.rect(0, 22, 128, 11, 1, True)
@@ -161,9 +160,9 @@ def pico_dino_main():
         else:
             if dino.state == Dino.DEAD:
                 # play an ugly sound
-                game.sound(200)
+                game.tone(200)
                 time.sleep(0.5)
-                game.sound(0)
+                game.tone(0)
                 while not game.any_button():
                     time.sleep(0.001)
                 dino.state = Dino.FALL

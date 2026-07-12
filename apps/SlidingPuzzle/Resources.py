@@ -336,8 +336,3 @@ BLANK = framebuf.FrameBuffer(
     ]),
     16, 16, framebuf.MONO_HLSB
 )
-
-NUMBERS = [
-    ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
-    ELEVEN, TWELVE, THIRTEEN, FOURTEEN, FIFTEEN, BLANK
-]

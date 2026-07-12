@@ -1,13 +1,13 @@
 from time import ticks_ms, ticks_diff, sleep_ms
 from random import choice
 
-from PicoApp import PicoApp
+from core.app import BaseApp
 from apps.RacingGame.Racer import Racer
 from apps.RacingGame.Civilian import Civilian
 from apps.RacingGame.Lanes import LANES
 
 
-class Main(PicoApp):
+class Main(BaseApp):
     
     def __init__(self):
         super().__init__()

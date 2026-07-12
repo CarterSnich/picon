@@ -1,0 +1,14 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Sync sources" type="micropython-tools-configuration-type" factoryName="micropython-tools-upload-configuration">
+    <option name="excludePaths" value="true" />
+    <option name="excludedPaths">
+      <list>
+        <option value="/assets/menu.pixil" />
+        <option value="/README.md" />
+      </list>
+    </option>
+    <option name="path" />
+    <option name="synchronize" value="true" />
+    <method v="2" />
+  </configuration>
+</component>

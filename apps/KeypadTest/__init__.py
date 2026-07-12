@@ -1,49 +1,81 @@
-from PicoApp import PicoApp
-from apps.KeypadTest.Sprites import KEYPAD_UP, KEYPAD_UP_INVERT, KEYPAD_RIGHT, KEYPAD_RIGHT_INVERT, KEYPAD_DOWN, KEYPAD_DOWN_INVERT, KEYPAD_LEFT, KEYPAD_LEFT_INVERT, KEYPAD_A, KEYPAD_A_INVERT, KEYPAD_B, KEYPAD_B_INVERT
+from core import PiconApp
+from core.input import *
+from core.helper import Countdown
+
+from apps.KeypadTest import Sprites
 
 
-class Main(PicoApp):
-    
-    def __init__(self):
-        super().__init__()
-        
-    def run(self):
-        while True:
-            self.text("Press UP and B", 8, 0, 1)
-            self.text("to EXIT", 36, 8, 1)
-            
-            if self.button_up() and self.button_B():
-                return
-            
-            if self.button_A():
-                self.blit(KEYPAD_A_INVERT, 90, 26)
-            else:
-                self.blit(KEYPAD_A, 90, 26)
-            if self.button_B():
-                self.blit(KEYPAD_B_INVERT, 78, 42)
-            else:
-                self.blit(KEYPAD_B, 78, 42)
-            
-            x, y = 18, 22
-            if self.button_up():
-                self.blit(KEYPAD_UP_INVERT, x+16, y)
-            else:
-                self.blit(KEYPAD_UP, x+16, y)
-            if self.button_right():
-                self.blit(KEYPAD_RIGHT_INVERT, x+30, y+12)
-            else:
-                self.blit(KEYPAD_RIGHT, x+30, y+12)
-            if self.button_down():
-                self.blit(KEYPAD_DOWN_INVERT, x+16, y+24)
-            else:
-                self.blit(KEYPAD_DOWN, x+16, y+24)
-            if self.button_left():
-                self.blit(KEYPAD_LEFT_INVERT, x+2, y+12)
-            else:
-                self.blit(KEYPAD_LEFT, x+2, y+12)
-            
-            self.show()
-        
+class Main(PiconApp):
+    current_pressed_key = None
+    countdown = None
 
-if __name__ == '__main__':
-    KeypadTest().run()
+    def __init__(self, display, input, sound):
+        super().__init__(display, input, sound)
+
+    def inputs(self):
+        self.current_pressed_key = self.input.any_pressed_key()
+        if self.current_pressed_key == KEY_START:
+            if self.countdown:
+                self.countdown.update(self.current_tick)
+            else:
+                self.countdown = Countdown(3000)
+
+    def update(self):
+        if self.countdown and self.countdown.finished():
+            self.countdown = None
+            self.quit()
+
+    def render(self):
+        self.display.text("Hold STA", 32, 2, 1)
+        self.display.text("to exit", 36, 11, 1)
+
+        if self.current_pressed_key == DPAD_LEFT:
+            self.display.blit(Sprites.KEYPAD_LEFT_INVERT, 2, 33, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_LEFT, 2, 33, 0)
+
+        if self.current_pressed_key == DPAD_UP:
+            self.display.blit(Sprites.KEYPAD_UP_INVERT, 15, 21, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_UP, 15, 21, 0)
+
+        if self.current_pressed_key == DPAD_DOWN:
+            self.display.blit(Sprites.KEYPAD_DOWN_INVERT, 15, 45, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_DOWN, 15, 45, 0)
+
+        if self.current_pressed_key == DPAD_RIGHT:
+            self.display.blit(Sprites.KEYPAD_RIGHT_INVERT, 28, 33, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_RIGHT, 28, 33, 0)
+
+        if self.current_pressed_key == KEY_X:
+            self.display.blit(Sprites.KEYPAD_X_INVERT, 83, 33, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_X, 83, 33, 0)
+
+        if self.current_pressed_key == KEY_Y:
+            self.display.blit(Sprites.KEYPAD_Y_INVERT, 96, 21, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_Y, 96, 21, 0)
+
+        if self.current_pressed_key == KEY_A:
+            self.display.blit(Sprites.KEYPAD_A_INVERT, 96, 45, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_A, 96, 45, 0)
+
+        if self.current_pressed_key == KEY_B:
+            self.display.blit(Sprites.KEYPAD_B_INVERT, 109, 33, 0)
+        else:
+            self.display.blit(Sprites.KEYPAD_B, 109, 33, 0)
+
+        if self.current_pressed_key == KEY_SELECT:
+            self.display.blit(Sprites.KEY_SELECT_INVERT, 53, 30, 0)
+        else:
+            self.display.blit(Sprites.KEY_SELECT, 53, 30, 0)
+
+        if self.current_pressed_key == KEY_START:
+            self.display.blit(Sprites.KEY_START_INVERT, 53, 43, 0)
+        else:
+            self.display.blit(Sprites.KEY_START, 53, 43, 0)
+

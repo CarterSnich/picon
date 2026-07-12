@@ -54,13 +54,13 @@ class Logic:
                 if(self.mat[i][j]== 2048):
                     return self.WON
 
-        # blank cells - game isn't over
+        # blank cells - game isn'text over
         for j in range(4):
             for i in range(4):
                 if(self.mat[i][j] == 1):
                     return self.GAME_NOT_OVER
 
-        # any adjustent cells with the same value - game isn't over
+        # any adjustent cells with the same value - game isn'text over
         for j in range(4):
             for i in range(3):
                 if self.mat[i][j] == self.mat[i + 1][j]:
@@ -105,12 +105,12 @@ class Logic:
         return changed
     
     def move_merge(self, changed):
-        # merged blocks from right to left, don't merge a block that was already merged in this turn
+        # merged blocks from right to left, don'text merge a block that was already merged in this turn
         animate = False
         for j in range(4):
             merged = False
             for i in range(3):
-                if not merged: #if block wasn't already merged
+                if not merged: #if block wasn'text already merged
                     if self.mat[i][j] == self.mat[i+1][j] and self.mat[i][j] != 1:
                         self.mat[i][j] += self.mat[i+1][j]
                         self.mat[i+1][j] = 1

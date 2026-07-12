@@ -1,14 +1,15 @@
 from machine import Pin
-from time import sleep
 
 __version__ = '1.0.3'
 __author__ = 'Teeraphat Kullanankanjana'
+
 
 class KeypadException(Exception):
     """
     Exception class for keypad-related errors.
     """
     pass
+
 
 class Keypad:
     def __init__(self, row_pins, column_pins, keys):
@@ -25,12 +26,13 @@ class Keypad:
         """
         if not all(isinstance(pin, Pin) for pin in row_pins):
             raise KeypadException("Row pins must be instances of Pin.")
-        
+
         if not all(isinstance(pin, Pin) for pin in column_pins):
             raise KeypadException("Column pins must be instances of Pin.")
-        
-        if not isinstance(keys, list) or not all(isinstance(row, list) for row in keys):
-            raise KeypadException("Keys must be a 2D list.")
+
+        if (not isinstance(keys, (list, tuple))
+                or not all(isinstance(row, (list, tuple)) for row in keys)):
+            raise KeypadException("Keys must be a 2D list or tuple.")
 
         self.row_pins = row_pins
         self.column_pins = column_pins
@@ -57,10 +59,10 @@ class Keypad:
         """
         if not self.column_pins:
             raise KeypadException("No column pins defined.")
-        
+
         if not self.row_pins:
             raise KeypadException("No row pins defined.")
-        
+
         if not self.keys:
             raise KeypadException("No key layout defined.")
 
