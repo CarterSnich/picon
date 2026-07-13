@@ -1,7 +1,7 @@
 from random import choice
 from time import ticks_diff
 
-from core import PiconGame
+from core import PiconGame, Sound
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
 from .Resources import *
@@ -86,7 +86,7 @@ class Main(PiconGame):
 
     def update(self):
         if ticks_diff(self.current_tick, self.last_beep_ms) >= 50:
-            self.sound.tone(0)
+            self.sound.stop()
 
         # Check if puzzle is solved
         if self.blank_index == 15:
@@ -94,6 +94,7 @@ class Main(PiconGame):
                 if i != v:
                     break
             else:
+                self.sound.stop()
                 self.winner()
 
     def render(self):

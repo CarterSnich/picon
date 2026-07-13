@@ -1,6 +1,7 @@
 from random import randrange
+from time import ticks_diff
 
-from core import PiconGame, Input
+from core import PiconGame, Input, Sound
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
 
@@ -12,12 +13,16 @@ INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
 INPUT_INTERVAL = 100
 
+EAT_SOUND_DURATION = 50
+
 
 class Main(PiconGame):
     score = 0
-
     snake = None
     food = None
+
+    last_eat_ms = None
+
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
@@ -27,14 +32,6 @@ class Main(PiconGame):
         self.food = Food(-1, -1)
         self.randomize_food()
 
-    def randomize_food(self):
-        while True:
-            x = randrange(4, SCREEN_WIDTH - 8, 4)
-            y = randrange(4, SCREEN_HEIGHT - 8, 4)
-
-            if [x, y] not in self.snake.segments:
-                self.food.set_coordinates(x, y)
-                break
 
     def inputs(self):
         if self.input.is_pressed(DPAD_UP) and self.snake.direction != Direction.SOUTH:
@@ -46,7 +43,19 @@ class Main(PiconGame):
         elif self.input.is_pressed(DPAD_LEFT) and self.snake.direction != Direction.EAST:
             self.snake.set_direction(Direction.WEST)
 
+
     def update(self):
+        # sound off
+        if self.last_eat_ms and ticks_diff(self.current_tick, self.last_eat_ms) >= EAT_SOUND_DURATION:
+            self.sound.stop()
+            self.last_eat_ms = None
+
+        # snake
+        self.snake.update(self.current_tick)
+        if self.snake.is_dead:
+            self.game_over()
+            return
+
         # food
         self.food.update(self.current_tick)
         head = self.snake.get_head_segments()
@@ -55,11 +64,8 @@ class Main(PiconGame):
             self.snake.grow(self.current_tick)
             self.randomize_food()
             self.score += 1
+            self.last_eat_ms = self.current_tick
 
-        # snake
-        self.snake.update(self.current_tick)
-        if self.snake.is_dead:
-            self.game_over()
 
     def render(self):
         # border
@@ -72,3 +78,13 @@ class Main(PiconGame):
         # food
         if self.food.blink_state:
             self.display.fill_rect(self.food.x, self.food.y, 4, 4, 1)
+
+
+    def randomize_food(self):
+        while True:
+            x = randrange(4, SCREEN_WIDTH - 8, 4)
+            y = randrange(4, SCREEN_HEIGHT - 8, 4)
+
+            if [x, y] not in self.snake.segments:
+                self.food.set_coordinates(x, y)
+                break
