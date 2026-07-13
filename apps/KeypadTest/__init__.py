@@ -19,6 +19,8 @@ class Main(PiconApp):
                 self.countdown.update(self.current_tick)
             else:
                 self.countdown = Countdown(3000)
+        else:
+            self.countdown = None
 
     def update(self):
         if self.countdown and self.countdown.finished():
