@@ -44,17 +44,18 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/LovaRM/Desktop/micropython-projects/picon",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Python",
+    "settings.editor.splitter.proportion": "0.22425249",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\apps\.excluded" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\core" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\games" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\tools\KeypadTest" />
-      <recent name="C:\Users\LovaRM\Documents\micropython-projects\picon\games\Racing" />
     </key>
   </component>
   <component name="SharedIndexes">

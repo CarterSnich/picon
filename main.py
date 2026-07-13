@@ -26,11 +26,14 @@ class Picon:
     current_tick = ticks_ms()
     last_press_ms = current_tick
 
+
     def __init__(self, apps):
         self.apps = apps
 
+
     def get_sub_menu_list(self):
         return self.apps[self.main_menu_selection]
+
 
     def render(self):
         self.display.fill(0)
@@ -52,6 +55,7 @@ class Picon:
                 y += 8
 
         self.display.show()
+
 
     def inputs(self):
         if ticks_diff(ticks_ms(), self.last_press_ms) < 200:
@@ -99,16 +103,19 @@ class Picon:
                     self.items_stop_index += 1
                 self.current_index = self.items_stop_index - (self.max_index - self.selection_index - 1) - 1
 
+
     def run(self):
         while True:
             self.current_tick = ticks_ms()
             self.inputs()
             self.render()
 
+
     def modal(self, text):
         self.display.center_text(text, True)
         self.display.show()
         sleep_ms(3000)
+
 
 if __name__ == '__main__':
     # this delay saves the world

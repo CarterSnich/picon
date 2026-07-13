@@ -3,6 +3,8 @@
     <option name="excludePaths" value="true" />
     <option name="excludedPaths">
       <list>
+        <option value="/.github/" />
+        <option value="/apps/.excluded" />
         <option value="/assets/menu.pixil" />
         <option value="/README.md" />
       </list>
