@@ -1,8 +1,11 @@
+from micropython import const
+
+
 class Direction:
-    NORTH = 0
-    EAST = 1
-    SOUTH = 2
-    WEST = 3
+    NORTH = const(0)
+    EAST = const(1)
+    SOUTH = const(2)
+    WEST = const(3)
 
 
 class Tank:
@@ -12,8 +15,10 @@ class Tank:
         self.y = y
         self.direction = direction
 
+
     def get_sprite(self):
         return self.sprites[self.direction]
+
 
     def is_colliding(self, obj_x, obj_y, obj_w, obj_h):
         return (
@@ -22,6 +27,7 @@ class Tank:
                 self.y < obj_y + obj_h and
                 self.y + 8 > obj_y
         )
+
 
     def will_collide(self, obj_x, obj_y, obj_w, obj_h):
         self_x = self.x

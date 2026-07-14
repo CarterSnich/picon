@@ -5,9 +5,9 @@ from core import PiconGame, Input, Sound
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
 
-from apps.SnakeGame.Snake import Snake
-from apps.SnakeGame.Food import Food
-from apps.SnakeGame.Direction import Direction
+from .snake import Snake
+from .food import Food
+from .direction import Direction
 
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
@@ -46,25 +46,25 @@ class Main(PiconGame):
 
     def update(self):
         # sound off
-        if self.last_eat_ms and ticks_diff(self.current_tick, self.last_eat_ms) >= EAT_SOUND_DURATION:
+        if self.last_eat_ms and ticks_diff(self.current_ms, self.last_eat_ms) >= EAT_SOUND_DURATION:
             self.sound.stop()
             self.last_eat_ms = None
 
         # snake
-        self.snake.update(self.current_tick)
+        self.snake.update(self.current_ms)
         if self.snake.is_dead:
             self.game_over()
             return
 
         # food
-        self.food.update(self.current_tick)
+        self.food.update(self.current_ms)
         head = self.snake.get_head_segments()
         if self.food.is_intersecting(head[0], head[1]):
             self.sound.tone(1000)
-            self.snake.grow(self.current_tick)
+            self.snake.grow(self.current_ms)
             self.randomize_food()
             self.score += 1
-            self.last_eat_ms = self.current_tick
+            self.last_eat_ms = self.current_ms
 
 
     def render(self):

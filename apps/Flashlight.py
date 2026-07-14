@@ -1,5 +1,5 @@
 from machine import Pin
-from time import ticks_ms, ticks_diff, sleep_ms
+from time import ticks_ms, ticks_diff
 
 from core import PiconApp
 from core.input import KEY_A, KEY_B, DPAD_UP, DPAD_DOWN
@@ -41,7 +41,7 @@ class Main(PiconApp):
         elif self.led_state == LED_ON:
             self.led.on()
         elif self.led_state == LED_STROBE:
-            if ticks_diff(self.current_tick, self.last_strobe_ms) >= self.strobe_delay:
+            if ticks_diff(self.current_ms, self.last_strobe_ms) >= self.strobe_delay:
                 self.last_strobe_ms = ticks_ms()
                 self.led.value(not self.led.value())
 

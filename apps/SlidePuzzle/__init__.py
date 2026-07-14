@@ -4,7 +4,7 @@ from time import ticks_diff
 from core import PiconGame, Sound
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
-from .Resources import *
+from .resources import *
 
 MOVE_UP = -4
 MOVE_DOWN = 4
@@ -23,9 +23,11 @@ class Main(PiconGame):
 
     last_beep_ms = -1
 
+
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
         self.generate_puzzle(200)
+
 
     def generate_puzzle(self, moves=100):
         puzzle = list(range(0, 16))
@@ -52,6 +54,7 @@ class Main(PiconGame):
 
         self.puzzle, self.blank_index = puzzle, blank
 
+
     def move(self, direction):
         target = self.blank_index
 
@@ -72,7 +75,8 @@ class Main(PiconGame):
         )
         self.blank_index = target
         self.sound.tone(880)
-        self.last_beep_ms = self.current_tick
+        self.last_beep_ms = self.current_ms
+
 
     def inputs(self):
         if self.input.is_pressed(DPAD_UP):
@@ -84,8 +88,9 @@ class Main(PiconGame):
         elif self.input.is_pressed(DPAD_RIGHT):
             self.move(MOVE_RIGHT)
 
+
     def update(self):
-        if ticks_diff(self.current_tick, self.last_beep_ms) >= 50:
+        if ticks_diff(self.current_ms, self.last_beep_ms) >= 50:
             self.sound.stop()
 
         # Check if puzzle is solved
@@ -96,6 +101,7 @@ class Main(PiconGame):
             else:
                 self.sound.stop()
                 self.winner()
+
 
     def render(self):
         start_x, start_y = 32, 0

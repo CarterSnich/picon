@@ -3,7 +3,7 @@ from sys import print_exception
 
 from core import Sound, Display
 from core.input import Input, DPAD_UP, DPAD_DOWN, KEY_A, KEY_B
-from assets.MenuSprites import GAMES_OR_TOOLS, ARROW_RIGHT
+from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 
 class Picon:
@@ -53,16 +53,14 @@ class Picon:
 
         else:
             if self.input.is_pressed(KEY_A) and len(self.sub_items):
-                print(self.current_index)
-
-                # try:
-                #     item = self.sub_items[current_index]
-                #     app = __import__("apps." + item[1], None, None, ("*",))
-                #     app.Main(self.display, self.input, self.sound).run()
-                # except BaseException as e:
-                #     self.modal("Failed to open")
-                #     print_exception(e)
-                # sleep_ms(200)
+                try:
+                    item = self.sub_items[self.current_index]
+                    app = __import__("apps." + item[1], None, None, ("*",))
+                    app.Main(self.display, self.input, self.sound).run()
+                except BaseException as e:
+                    self.modal("Failed to open")
+                    print_exception(e)
+                sleep_ms(200)
             elif self.input.is_pressed(KEY_B):
                 self.is_main_menu = True
             elif self.input.is_pressed(DPAD_UP):
@@ -87,7 +85,7 @@ class Picon:
                 y = i * 8
                 if self.current_row == i:
                     self.display.blit(ARROW_RIGHT, 0, y)
-                self.display.text(item[1], 8, y)
+                self.display.text(item[0], 8, y)
 
         self.display.show()
 
@@ -146,16 +144,16 @@ if __name__ == '__main__':
 
     apps = {
         "games": [
-            ("SNAKE", "SnakeGame"),
-            ("BATTLE CITY", "BattleCity"),
-            ("RACING GAME", "RacingGame"),
-            ("SLIDING PUZZLE", "SlidingPuzzle")
+            ("Snake", "SnakeGame"),
+            ("Battle City", "BattleCity"),
+            ("Racing Game", "RacingGame"),
+            ("Slide Puzzle", "SlidePuzzle")
         ],
         "tools": [
-            ("FLASHLIGHT", "Flashlight"),
-            ("METRONOME", "Metronome"),
-            ("NOTEPAD", "Notepad"),
-            ("KEYPAD TEST", "KeypadTest"),
+            ("Flashlight", "Flashlight"),
+            ("Metronome", "Metronome"),
+            ("Notepad", "Notepad"),
+            ("Key Test", "KeyTest"),
         ]
 
     }

@@ -1,10 +1,11 @@
-from apps.BattleCity.Tank import Direction
-from apps.BattleCity.Resources import BULLET
+from .tank import Direction
+from .resources import BULLET
 
 
 class Bullet:
     sprite = BULLET
     bullet_speed = 2
+
 
     def __init__(self, x, y, direction, from_player=False):
         self.x = x
@@ -12,8 +13,10 @@ class Bullet:
         self.direction = direction
         self.from_player = from_player
 
+
     def get_sprite(self):
         return self.sprite
+
 
     # returns True if out of bounds on the screen
     def update(self):
@@ -34,6 +37,7 @@ class Bullet:
                 return True
             self.x -= self.bullet_speed
         return False
+
 
     def is_colliding(self, tank_x, tank_y, tank_w, tank_h):
         return (

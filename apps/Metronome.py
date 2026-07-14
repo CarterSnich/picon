@@ -17,11 +17,13 @@ class Main(PiconApp):
     init_beat_ms = -1
     beat_gap_ms = (60 * 1000) / bpm
 
+
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
-        self.last_beat_ms = self.current_tick
+        self.last_beat_ms = self.current_ms
         self.init_beat_ms = self.last_beat_ms
         self.sound.tone(1000)
+
 
     def inputs(self):
         if self.input.is_pressed(KEY_B):
@@ -36,13 +38,14 @@ class Main(PiconApp):
         elif self.input.is_pressed(DPAD_LEFT):
             self.decrease_bpm(BPM_LARGE_STEP)
 
+
     def update(self):
         beat_delta = ticks_diff(ticks_ms(), self.last_beat_ms)
 
         self.calculate_beat_gap()
 
         if beat_delta >= self.beat_gap_ms:
-            self.last_beat_ms = self.current_tick
+            self.last_beat_ms = self.current_ms
             self.current_beat = (self.current_beat + 1) % 4
             if self.current_beat == 0:
                 self.sound.tone(1000)
@@ -50,6 +53,7 @@ class Main(PiconApp):
                 self.sound.tone(880)
         elif beat_delta >= 100:
             self.sound.stop()
+
 
     def render(self):
         self.display.center_text(str(self.bpm))
@@ -60,17 +64,20 @@ class Main(PiconApp):
             else:
                 self.display.ellipse((20 * i) + 34, 44, 5, 5, 1)
 
+
     def increase_bpm(self, amount):
         if self.bpm + amount >= MAX_BPM:
             self.bpm = MAX_BPM
         else:
             self.bpm += amount
 
+
     def decrease_bpm(self, amount):
         if self.bpm - amount <= MIN_BPM:
             self.bpm = MIN_BPM
         else:
             self.bpm -= amount
+
 
     def calculate_beat_gap(self):
         self.beat_gap_ms = (60 * 1000) / self.bpm

@@ -9,8 +9,34 @@
         <option value="/README.md" />
       </list>
     </option>
+    <option name="exclusionsMigrated" value="true" />
+    <option name="migrated" value="true" />
     <option name="path" />
+    <option name="pathMappings">
+      <map>
+        <entry key="$PROJECT_DIR$" value="/" />
+      </map>
+    </option>
+    <option name="syncExcludedPaths">
+      <list>
+        <option value="/.github/" />
+        <option value="/apps/.excluded" />
+        <option value="/assets/menu.pixil" />
+        <option value="/README.md" />
+      </list>
+    </option>
     <option name="synchronize" value="true" />
+    <option name="uploadExcludedPaths">
+      <list>
+        <option value="/venv" />
+        <option value="/env" />
+      </list>
+    </option>
+    <option name="uploadExcludedPatterns">
+      <list>
+        <option value=".*" />
+      </list>
+    </option>
     <method v="2" />
   </configuration>
 </component>

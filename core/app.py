@@ -3,39 +3,45 @@ from time import sleep_ms, ticks_ms
 
 class PiconApp:
     running = True
-    current_tick = 0
+    current_ms = 0
+
 
     def __init__(self, display, input, sound):
         self.display = display
         self.input = input
         self.sound = sound
 
+
     def inputs(self):
         raise NotImplementedError(
             f"{type(self).__name__}.inputs() must be implemented."
         )
+
 
     def update(self):
         raise NotImplementedError(
             f"{type(self).__name__}.update() must be implemented."
         )
 
+
     def render(self):
         raise NotImplementedError(
             f"{type(self).__name__}.render() must be implemented."
         )
+
 
     def __render(self):
         self.display.fill(0)
         self.render()
         self.display.show()
 
+
     def run(self):
         while self.running:
-            self.current_tick = ticks_ms()
+            self.update_ms()
 
             # Input
-            if self.input.is_ready(self.current_tick):
+            if self.input.is_ready(self.current_ms):
                 self.inputs()
 
             # Update
@@ -46,6 +52,11 @@ class PiconApp:
 
         self.sound.stop()
         self.input.restore_debounce()
+
+
+    def update_ms(self):
+        self.current_ms = ticks_ms()
+
 
     def quit(self):
         self.running = False
@@ -58,9 +69,11 @@ class PiconGame(PiconApp):
 
     game_state = -1
 
+
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
         self.game_state = PiconGame.RUNNING_STATE
+
 
     def __render(self):
         self.display.fill(0)
@@ -79,8 +92,10 @@ class PiconGame(PiconApp):
         else:
             self.display.show()
 
+
     def winner(self):
         self.game_state = PiconGame.WINNER_STATE
+
 
     def game_over(self):
         self.game_state = PiconGame.GAME_OVER_STATE

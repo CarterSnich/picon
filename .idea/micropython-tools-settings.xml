@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="MicroPythonTools">
-    <option name="lastShownVersion" value="2026.1.1" />
+    <option name="activeWebReplPresetId" value="7f53afab-0c73-42d3-9337-ac35bfc0fac4" />
     <option name="pluginEnabled" value="true" />
     <option name="portName" value="COM9" />
-    <option name="showUploadPreviewDialog" value="false" />
+    <option name="webReplPresets">
+      <map>
+        <entry key="7f53afab-0c73-42d3-9337-ac35bfc0fac4" value="{&quot;id&quot;:&quot;7f53afab-0c73-42d3-9337-ac35bfc0fac4&quot;,&quot;name&quot;:&quot;Default&quot;}" />
+      </map>
+    </option>
+    <option name="webReplPresetsMigrated" value="true" />
   </component>
 </project>
