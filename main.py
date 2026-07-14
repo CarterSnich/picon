@@ -1,4 +1,4 @@
-from time import sleep_ms, ticks_ms, ticks_diff
+from time import sleep_ms, ticks_ms
 from sys import print_exception
 
 from core import Sound, Display
@@ -17,22 +17,58 @@ class Picon:
     main_menu_selection = "games"
 
     # item selection
-    current_index = 0
-    selection_index = 0
-    items_stop_index = 0
-    max_index = 0
     sub_items = []
+    sub_items_count = 0
+    current_index = 0
+    split_start_index = 0
+    split_end_index = 0
+    current_row = 0
 
-    current_tick = ticks_ms()
-    last_press_ms = current_tick
+    current_ms = 0
 
 
     def __init__(self, apps):
         self.apps = apps
 
 
-    def get_sub_menu_list(self):
-        return self.apps[self.main_menu_selection]
+    def inputs(self):
+        if not self.input.is_ready(self.current_ms):
+            return
+
+        if self.is_main_menu:
+            if self.input.is_pressed(DPAD_UP):
+                self.main_menu_selection = "games"
+            elif self.input.is_pressed(DPAD_DOWN):
+                self.main_menu_selection = "tools"
+            elif self.input.is_pressed(KEY_A):
+                self.is_main_menu = False
+
+                self.sub_items = apps[self.main_menu_selection]
+                self.sub_items_count = len(self.sub_items)
+
+                self.current_index = 0
+                self.current_row = 0
+                self.split_start_index = 0
+                self.split_end_index = self.sub_items_count
+
+        else:
+            if self.input.is_pressed(KEY_A) and len(self.sub_items):
+                print(self.current_index)
+
+                # try:
+                #     item = self.sub_items[current_index]
+                #     app = __import__("apps." + item[1], None, None, ("*",))
+                #     app.Main(self.display, self.input, self.sound).run()
+                # except BaseException as e:
+                #     self.modal("Failed to open")
+                #     print_exception(e)
+                # sleep_ms(200)
+            elif self.input.is_pressed(KEY_B):
+                self.is_main_menu = True
+            elif self.input.is_pressed(DPAD_UP):
+                self.scroll(-1)
+            elif self.input.is_pressed(DPAD_DOWN):
+                self.scroll(1)
 
 
     def render(self):
@@ -46,69 +82,56 @@ class Picon:
                 self.display.invert(1)
         else:
             self.display.invert(0)
-            self.sub_items = self.sub_items[self.items_stop_index - self.max_index:self.items_stop_index]
-            y = 0
-            for i, item in enumerate(self.sub_items):
-                if i == self.selection_index:
+
+            for i, item in enumerate(self.sub_items[self.split_start_index:self.split_end_index]):
+                y = i * 8
+                if self.current_row == i:
                     self.display.blit(ARROW_RIGHT, 0, y)
-                self.display.text(item[0], 8, y)
-                y += 8
+                self.display.text(item[1], 8, y)
 
         self.display.show()
 
 
-    def inputs(self):
-        if ticks_diff(ticks_ms(), self.last_press_ms) < 200:
-            return
-
-        if self.is_main_menu:
-            if self.input.is_pressed(DPAD_UP):
-                self.main_menu_selection = "games"
-                self.last_press_ms = self.current_tick
-            elif self.input.is_pressed(DPAD_DOWN):
-                self.main_menu_selection = "tools"
-                self.last_press_ms = self.current_tick
-            elif self.input.is_pressed(KEY_A):
-                self.is_main_menu = False
-                self.sub_items = self.get_sub_menu_list()
-                self.max_index = min(len(self.sub_items), 8)
-                self.items_stop_index = self.max_index
-                self.selection_index = 0
-                self.last_press_ms = self.current_tick
-        else:
-            if self.input.is_pressed(KEY_A) and len(self.sub_items):
-                item = self.sub_items[self.current_index]
-                try:
-                    app = __import__("apps." + item[1], None, None, ("*",))
-                    app.Main(self.display, self.input, self.sound).run()
-                except BaseException as e:
-                    self.modal("Failed to open")
-                    print_exception(e)
-                sleep_ms(200)
-            elif self.input.is_pressed(KEY_B):
-                self.is_main_menu = True
-                self.last_press_ms = self.current_tick
-            elif self.input.is_pressed(DPAD_UP):
-                self.last_press_ms = self.current_tick
-                if self.selection_index > 0:
-                    self.selection_index -= 1
-                elif self.items_stop_index > 8:
-                    self.items_stop_index -= 1
-                self.current_index = self.items_stop_index - (self.max_index - self.selection_index - 1) - 1
-            elif self.input.is_pressed(DPAD_DOWN):
-                self.last_press_ms = self.current_tick
-                if self.selection_index < self.max_index - 1:
-                    self.selection_index += 1
-                elif self.items_stop_index < len(self.sub_items):
-                    self.items_stop_index += 1
-                self.current_index = self.items_stop_index - (self.max_index - self.selection_index - 1) - 1
-
-
     def run(self):
         while True:
-            self.current_tick = ticks_ms()
+            self.update_ms()
             self.inputs()
             self.render()
+
+
+    def update_ms(self):
+        self.current_ms = ticks_ms()
+
+
+    def scroll(self, i):
+        if i == -1 and self.current_index == 0 and self.current_row == 0:
+            self.current_index = self.sub_items_count - 1
+            self.current_row = 7 if self.sub_items_count >= 8 else self.current_index
+            self.split_start_index = self.sub_items_count - 8 if self.sub_items_count >= 8 else 0
+            self.split_end_index = self.sub_items_count
+        elif (i == 1 and self.current_index == self.sub_items_count - 1
+              and self.current_row == (7 if self.sub_items_count >= 8 else self.sub_items_count - 1)):
+            self.current_index = 0
+            self.current_row = 0
+            self.split_start_index = 0
+            self.split_end_index = 8 if self.sub_items_count >= 8 else self.sub_items_count
+        else:
+            self.current_index += i
+
+            if (self.current_row == 0 and self.split_start_index - 1 == self.current_index
+                    or self.current_row == 7 and self.split_end_index == self.current_index):
+                self.set_split_range(i)
+            else:
+                self.current_row = self.current_index - self.split_start_index
+
+
+    def set_split_range(self, i):
+        self.split_start_index += i
+        self.split_end_index += i
+
+
+    def get_selection_index(self):
+        return self.split_start_index + self.current_index
 
 
     def modal(self, text):
@@ -134,6 +157,7 @@ if __name__ == '__main__':
             ("NOTEPAD", "Notepad"),
             ("KEYPAD TEST", "KeypadTest"),
         ]
+
     }
 
     Picon(apps).run()
