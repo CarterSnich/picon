@@ -73,7 +73,7 @@ class Picon:
         self.display.fill(0)
 
         if self.is_main_menu:
-            self.display.blit(GAMES_OR_TOOLS, 0, 0)
+            self.display.blit(GAMES_OR_TOOLS.framebuffer, 0, 0)
             if self.main_menu_selection == "games":
                 self.display.invert(0)
             else:
@@ -84,7 +84,7 @@ class Picon:
             for i, item in enumerate(self.sub_items[self.split_start_index:self.split_end_index]):
                 y = i * 8
                 if self.current_row == i:
-                    self.display.blit(ARROW_RIGHT, 0, y)
+                    self.display.blit(ARROW_RIGHT.framebuffer, 0, y)
                 self.display.text(item[0], 8, y)
 
         self.display.show()

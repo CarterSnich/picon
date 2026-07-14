@@ -1,6 +1,6 @@
-import framebuf
+from core import Sprite
 
-ONE = framebuf.FrameBuffer(
+ONE = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -19,9 +19,10 @@ ONE = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-TWO = framebuf.FrameBuffer(
+
+TWO = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -40,9 +41,10 @@ TWO = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-THREE = framebuf.FrameBuffer(
+
+THREE = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -61,9 +63,10 @@ THREE = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-FOUR = framebuf.FrameBuffer(
+
+FOUR = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -82,30 +85,10 @@ FOUR = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-FIVE = framebuf.FrameBuffer(
-    bytearray([
-        0b11111111, 0b11111111,
-        0b10000000, 0b00000001,
-        0b10000000, 0b00000001,
-        0b10000111, 0b11100001,
-        0b10000111, 0b11100001,
-        0b10000110, 0b00000001,
-        0b10000110, 0b00000001,
-        0b10000111, 0b11100001,
-        0b10000111, 0b11100001,
-        0b10000000, 0b01100001,
-        0b10000000, 0b01100001,
-        0b10000111, 0b11100001,
-        0b10000111, 0b11100001,
-        0b10000000, 0b00000001,
-        0b10000000, 0b00000001,
-        0b11111111, 0b11111111
-    ]),
-    16, 16, framebuf.MONO_HLSB
-)
-SIX = framebuf.FrameBuffer(
+
+FIVE = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -116,6 +99,28 @@ SIX = framebuf.FrameBuffer(
         0b10000110, 0b00000001,
         0b10000111, 0b11100001,
         0b10000111, 0b11100001,
+        0b10000000, 0b01100001,
+        0b10000000, 0b01100001,
+        0b10000111, 0b11100001,
+        0b10000111, 0b11100001,
+        0b10000000, 0b00000001,
+        0b10000000, 0b00000001,
+        0b11111111, 0b11111111
+    ]),
+    16, 16
+)
+
+SIX = Sprite(
+    bytearray([
+        0b11111111, 0b11111111,
+        0b10000000, 0b00000001,
+        0b10000000, 0b00000001,
+        0b10000111, 0b11100001,
+        0b10000111, 0b11100001,
+        0b10000110, 0b00000001,
+        0b10000110, 0b00000001,
+        0b10000111, 0b11100001,
+        0b10000111, 0b11100001,
         0b10000110, 0b01100001,
         0b10000110, 0b01100001,
         0b10000111, 0b11100001,
@@ -124,9 +129,10 @@ SIX = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-SEVEN = framebuf.FrameBuffer(
+
+SEVEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -145,9 +151,10 @@ SEVEN = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-EIGHT = framebuf.FrameBuffer(
+
+EIGHT = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -166,9 +173,10 @@ EIGHT = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-NINE = framebuf.FrameBuffer(
+
+NINE = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -187,9 +195,10 @@ NINE = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-TEN = framebuf.FrameBuffer(
+
+TEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -208,9 +217,10 @@ TEN = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-ELEVEN= framebuf.FrameBuffer(
+
+ELEVEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -229,9 +239,10 @@ ELEVEN= framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-TWELVE = framebuf.FrameBuffer(
+
+TWELVE = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -250,9 +261,10 @@ TWELVE = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-THIRTEEN = framebuf.FrameBuffer(
+
+THIRTEEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -271,9 +283,10 @@ THIRTEEN = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-FOURTEEN = framebuf.FrameBuffer(
+
+FOURTEEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -292,9 +305,10 @@ FOURTEEN = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-FIFTEEN = framebuf.FrameBuffer(
+
+FIFTEEN = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -313,9 +327,10 @@ FIFTEEN = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
-BLANK = framebuf.FrameBuffer(
+
+BLANK = Sprite(
     bytearray([
         0b11111111, 0b11111111,
         0b10000000, 0b00000001,
@@ -334,5 +349,5 @@ BLANK = framebuf.FrameBuffer(
         0b10000000, 0b00000001,
         0b11111111, 0b11111111
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )

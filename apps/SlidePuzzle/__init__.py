@@ -4,7 +4,7 @@ from time import ticks_diff
 from core import PiconGame, Sound
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
-from .resources import *
+from apps.SlidePuzzle.resources import *
 
 MOVE_UP = -4
 MOVE_DOWN = 4
@@ -110,4 +110,4 @@ class Main(PiconGame):
                 index = n + j
                 x = start_x + (j * 16)
                 y = start_y + (i * 16)
-                self.display.blit(SPRITES[self.puzzle[index]], x, y)
+                self.display.blit(SPRITES[self.puzzle[index]].framebuffer, x, y)

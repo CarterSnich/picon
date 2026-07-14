@@ -1,6 +1,6 @@
-import framebuf
+from core import Sprite
 
-KEYPAD_UP = framebuf.FrameBuffer(
+BUTTON_UP = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -20,10 +20,10 @@ KEYPAD_UP = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_UP_INVERT = framebuf.FrameBuffer(
+BUTTON_UP_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -43,10 +43,10 @@ KEYPAD_UP_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_RIGHT = framebuf.FrameBuffer(
+BUTTON_RIGHT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -66,10 +66,10 @@ KEYPAD_RIGHT = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_RIGHT_INVERT = framebuf.FrameBuffer(
+BUTTON_RIGHT_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -89,10 +89,10 @@ KEYPAD_RIGHT_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_DOWN = framebuf.FrameBuffer(
+BUTTON_DOWN = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -112,10 +112,10 @@ KEYPAD_DOWN = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_DOWN_INVERT = framebuf.FrameBuffer(
+BUTTON_DOWN_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -135,10 +135,10 @@ KEYPAD_DOWN_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_LEFT = framebuf.FrameBuffer(
+BUTTON_LEFT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -158,10 +158,10 @@ KEYPAD_LEFT = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_LEFT_INVERT = framebuf.FrameBuffer(
+BUTTON_LEFT_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -181,10 +181,10 @@ KEYPAD_LEFT_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_A = framebuf.FrameBuffer(
+BUTTON_A = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -204,10 +204,10 @@ KEYPAD_A = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_A_INVERT = framebuf.FrameBuffer(
+BUTTON_A_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -227,10 +227,10 @@ KEYPAD_A_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_B = framebuf.FrameBuffer(
+BUTTON_B = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -250,10 +250,10 @@ KEYPAD_B = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_B_INVERT = framebuf.FrameBuffer(
+BUTTON_B_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -273,10 +273,10 @@ KEYPAD_B_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_X = framebuf.FrameBuffer(
+BUTTON_X = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -296,10 +296,10 @@ KEYPAD_X = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_X_INVERT = framebuf.FrameBuffer(
+BUTTON_X_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -319,10 +319,10 @@ KEYPAD_X_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_Y = framebuf.FrameBuffer(
+BUTTON_Y = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001100, 0b00110000,
@@ -342,10 +342,10 @@ KEYPAD_Y = framebuf.FrameBuffer(
         0b00001100, 0b00110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEYPAD_Y_INVERT = framebuf.FrameBuffer(
+BUTTON_Y_INVERT = Sprite(
     bytearray([
         0b00000011, 0b11000000,
         0b00001111, 0b11110000,
@@ -365,17 +365,17 @@ KEYPAD_Y_INVERT = framebuf.FrameBuffer(
         0b00001111, 0b11110000,
         0b00000011, 0b11000000,
     ]),
-    16, 16, framebuf.MONO_HLSB
+    16, 16
 )
 
-KEY_SELECT = framebuf.FrameBuffer(
+BUTTON_SELECT = Sprite(
     bytearray(
         b'x\xfc\xc0\xcc\xc0\xc0\xc0\xc0\xc0x\xf0\xc0\x0c\xc0\xc0\xcc\xc0\xc0x\xfc\xfc'
     ),
-    22, 7, framebuf.MONO_HLSB
+    22, 7
 )
 
-KEY_SELECT_INVERT = framebuf.FrameBuffer(
+BUTTON_SELECT_INVERT = Sprite(
     bytearray([
         0x87, 0x03,
         0x3F, 0x33,
@@ -389,15 +389,15 @@ KEY_SELECT_INVERT = framebuf.FrameBuffer(
         0x87, 0x03,
         0x03,
     ]),
-    22, 7, framebuf.MONO_HLSB
+    22, 7
 )
 
-KEY_START = framebuf.FrameBuffer(
+BUTTON_START = Sprite(
     bytearray(b'x\xfc0\xcc0x\xc00\xccx0\xfc\x0c0\xcc\xcc0\xccx0\xcc'),
-    22, 7, framebuf.MONO_HLSB
+    22, 7
 )
 
-KEY_START_INVERT = framebuf.FrameBuffer(
+BUTTON_START_INVERT = Sprite(
     bytearray([
         0x87, 0x03,
         0xCF, 0x33,
@@ -411,5 +411,5 @@ KEY_START_INVERT = framebuf.FrameBuffer(
         0x87, 0xCF,
         0x33,
     ]),
-    22, 7, framebuf.MONO_HLSB
+    22, 7
 )

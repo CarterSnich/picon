@@ -1,13 +1,13 @@
 from random import randrange
 from time import ticks_diff
 
-from core import PiconGame, Input, Sound
+from core import PiconGame
 from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
 
-from .snake import Snake
-from .food import Food
-from .direction import Direction
+from apps.SnakeGame.snake import Snake
+from apps.SnakeGame.food import Food
+from apps.SnakeGame.direction import Direction
 
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48

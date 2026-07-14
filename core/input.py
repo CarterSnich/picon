@@ -4,9 +4,8 @@ from time import ticks_ms, ticks_diff
 from lib.keypad import Keypad
 from core import config
 
-
-KEY_SELECT = "KEY_SELECT"
-KEY_START = "KEY_START"
+KEY_SELECT = "KEYPAD_SELECT"
+KEY_START = "KEYPAD_START"
 KEY_X = "KEY_X"
 KEY_Y = "KEY_Y"
 KEY_A = "KEY_A"
@@ -22,6 +21,7 @@ BUTTON_DEBOUNCE_MS = 200
 class Input:
     last_pressed_ms = 0
     button_debounce_ms = BUTTON_DEBOUNCE_MS
+
 
     def __init__(self):
         self.__KEY_SELECT = Pin(config.KEY_SELECT, Pin.IN, Pin.PULL_UP)
@@ -49,17 +49,21 @@ class Input:
             DPAD_DOWN: lambda: self.__DPAD.read_keypad() == config.DPAD_COLS[1]
         }
 
+
     def __update_tick(self):
         self.last_pressed_ms = ticks_ms()
 
+
     def is_ready(self, tick):
         return ticks_diff(tick, self.last_pressed_ms) >= BUTTON_DEBOUNCE_MS
+
 
     def is_pressed(self, key):
         state = self.key_states[key]()
         if state:
             self.__update_tick()
         return state
+
 
     def any_pressed_key(self):
         for key, state in self.key_states.items():
@@ -68,8 +72,10 @@ class Input:
                 return key
         return None
 
+
     def set_debounce(self, ms):
         self.button_debounce_ms = ms
+
 
     def restore_debounce(self):
         self.button_debounce_ms = BUTTON_DEBOUNCE_MS

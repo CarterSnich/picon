@@ -1,4 +1,5 @@
 from .display import Display
 from .input import Input
 from .sound import Sound
-from .app import  PiconApp, PiconGame
+from .sprite import Sprite
+from .app import PiconApp, PiconGame

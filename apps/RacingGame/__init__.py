@@ -2,9 +2,9 @@ from time import ticks_ms, ticks_diff, sleep_ms
 from random import choice
 
 from core.app import PiconGame
-from .racer import Racer
-from .civilian import Civilian
-from .lanes import LANES
+from apps.RacingGame.racer import Racer
+from apps.RacingGame.civilian import Civilian
+from apps.RacingGame.lanes import LANES
 
 
 class Main(PiconGame):

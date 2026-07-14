@@ -1,8 +1,8 @@
 from core import PiconGame
 
-from .tank import Direction
-from .player_tank import PlayerTank
-from .enemy_tank import EnemyTank
+from apps.BattleCity.tank import Direction
+from apps.BattleCity.player_tank import PlayerTank
+from apps.BattleCity.enemy_tank import EnemyTank
 
 MAX_ENEMY_COUNT = 4
 ENEMY_SPAWN_INTERVAL = 1500

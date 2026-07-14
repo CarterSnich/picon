@@ -1,6 +1,6 @@
-import framebuf
+from core import Sprite
 
-RACER = framebuf.FrameBuffer(
+RACER = Sprite(
     bytearray([
         0b00000000, 0b00000000, 0b00000000,
         0b00000000, 0b00000000, 0b00000000,
@@ -15,10 +15,10 @@ RACER = framebuf.FrameBuffer(
         0b00000000, 0b00000000, 0b00000000,
         0b00000000, 0b00000000, 0b00000000
     ]),
-    20, 12, framebuf.MONO_HLSB
+    20, 12
 )
 
-CIVILIAN = framebuf.FrameBuffer(
+CIVILIAN = Sprite(
     bytearray([
         0b00000000, 0b00000000, 0b00000000,
         0b00011100, 0b00000111, 0b00000000,
@@ -33,10 +33,5 @@ CIVILIAN = framebuf.FrameBuffer(
         0b00011100, 0b00000111, 0b00000000,
         0b00000000, 0b00000000, 0b00000000
     ]),
-    20, 12, framebuf.MONO_HLSB
+    20, 12
 )
-  
-        
-if __name__ == '__main__':
-    from apps.RacingGame.__init__ import RacingGame
-    RacingGame().run()

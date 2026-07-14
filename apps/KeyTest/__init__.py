@@ -2,7 +2,7 @@ from core import PiconApp
 from core.input import *
 from core.helper import Countdown
 
-from .KeyTest import sprites
+from apps.KeyTest.sprites import *
 
 
 class Main(PiconApp):
@@ -20,7 +20,7 @@ class Main(PiconApp):
             if self.countdown:
                 self.countdown.update(self.current_ms)
             else:
-                self.countdown = Countdown(3000)
+                self.countdown = Countdown(2000)
         else:
             self.countdown = None
 
@@ -36,54 +36,54 @@ class Main(PiconApp):
         self.display.text("to exit", 36, 11, 1)
 
         if self.current_pressed_key == DPAD_LEFT:
-            self.display.blit(sprites.KEYPAD_LEFT_INVERT, 2, 33, 0)
+            self.display.blit(BUTTON_LEFT_INVERT.framebuffer, 2, 33, 0)
         else:
-            self.display.blit(sprites.KEYPAD_LEFT, 2, 33, 0)
+            self.display.blit(BUTTON_LEFT.framebuffer, 2, 33, 0)
 
         if self.current_pressed_key == DPAD_UP:
-            self.display.blit(sprites.KEYPAD_UP_INVERT, 15, 21, 0)
+            self.display.blit(BUTTON_UP_INVERT.framebuffer, 15, 21, 0)
         else:
-            self.display.blit(sprites.KEYPAD_UP, 15, 21, 0)
+            self.display.blit(BUTTON_UP.framebuffer, 15, 21, 0)
 
         if self.current_pressed_key == DPAD_DOWN:
-            self.display.blit(sprites.KEYPAD_DOWN_INVERT, 15, 45, 0)
+            self.display.blit(BUTTON_DOWN_INVERT.framebuffer, 15, 45, 0)
         else:
-            self.display.blit(sprites.KEYPAD_DOWN, 15, 45, 0)
+            self.display.blit(BUTTON_DOWN.framebuffer, 15, 45, 0)
 
         if self.current_pressed_key == DPAD_RIGHT:
-            self.display.blit(sprites.KEYPAD_RIGHT_INVERT, 28, 33, 0)
+            self.display.blit(BUTTON_RIGHT_INVERT.framebuffer, 28, 33, 0)
         else:
-            self.display.blit(sprites.KEYPAD_RIGHT, 28, 33, 0)
+            self.display.blit(BUTTON_RIGHT.framebuffer, 28, 33, 0)
 
         if self.current_pressed_key == KEY_X:
-            self.display.blit(sprites.KEYPAD_X_INVERT, 83, 33, 0)
+            self.display.blit(BUTTON_X_INVERT.framebuffer, 83, 33, 0)
         else:
-            self.display.blit(sprites.KEYPAD_X, 83, 33, 0)
+            self.display.blit(BUTTON_X.framebuffer, 83, 33, 0)
 
         if self.current_pressed_key == KEY_Y:
-            self.display.blit(sprites.KEYPAD_Y_INVERT, 96, 21, 0)
+            self.display.blit(BUTTON_Y_INVERT.framebuffer, 96, 21, 0)
         else:
-            self.display.blit(sprites.KEYPAD_Y, 96, 21, 0)
+            self.display.blit(BUTTON_Y.framebuffer, 96, 21, 0)
 
         if self.current_pressed_key == KEY_A:
-            self.display.blit(sprites.KEYPAD_A_INVERT, 96, 45, 0)
+            self.display.blit(BUTTON_A_INVERT.framebuffer, 96, 45, 0)
         else:
-            self.display.blit(sprites.KEYPAD_A, 96, 45, 0)
+            self.display.blit(BUTTON_A.framebuffer, 96, 45, 0)
 
         if self.current_pressed_key == KEY_B:
-            self.display.blit(sprites.KEYPAD_B_INVERT, 109, 33, 0)
+            self.display.blit(BUTTON_B_INVERT.framebuffer, 109, 33, 0)
         else:
-            self.display.blit(sprites.KEYPAD_B, 109, 33, 0)
+            self.display.blit(BUTTON_B.framebuffer, 109, 33, 0)
 
         if self.current_pressed_key == KEY_SELECT:
-            self.display.blit(sprites.KEY_SELECT_INVERT, 53, 30, 0)
+            self.display.blit(BUTTON_SELECT_INVERT.framebuffer, 53, 30, 0)
         else:
-            self.display.blit(sprites.KEY_SELECT, 53, 30, 0)
+            self.display.blit(BUTTON_SELECT.framebuffer, 53, 30, 0)
 
         if self.current_pressed_key == KEY_START:
-            self.display.blit(sprites.KEY_START_INVERT, 53, 43, 0)
+            self.display.blit(BUTTON_START_INVERT.framebuffer, 53, 43, 0)
         else:
-            self.display.blit(sprites.KEY_START, 53, 43, 0)
+            self.display.blit(BUTTON_START.framebuffer, 53, 43, 0)
 
 
 if __name__ == "__main__":
