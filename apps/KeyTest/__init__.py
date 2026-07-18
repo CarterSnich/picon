@@ -1,6 +1,6 @@
 from core import PiconApp
 from core.input import *
-from core.helper import Countdown
+from core.helper.utils import Countdown
 
 from apps.KeyTest.sprites import *
 

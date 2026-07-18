@@ -75,11 +75,11 @@ class Picon:
         if self.is_main_menu:
             self.display.blit(GAMES_OR_TOOLS.framebuffer, 0, 0)
             if self.main_menu_selection == "games":
-                self.display.invert(0)
+                self.display.invert(False)
             else:
-                self.display.invert(1)
+                self.display.invert(True)
         else:
-            self.display.invert(0)
+            self.display.invert(False)
 
             for i, item in enumerate(self.sub_items[self.split_start_index:self.split_end_index]):
                 y = i * 8
@@ -154,6 +154,7 @@ if __name__ == '__main__':
             ("Metronome", "Metronome"),
             ("Notepad", "Notepad"),
             ("Key Test", "KeyTest"),
+            ("Timer", "Timer"),
         ]
 
     }
