@@ -1,34 +1,39 @@
 from core import PiconApp
 from core.input import *
-from core.helper.utils import Countdown
+from core.helper.countdown import *
 
 from apps.KeyTest.sprites import *
 
+EXIT_WAIT_MS = 2000
+
 
 class Main(PiconApp):
-    current_pressed_key = None
-    countdown = None
+    current_pressed_key: int
+    countdown: Countdown
 
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
+        self.current_pressed_key = -1
+        self.countdown = Countdown(EXIT_WAIT_MS)
 
 
     def inputs(self):
         self.current_pressed_key = self.input.any_pressed_key()
-        if self.current_pressed_key == KEY_START:
-            if self.countdown:
-                self.countdown.update(self.current_ms)
-            else:
-                self.countdown = Countdown(2000)
-        else:
-            self.countdown = None
 
 
     def update(self):
-        if self.countdown and self.countdown.finished():
-            self.countdown = None
-            self.quit()
+        if self.current_pressed_key == KEY_START:
+            if self.countdown.state == STATE_IDLE:
+                self.countdown.start(self.current_ms)
+            else:
+                self.countdown.update(self.current_ms)
+                if self.countdown.state == STATE_FINISHED:
+                    self.countdown.stop()
+                    self.quit()
+        elif self.countdown.state == STATE_TICKING:
+            self.countdown.stop()
+            self.countdown.reset()
 
 
     def render(self):

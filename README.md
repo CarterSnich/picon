@@ -7,6 +7,11 @@ board with compatible hardware. Some parts of the original codebase were based o
 excellent [YouMakeTech/PicoRetroGamingSystem](https://github.com/YouMakeTech/PicoRetroGamingSystem), although the
 project has since been largely rewritten.
 
+The hardware has also been extensively redesigned. The console reuses the shell of an inexpensive brick game handheld,
+but replaces nearly all of its internal electronics. It features a 2.4-inch SSD1309 OLED display, a TP5100 lithium
+battery charging module in place of the commonly used TP4056, and a Raspberry Pi Pico as the main controller instead of
+the original WaveShare RP2040 Zero used during early development.
+
 ![picon handheld gaming console](.github/images/console.jpg)
 
 ## Apps
@@ -16,8 +21,8 @@ project has since been largely rewritten.
 ### Games
 
 - **Snake** — Classic Snake gameplay.
-- **Racing Game** — A top-down racing game where you dodge oncoming traffic.
-- **Battle City** — A top-down tank game. The name is inspired by the NES game *Battle City*.
+- **Racing Game** *(WIP)* — A top-down racing game where you dodge oncoming traffic.
+- **Battle City** *(WIP)* — A top-down tank game. The name is inspired by the NES game *Battle City*.
 - **Sliding Puzzle** — A classic 4×4 sliding tile puzzle.
 
 ### Tools
@@ -26,6 +31,7 @@ project has since been largely rewritten.
 - **Keypad Test** — Tests all console buttons.
 - ~~**Neopixel Controller** — Toy tool for controlling the onboard NeoPixel LED on the WaveShare RP2040 Zero.~~
 - **Notepad** *(WIP)* — A simple text editor.
+- **Timer** — A simple countdown timer.
 
 > **Neopixel Controller:**  
 > The project was migrated from the WaveShare RP2040 Zero to the Raspberry Pi Pico during a hardware redesign. The
@@ -35,6 +41,10 @@ project has since been largely rewritten.
 ## Getting Started
 
 1. Install MicroPython on your RP2040 board.
-2. Copy the project files to the board's root directory.
-3. Reboot the board.
-4. Enjoy!
+2. Modify `core/config.py` to much your pin configuration and the display. **Make sure to read
+   the [library for the SSD1309](https://github.com/SinaHosseini7/micropython-ssd1309) when assigning pins for your
+   SSD1309
+   display.**
+3. Copy the project files to the board's root directory.
+4. Reboot the board.
+5. Enjoy!
