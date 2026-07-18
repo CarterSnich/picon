@@ -58,8 +58,8 @@ class Picon:
                     app = __import__("apps." + item[1], None, None, ("*",))
                     app.Main(self.display, self.input, self.sound).run()
                 except BaseException as e:
-                    self.modal("Failed to open")
                     print_exception(e)
+                    self.modal("Failed to open")
                 sleep_ms(200)
             elif self.input.is_pressed(KEY_B):
                 self.is_main_menu = True
