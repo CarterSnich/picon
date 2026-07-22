@@ -11,37 +11,35 @@ from apps.SnakeGame.direction import Direction
 
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
-INPUT_INTERVAL = 100
 
 EAT_SOUND_DURATION = 50
+MOVEMENT_INTERVAL = 100
 
 
 class Main(PiconGame):
-    score = 0
-    snake = None
-    food = None
-
-    last_eat_ms = None
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
 
-        self.input.set_debounce(INPUT_INTERVAL)
+        self.score = 0
         self.snake = Snake(INITIAL_HEAD_X, INITIAL_HEAD_Y)
         self.food = Food(-1, -1)
+
+        self.last_move_ms = -1
+        self.last_eat_ms = None
+
         self.randomize_food()
 
 
     def inputs(self):
         if self.input.is_pressed(DPAD_UP) and self.snake.direction != Direction.SOUTH:
-            self.snake.set_direction(Direction.NORTH)
+            self.snake.redirect(Direction.NORTH)
         elif self.input.is_pressed(DPAD_RIGHT) and self.snake.direction != Direction.WEST:
-            self.snake.set_direction(Direction.EAST)
+            self.snake.redirect(Direction.EAST)
         elif self.input.is_pressed(DPAD_DOWN) and self.snake.direction != Direction.NORTH:
-            self.snake.set_direction(Direction.SOUTH)
+            self.snake.redirect(Direction.SOUTH)
         elif self.input.is_pressed(DPAD_LEFT) and self.snake.direction != Direction.EAST:
-            self.snake.set_direction(Direction.WEST)
+            self.snake.redirect(Direction.WEST)
 
 
     def update(self):
@@ -51,17 +49,18 @@ class Main(PiconGame):
             self.last_eat_ms = None
 
         # snake
-        self.snake.update(self.current_ms)
-        if self.snake.is_dead:
-            self.game_over()
-            return
+        if ticks_diff(self.current_ms, self.last_move_ms) >= MOVEMENT_INTERVAL:
+            self.last_move_ms = self.current_ms
+            self.snake.move()
+            if self.snake.is_stupid() or self.snake.is_blind():
+                self.game_over()
 
         # food
         self.food.update(self.current_ms)
         head = self.snake.get_head_segments()
         if self.food.is_intersecting(head[0], head[1]):
             self.sound.tone(1000)
-            self.snake.grow(self.current_ms)
+            self.snake.grow(self.food.x, self.food.y)
             self.randomize_food()
             self.score += 1
             self.last_eat_ms = self.current_ms
