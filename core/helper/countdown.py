@@ -7,9 +7,14 @@ STATE_FINISHED = 3
 
 
 class Countdown:
+    time_ms: int
+    remaining_ms: int
+    last_update_ms: int
+    state: int
+
 
     def __init__(self, ms: int):
-        self.remaining_ms = ms
+        self.time_ms = ms
         self.state = STATE_IDLE
         self.last_update_ms = -1
 
@@ -25,10 +30,11 @@ class Countdown:
 
 
     def set(self, ms: int):
-        self.remaining_ms = ms
+        self.time_ms = ms
 
 
     def start(self, current_ms):
+        self.remaining_ms = self.time_ms
         self.last_update_ms = current_ms
         self.state = STATE_TICKING
 
@@ -48,6 +54,10 @@ class Countdown:
 
     def finish(self):
         self.state = STATE_FINISHED
+
+
+    def reset(self):
+        self.remaining_ms = self.time_ms
 
 
 if __name__ == '__main__':

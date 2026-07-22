@@ -11,7 +11,6 @@ class Main(PiconApp):
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
-
         self.current_pressed_key = None
         self.countdown = Countdown(COUNTDOWN_MS)
 
@@ -27,11 +26,17 @@ class Main(PiconApp):
 
 
     def update(self):
-        if self.countdown.state == STATE_TICKING:
-            self.countdown.update(self.current_ms)
-        elif self.countdown.state == STATE_FINISHED:
+        if self.current_pressed_key == KEY_START:
+            if self.countdown.state == STATE_IDLE:
+                self.countdown.start(self.current_ms)
+            else:
+                self.countdown.update(self.current_ms)
+                if self.countdown.state == STATE_FINISHED:
+                    self.countdown.stop()
+                    self.quit()
+        elif self.countdown.state == STATE_TICKING:
             self.countdown.stop()
-            self.quit()
+            self.countdown.reset()
 
 
     def render(self):
