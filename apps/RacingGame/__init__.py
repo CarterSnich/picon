@@ -1,135 +1,84 @@
-from time import ticks_ms, ticks_diff, sleep_ms
-from random import choice
+from random import randrange
+from time import ticks_diff
 
 from core.app import PiconGame
+from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
+from core.input import DPAD_UP, DPAD_DOWN, KEY_A
+
 from apps.RacingGame.racer import Racer
 from apps.RacingGame.civilian import Civilian
-from apps.RacingGame.lanes import LANES
+
+ROAD_LINES_Y = (10, 52, 94)
+STARTING_INTERVAL = 50
+MAX_CIVILLIANS = 3
 
 
 class Main(PiconGame):
-    speed = 1
-    is_start = True
-    is_transition = False
-    transiton_start = 0
-
-    last_beep_ms = 0
-    beep = True
-
-    racer = None
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
+
         self.racer = Racer()
+        self.civillians = (
+            Civilian(128, randrange(3)),
+            Civilian(182, randrange(3)),
+            Civilian(236, randrange(3))
+        )
+        self.interval = STARTING_INTERVAL
+        self.nos_on = False
+
+        self.last_update_ms = self.current_ms
 
 
     def inputs(self):
-        ...
+        if self.input.is_pressed(DPAD_UP):
+            self.racer.up()
+        if self.input.is_pressed(DPAD_DOWN):
+            self.racer.down()
+        if self.input.is_pressed(KEY_A):
+            self.nos_on = True
+        else:
+            self.nos_on = False
 
 
-    def run(self):
+    def update(self):
+        if ticks_diff(self.current_ms, self.last_update_ms) < self.interval and self.nos_on is False:
+            return
 
-        traffic = [
-            Civilian(self.SCREEN_WIDTH, choice(LANES))
-        ]
-        road_lines = [10, 52, 94]
-        traffic_added = len(traffic)
+        for c in self.civillians:
+            c.move()
+            if c.is_colliding(self.racer):
+                self.game_over()
+                return
 
-        while True:
-            # sound
-            if not is_start and ticks_diff(ticks_ms(), last_beep_ms) >= 30:
-                last_beep_ms = ticks_ms()
-                if beep:
-                    self.sound(220)
-                else:
-                    self.sound(0)
+            if c.is_offscreen():
+                c.x = 148
+                c.set_lane(randrange(3))
+                if self.interval:
+                    self.interval -= 1
 
-            # Render
-            self.fill(0)
-            # top and bottom lines
-            self.fill_rect(0, 0, self.SCREEN_WIDTH, 4, 1)
-            self.fill_rect(0, self.SCREEN_HEIGHT - 4, self.SCREEN_WIDTH, 4, 1)
-            # road lines
-            for rl_x in road_lines:
-                self.fill_rect(rl_x, 20, 21, 4, 1)
-                self.fill_rect(rl_x, 40, 21, 4, 1)
-            # racer
-            self.blit(racer.SPRITE, racer.x, LANES[racer.lane])
+        self.last_update_ms = self.current_ms
 
-            if is_transition:
-                # transition
-                self.fill_rect(0, int(self.SCREEN_HEIGHT / 2) - 5, self.SCREEN_WIDTH, 9, 1)
-                t = f"LEVEL {speed + 1}"
-                self.text(t, int(self.SCREEN_WIDTH / 2) - int((len(t) / 2) * 8), int(self.SCREEN_HEIGHT / 2) - 4, 0)
-            else:
-                # traffic
-                for c in traffic:
-                    self.blit(c.SPRITE, c.x, c.y)
-            self.show()
 
-            # starting animation
-            if is_start:
-                is_start = False
-                for i, t in enumerate(["READY", "3", "2", "1", "GO"]):
-                    self.fill_rect(0, int(self.SCREEN_HEIGHT / 2) - 5, self.SCREEN_WIDTH, 9, 1)
-                    self.text(t, int(self.SCREEN_WIDTH / 2) - int((len(t) / 2) * 8), int(self.SCREEN_HEIGHT / 2) - 4, 0)
-                    self.show()
-                    if i == 4:
-                        self.sound(880)
-                    elif i > 0:
-                        self.sound(440)
-                    sleep_ms(300)
-                    self.sound(0)
-                    sleep_ms(700)
+    def render(self):
+        # Top and bottom lines
+        self.display.fill_rect(0, 0, SCREEN_WIDTH, 4, 1)
+        self.display.fill_rect(0, SCREEN_HEIGHT - 4, SCREEN_WIDTH, 4, 1)
 
-            # check for collisions
-            for c in traffic:
-                if racer.is_colliding(c.x, c.y, c.WIDTH, c.HEIGHT):
-                    self.game_over()
-                    return
+        # Road lines
+        for rl_x in ROAD_LINES_Y:
+            self.display.fill_rect(rl_x, 20, 21, 4, 1)
+            self.display.fill_rect(rl_x, 40, 21, 4, 1)
 
-            # Inputs
-            if ticks_diff(ticks_ms(), last_press_ms) >= 150:
-                if self.button_up() and racer.lane > 0:
-                    last_press_ms = ticks_ms()
-                    racer.up()
-                elif self.button_down() and racer.lane < 2:
-                    last_press_ms = ticks_ms()
-                    racer.down()
+        # Racer
+        self.racer.draw(self.display, self.racer.x, self.racer.y)
 
-            # State updates
-            # road lines
-            for i in range(len(road_lines)):
-                road_lines[i] -= speed
-            if road_lines[0] <= 0 and len(road_lines) < 4:
-                road_lines.append(self.SCREEN_WIDTH)
-            if road_lines[0] <= -20:
-                road_lines.remove(road_lines[0])
-
-            # traffic
-            for civilian in traffic:
-                civilian.move()
-            if len(traffic) and traffic[0].x <= -32:
-                traffic.remove(traffic[0])
-            if is_transition:
-                if ticks_diff(ticks_ms(), transition_start) >= 3000:
-                    is_transition = False
-                    speed += 1
-                    x = self.SCREEN_WIDTH
-                    y = choice(LANES)
-                    traffic.append(Civilian(x, y, speed))
-                    traffic_added = 1
-            else:
-                if traffic_added >= 10 and len(traffic) == 0:
-                    is_transition = True
-                    transition_start = ticks_ms()
-                elif traffic_added < 10 and len(traffic) < 3 and traffic[-1].x < self.SCREEN_WIDTH - 84:
-                    x = self.SCREEN_WIDTH
-                    y = choice(LANES)
-                    traffic.append(Civilian(x, y, speed))
-                    traffic_added += 1
+        # Civillians
+        for c in self.civillians:
+            c.draw(self.display, c.x, c.y)
 
 
 if __name__ == '__main__':
-    RacingGame().run()
+    from core import Display, Input, Sound
+
+    Main(Display(), Input(), Sound()).run()
