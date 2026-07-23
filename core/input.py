@@ -55,7 +55,7 @@ class Input:
 
 
     def is_ready(self, tick):
-        return ticks_diff(tick, self.last_pressed_ms) >= BUTTON_DEBOUNCE_MS
+        return ticks_diff(tick, self.last_pressed_ms) >= self.button_debounce_ms
 
 
     def is_pressed(self, key):
