@@ -1,56 +1,38 @@
-from micropython import const
+from apps.BattleCity.direction import Direction
+from core import GameObject, Sprite, SCREEN_WIDTH, SCREEN_HEIGHT, sprite
 
 
-class Direction:
-    NORTH = const(0)
-    EAST = const(1)
-    SOUTH = const(2)
-    WEST = const(3)
+class Tank(GameObject):
 
+    def __init__(self, sprites: dict[Direction, Sprite], x, y, direction, speed=1):
 
-class Tank:
-
-    def __init__(self, x, y, direction):
-        self.x = x
-        self.y = y
         self.direction = direction
+        self.speed = speed
+        self.sprites = sprites
+        self.bullet_count = 0
+
+        super().__init__(self.sprites[direction], x, y)
 
 
-    def get_sprite(self):
-        return self.sprites[self.direction]
+    def move(self, direction: Direction, obstacles: list[GameObject]):
+        if self.direction != direction:
+            self.direction = direction
+            self.sprite = self.sprites[direction]
+            return
 
+        dx, dy = direction
 
-    def is_colliding(self, obj_x, obj_y, obj_w, obj_h):
-        return (
-                self.x < obj_x + obj_w and
-                self.x + 8 > obj_x and
-                self.y < obj_y + obj_h and
-                self.y + 8 > obj_y
-        )
+        new_x = min(max(0, self.x + dx * self.speed), SCREEN_WIDTH - self.sprite.width)
+        new_y = min(max(0, self.y + dy * self.speed), SCREEN_HEIGHT - self.sprite.height)
 
+        old_x, old_y = self.x, self.y
 
-    def will_collide(self, obj_x, obj_y, obj_w, obj_h):
-        self_x = self.x
-        self_y = self.y
+        # Temporarily move for collision testing
+        self.x = new_x
+        self.y = new_y
 
-        if self.direction == Direction.NORTH:
-            self_y -= 1
-        elif self.direction == Direction.EAST:
-            self_x += 1
-        elif self.direction == Direction.SOUTH:
-            self_y += 1
-        elif self.direction == Direction.WEST:
-            self_x -= 1
-
-        return (
-                self_x < obj_x + obj_w and
-                self_x + 8 > obj_x and
-                self_y < obj_y + obj_h and
-                self_y + 8 > obj_y
-        )
-
-
-if __name__ == '__main__':
-    from apps.PicoBattleCity import BattleCity
-
-    BattleCity().run()
+        for obs in obstacles:
+            if obs is not self and self.is_colliding(obs, box_collision=True):
+                self.x = old_x
+                self.y = old_y
+                return

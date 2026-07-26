@@ -60,6 +60,8 @@ class Picon:
                 except BaseException as e:
                     print_exception(e)
                     self.modal("Failed to open")
+                self.sound.stop()
+                self.input.restore_debounce()
                 sleep_ms(200)
             elif self.input.is_pressed(KEY_B):
                 self.is_main_menu = True

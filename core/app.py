@@ -52,9 +52,6 @@ class PiconApp:
             # Render
             self.__render()
 
-        self.sound.stop()
-        self.input.restore_debounce()
-
 
     def update_ms(self):
         self.current_ms = ticks_ms()

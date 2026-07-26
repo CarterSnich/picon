@@ -1,59 +1,43 @@
-from .tank import Direction
-from .resources import BULLET
+from apps.BattleCity.direction import Direction
+from apps.BattleCity.resources import BULLET
+from apps.BattleCity.tank import Tank
+from core import GameObject, has_elapsed
 
 
-class Bullet:
-    sprite = BULLET
-    bullet_speed = 2
+class Bullet(GameObject):
 
+    def __init__(self, owner: Tank, speed=2):
+        self.owner = owner
+        self.direction = owner.direction
+        self.speed = speed
+        self.last_move_ms = 0
 
-    def __init__(self, x, y, direction, from_player=False):
-        self.x = x
-        self.y = y
-        self.direction = direction
-        self.from_player = from_player
+        tw = owner.sprite.width
+        th = owner.sprite.height
+        bw = BULLET.width
+        bh = BULLET.height
 
-
-    def get_sprite(self):
-        return self.sprite
-
-
-    # returns True if out of bounds on the screen
-    def update(self):
         if self.direction == Direction.NORTH:
-            if self.y <= 0:
-                return True
-            self.y -= self.bullet_speed
+            x = owner.x + (tw - bw) // 2
+            y = owner.y - bh
         elif self.direction == Direction.EAST:
-            if self.x >= BaseApp.SCREEN_WIDTH:
-                return True
-            self.x += self.bullet_speed
+            x = owner.x + tw
+            y = owner.y + (th - bh) // 2
         elif self.direction == Direction.SOUTH:
-            if self.y >= BaseApp.SCREEN_HEIGHT:
-                return True
-            self.y += self.bullet_speed
-        elif self.direction == Direction.WEST:
-            if self.x <= 0:
-                return True
-            self.x -= self.bullet_speed
-        return False
+            x = owner.x + (tw - bw) // 2
+            y = owner.y + th
+        else:  # Direction.WEST
+            x = owner.x - bw
+            y = owner.y + (th - bh) // 2
+
+        super().__init__(BULLET, x, y)
 
 
-    def is_colliding(self, tank_x, tank_y, tank_w, tank_h):
-        return (
-                self.x < tank_x + tank_w and
-                self.x + 2 > tank_x and
-                self.y < tank_y + tank_h and
-                self.y + 2 > tank_y
-        )
+    def move(self):
+        x, y = self.direction
+        self.x += x
+        self.y += y
 
 
-if __name__ == '__main__':
-    from apps.PicoBattleCity import BattleCity
-
-    BattleCity().run()
-
-if __name__ == '__main__':
-    from apps.PicoBattleCity import BattleCity
-
-    BattleCity().run()
+    def update(self):
+        self.move()

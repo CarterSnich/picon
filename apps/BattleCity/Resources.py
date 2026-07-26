@@ -114,8 +114,8 @@ ENEMY_TANK_W = Sprite(
 
 BULLET = Sprite(
     bytearray([
-        0b11,
-        0b11,
+        0b11000000,
+        0b11000000,
     ]),
     2, 2
 )

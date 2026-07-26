@@ -3,6 +3,7 @@ from machine import Pin, PWM
 from core.config import SPEAKER
 
 DEFAULT_DUTY_CYCLE = 32768
+DEFAULT_FREQUENCY = 500
 
 
 class Sound:
@@ -15,7 +16,7 @@ class Sound:
         self.stop()
 
 
-    def tone(self, freq, duty_u16=DEFAULT_DUTY_CYCLE):
+    def tone(self, freq=DEFAULT_FREQUENCY, duty_u16=DEFAULT_DUTY_CYCLE):
         self.buzzer.freq(freq)
         self.buzzer.duty_u16(duty_u16)
         self.is_active = True

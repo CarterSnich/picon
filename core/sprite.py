@@ -1,5 +1,7 @@
 from framebuf import FrameBuffer, MONO_HLSB
 
+from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
+
 
 class Sprite:
 
@@ -48,5 +50,16 @@ class GameObject:
         return False
 
 
-    def draw(self, display, x, y, key=-1):
-        self.sprite.draw(display, x, y, key)
+    def draw(self, display, x=None, y=None, key=-1):
+        self.sprite.draw(
+            display,
+            self.x if x is None else x,
+            self.y if y is None else y,
+            key)
+
+
+    def is_offscreen(self):
+        return (self.x + self.sprite.width <= 0 or
+                self.x >= SCREEN_WIDTH or
+                self.y + self.sprite.height <= 0 or
+                self.y >= SCREEN_HEIGHT)
