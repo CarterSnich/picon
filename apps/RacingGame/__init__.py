@@ -1,12 +1,11 @@
 from random import randrange
 
+from apps.RacingGame.civilian import Civilian
+from apps.RacingGame.racer import Racer
 from core.app import PiconGame
 from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
+from core.helper import has_not_elapsed
 from core.input import DPAD_UP, DPAD_DOWN, KEY_A
-from core.helper import has_elapsed, has_not_elapsed
-
-from apps.RacingGame.racer import Racer
-from apps.RacingGame.civilian import Civilian
 
 STARTING_INTERVAL = 50
 MAX_CIVILLIANS = 3
