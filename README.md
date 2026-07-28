@@ -25,6 +25,8 @@ replacing the WaveShare RP2040 Zero used during the project's early development.
 - **Racing Game** — A top-down racing game where you dodge oncoming traffic.
 - **Battle City** *(WIP)* — A top-down tank game inspired by the NES title *Battle City*.
 - **Sliding Puzzle** — A classic 4×4 sliding tile puzzle.
+- **Pixel Blaster** — A sideways shoot-'em-up where you blast through an advancing wall of pixels before it crushes
+  you.
 
 ### Tools
 
