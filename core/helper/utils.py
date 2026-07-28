@@ -1,5 +1,6 @@
 from random import getrandbits
 from time import ticks_diff
+
 from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 

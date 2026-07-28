@@ -1,18 +1,14 @@
-from time import ticks_ms, ticks_diff
+from core import has_elapsed
 
 BLINK_INTERVAL = 100
 
 
 class Food:
-    x = -1
-    y = -1
-    blink_state = True
-    last_blink_ms = -1
 
-
-    def __init__(self, x, y):
-        self.set_coordinates(x, y)
-        self.last_blink_ms = ticks_ms()
+    def __init__(self, x, y, last_blink_ms):
+        self.x, self.y = x, y
+        self.blink_state = True
+        self.last_blink_ms = last_blink_ms
 
 
     def is_intersecting(self, x, y):
@@ -25,6 +21,6 @@ class Food:
 
 
     def update(self, tick):
-        if ticks_diff(tick, self.last_blink_ms) >= BLINK_INTERVAL:
+        if has_elapsed(tick, self.last_blink_ms, BLINK_INTERVAL):
             self.last_blink_ms = tick
             self.blink_state = not self.blink_state

@@ -1,25 +1,28 @@
-from machine import Pin
-from time import ticks_ms, ticks_diff
+from time import ticks_ms
 
-from core import PiconApp
-from core.input import KEY_A, KEY_B, DPAD_UP, DPAD_DOWN
+from machine import Pin
+
+from core import PiconApp, has_elapsed
 from core.config import FLASH, SCREEN_HEIGHT, SCREEN_WIDTH
+from core.input import KEY_A, KEY_B, DPAD_UP, DPAD_DOWN
 
 LED_OFF = 0
 LED_ON = 1
 LED_STROBE = 2
 
+DEFAUTL_STROBE_DELAY_MS = 300
+
 
 class Main(PiconApp):
-    led = Pin(FLASH, Pin.OUT)
-    led_state = LED_OFF
-
-    last_strobe_ms = 0
-    strobe_delay = 300
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
+
+        self.led = Pin(FLASH, Pin.OUT)
+        self.led_state = LED_OFF
+
+        self.last_strobe_ms = self.current_ms
+        self.strobe_delay = DEFAUTL_STROBE_DELAY_MS
 
 
     def inputs(self):
@@ -41,7 +44,7 @@ class Main(PiconApp):
         elif self.led_state == LED_ON:
             self.led.on()
         elif self.led_state == LED_STROBE:
-            if ticks_diff(self.current_ms, self.last_strobe_ms) >= self.strobe_delay:
+            if has_elapsed(self.current_ms, self.last_strobe_ms, self.strobe_delay):
                 self.last_strobe_ms = ticks_ms()
                 self.led.value(not self.led.value())
 

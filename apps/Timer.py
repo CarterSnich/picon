@@ -1,23 +1,12 @@
-from core import PiconApp, ms_to_hms
-from core.input import DPAD_LEFT, DPAD_RIGHT, DPAD_UP, DPAD_DOWN, KEY_A, KEY_B
-from core.helper.countdown import *
-
 from assets.menu_sprites import ARROW_UP, ARROW_DOWN
+from core import PiconApp, ms_to_hms, has_elapsed
+from core.helper.countdown import *
+from core.input import DPAD_LEFT, DPAD_RIGHT, DPAD_UP, DPAD_DOWN, KEY_A, KEY_B
 
 BLINK_INTERVAL_MS = 1_000
 
 
 class Main(PiconApp):
-    cursor: int
-    delta: int
-    hour: int
-    minute: int
-    seconds: int
-    countdown: Countdown
-
-    last_blink_ms: int
-    blink: bool
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
@@ -72,7 +61,7 @@ class Main(PiconApp):
         else:
             self.countdown.update(self.current_ms)
 
-            if ticks_diff(self.current_ms, self.last_blink_ms) >= BLINK_INTERVAL_MS:
+            if has_elapsed(self.current_ms, self.last_blink_ms, BLINK_INTERVAL_MS):
                 self.blink = not self.blink
                 self.last_blink_ms = self.current_ms
 

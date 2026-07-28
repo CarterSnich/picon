@@ -1,13 +1,11 @@
 from random import randrange
-from time import ticks_diff
 
-from core import PiconGame
-from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
-from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
-
-from apps.SnakeGame.snake import Snake
-from apps.SnakeGame.food import Food
 from apps.SnakeGame.direction import Direction
+from apps.SnakeGame.food import Food
+from apps.SnakeGame.snake import Snake
+from core import PiconGame, has_elapsed
+from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
+from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
@@ -23,7 +21,7 @@ class Main(PiconGame):
 
         self.score = 0
         self.snake = Snake(INITIAL_HEAD_X, INITIAL_HEAD_Y)
-        self.food = Food(-1, -1)
+        self.food = Food(-1, -1, self.current_ms)
 
         self.last_move_ms = -1
         self.last_eat_ms = None
@@ -44,12 +42,12 @@ class Main(PiconGame):
 
     def update(self):
         # sound off
-        if self.last_eat_ms and ticks_diff(self.current_ms, self.last_eat_ms) >= EAT_SOUND_DURATION:
+        if self.last_eat_ms and has_elapsed(self.current_ms, self.last_eat_ms, EAT_SOUND_DURATION):
             self.sound.stop()
             self.last_eat_ms = None
 
         # snake
-        if ticks_diff(self.current_ms, self.last_move_ms) >= MOVEMENT_INTERVAL:
+        if has_elapsed(self.current_ms, self.last_move_ms, MOVEMENT_INTERVAL):
             self.last_move_ms = self.current_ms
             self.snake.move()
             if self.snake.is_stupid() or self.snake.is_blind():

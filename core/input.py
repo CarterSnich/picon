@@ -1,8 +1,10 @@
-from machine import Pin
-from time import ticks_ms, ticks_diff
+from time import ticks_ms
 
-from lib.keypad import Keypad
+from machine import Pin
+
 from core import config
+from core.helper import has_elapsed
+from lib.keypad import Keypad
 
 KEY_SELECT = "KEYPAD_SELECT"
 KEY_START = "KEYPAD_START"
@@ -55,7 +57,7 @@ class Input:
 
 
     def is_ready(self, tick):
-        return ticks_diff(tick, self.last_pressed_ms) >= self.button_debounce_ms
+        return has_elapsed(tick, self.last_pressed_ms, self.button_debounce_ms)
 
 
     def is_pressed(self, key):

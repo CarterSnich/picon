@@ -3,25 +3,28 @@ from time import ticks_ms, ticks_diff
 from core import PiconApp
 from core.input import KEY_B, DPAD_UP, DPAD_DOWN, DPAD_LEFT, DPAD_RIGHT
 
+DEFAULT_BPM = 120
 MIN_BPM = 1
 MAX_BPM = 240
 BPM_SMALL_STEP = 1
 BPM_LARGE_STEP = 5
 
+SIXTY_SECONDS = 60
+ONE_K_MILLISECONDS = 1000
+
 
 class Main(PiconApp):
-    bpm = 120
-    current_beat = 0
-
-    last_beat_ms = -1
-    init_beat_ms = -1
-    beat_gap_ms = (60 * 1000) / bpm
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
+
+        self.bpm = DEFAULT_BPM
+        self.current_beat = 0
+
         self.last_beat_ms = self.current_ms
         self.init_beat_ms = self.last_beat_ms
+        self.beat_gap_ms = (SIXTY_SECONDS * ONE_K_MILLISECONDS) / self.bpm
+
         self.sound.tone(1000)
 
 

@@ -1,6 +1,5 @@
-from core import GameObject
-
 from apps.RacingGame.sprites import CIVILIAN
+from core import GameObject
 
 LANES_Y = (7, 27, 47)
 

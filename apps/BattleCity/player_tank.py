@@ -1,6 +1,6 @@
 from apps.BattleCity.direction import Direction
-from apps.BattleCity.tank import Tank
 from apps.BattleCity.resources import PLAYER_TANK_N, PLAYER_TANK_E, PLAYER_TANK_S, PLAYER_TANK_W
+from apps.BattleCity.tank import Tank
 
 
 class PlayerTank(Tank):
@@ -10,5 +10,5 @@ class PlayerTank(Tank):
                    Direction.EAST: PLAYER_TANK_E,
                    Direction.SOUTH: PLAYER_TANK_S,
                    Direction.WEST: PLAYER_TANK_W}
-        
+
         super().__init__(sprites, x, y, direction, speed)

@@ -1,5 +1,4 @@
 from random import choice
-from time import ticks_diff
 
 from apps.BattleCity.direction import Direction, DIRECTIONS
 from apps.BattleCity.resources import ENEMY_TANK_N, ENEMY_TANK_E, ENEMY_TANK_S, ENEMY_TANK_W

@@ -1,8 +1,7 @@
-from core import PiconApp
-from core.input import *
-from core.helper.countdown import Countdown, STATE_FINISHED, STATE_IDLE, STATE_TICKING
-
 from apps.KeyTest.sprites import *
+from core import PiconApp
+from core.helper.countdown import Countdown, STATE_FINISHED, STATE_IDLE, STATE_TICKING
+from core.input import *
 
 COUNTDOWN_MS = 2000
 

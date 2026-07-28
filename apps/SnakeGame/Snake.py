@@ -1,8 +1,5 @@
-from time import ticks_diff
-
-from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
-
 from apps.SnakeGame.direction import Direction
+from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
 
 class Snake:

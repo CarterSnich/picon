@@ -1,15 +1,15 @@
 from random import choice
-from time import ticks_diff
-
-from core import PiconGame, Sound
-from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
 from apps.SlidePuzzle.resources import *
+from core import PiconGame, has_elapsed
+from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
 
 MOVE_UP = -4
 MOVE_DOWN = 4
 MOVE_LEFT = -1
 MOVE_RIGHT = 1
+
+BEEP_DURATION_MS = 50
 
 SPRITES = [
     ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
@@ -18,14 +18,14 @@ SPRITES = [
 
 
 class Main(PiconGame):
-    puzzle = None
-    blank_index = -1
-
-    last_beep_ms = -1
-
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
+        self.puzzle = None
+        self.blank_index = -1
+
+        self.last_beep_ms = self.current_ms
+
         self.generate_puzzle(200)
 
 
@@ -37,7 +37,7 @@ class Main(PiconGame):
         for _ in range(moves):
             index = puzzle.index(15)
             row, col = divmod(index, 4)
-            valid_moves = []
+            valid_moves: list[int] = []
 
             for d in directions:
                 new_index = index + d
@@ -90,7 +90,7 @@ class Main(PiconGame):
 
 
     def update(self):
-        if ticks_diff(self.current_ms, self.last_beep_ms) >= 50:
+        if has_elapsed(self.current_ms, self.last_beep_ms, BEEP_DURATION_MS):
             self.sound.stop()
 
         # Check if puzzle is solved

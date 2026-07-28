@@ -1,5 +1,5 @@
 from apps.BattleCity.direction import Direction
-from core import GameObject, Sprite, SCREEN_WIDTH, SCREEN_HEIGHT, sprite
+from core import GameObject, Sprite, SCREEN_WIDTH, SCREEN_HEIGHT
 
 
 class Tank(GameObject):

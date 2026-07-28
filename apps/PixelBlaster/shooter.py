@@ -1,7 +1,6 @@
+from apps.PixelBlaster.assets import SHOOTER
 from apps.PixelBlaster.utils import get_row_y
 from core import GameObject
-
-from apps.PixelBlaster.assets import SHOOTER
 
 
 class Shooter(GameObject):

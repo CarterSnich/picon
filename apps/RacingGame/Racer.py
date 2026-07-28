@@ -1,6 +1,5 @@
-from core.sprite import GameObject
-
 from apps.RacingGame.sprites import RACER
+from core.sprite import GameObject
 
 LANES_Y = (8, 28, 48)
 

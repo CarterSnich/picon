@@ -1,7 +1,7 @@
 from apps.BattleCity.direction import Direction
 from apps.BattleCity.resources import BULLET
 from apps.BattleCity.tank import Tank
-from core import GameObject, has_elapsed
+from core import GameObject
 
 
 class Bullet(GameObject):
