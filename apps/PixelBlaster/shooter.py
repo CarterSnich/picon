@@ -12,17 +12,9 @@ class Shooter(GameObject):
         super().__init__(SHOOTER, 0, get_row_y(row) - 4)
 
 
-    def up(self):
-        if self.row == 0:
+    def move(self, n: int):
+        if (n == -1 and self.row == 0) or (n == 1 and self.row == 15):
             return
 
-        self.row -= 1
-        self.y -= 4
-
-
-    def down(self):
-        if self.row == 15:
-            return
-
-        self.row += 1
-        self.y += 4
+        self.row += n
+        self.y = get_row_y(self.row) - 4

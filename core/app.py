@@ -4,14 +4,14 @@ from core import Display, Input, Sound
 
 
 class PiconApp:
-    running = True
-    current_ms = 0
-
 
     def __init__(self, display: Display, input: Input, sound: Sound):
         self.display = display
         self.input = input
         self.sound = sound
+
+        self.running = True
+        self.current_ms = ticks_ms()
 
 
     def inputs(self):

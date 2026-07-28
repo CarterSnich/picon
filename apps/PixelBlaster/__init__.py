@@ -1,3 +1,5 @@
+from time import ticks_ms
+
 from apps.PixelBlaster.shooter import Shooter
 from apps.PixelBlaster.utils import get_row_y
 from core import PiconGame, has_not_elapsed, randbool
@@ -33,27 +35,29 @@ class Main(PiconGame):
             self.has_fired = True
 
         if self.input.is_pressed(DPAD_UP):
-            self.shooter.up()
+            self.shooter.move(-1)
         elif self.input.is_pressed(DPAD_DOWN):
-            self.shooter.down()
+            self.shooter.move(1)
 
 
     def update(self):
         # Shooting animation
-        if self.last_shot_ms and has_not_elapsed(self.current_ms, self.last_shot_ms, BULLET_ANIMATION_DURATION):
-            self.bullet_xy[0] += BULLET_SPEED
-            self.sound.tone(500 - self.bullet_xy[0])
-        else:
-            self.last_shot_ms = None
-            self.sound.stop()
+        if self.last_shot_ms:
+            if has_not_elapsed(self.current_ms, self.last_shot_ms, BULLET_ANIMATION_DURATION):
+                self.bullet_xy[0] += BULLET_SPEED
+                self.sound.tone(500 - self.bullet_xy[0])
+            else:
+                self.sound.stop()
+                self.bullet_xy = [8, get_row_y(self.shooter.row)]
+                self.last_shot_ms = None
 
         # Player shoots
         if self.has_fired:
             self.has_fired = False
 
             self.sound.tone()
-            self.last_shot_ms = self.current_ms
             self.bullet_xy = [8, get_row_y(self.shooter.row)]
+            self.last_shot_ms = self.current_ms
 
             # Flip pixel if hit
             for i, row in enumerate(self.pixel_wall):
@@ -61,22 +65,22 @@ class Main(PiconGame):
                     self.pixel_wall[i][self.shooter.row] = False
                     break
 
-        # Update pixel wall
-        interval = max(self.interval - self.cleared_pixels, MIN_INTERVAL)
-        if has_not_elapsed(self.current_ms, self.last_wall_move_ms, interval):
-            return
-
         # Remove top pixel wall when cleared
         if len(self.pixel_wall) and not any(self.pixel_wall[0]):
             self.pixel_wall.pop(0)
             self.cleared_pixels += 1
+
+        # Update pixel wall
+        interval = max(self.interval - self.cleared_pixels, MIN_INTERVAL)
+        if has_not_elapsed(self.current_ms, self.last_wall_move_ms, interval):
+            return
 
         # Check if pixel wall collision
         if len(self.pixel_wall) >= MAX_PIXEL_WALL_WIDTH:
             self.sound.stop()
             self.game_over()
 
-        # Expand wall
+        # Grow wall
         new_row = [randbool() for _ in range(16)]
         self.pixel_wall.append(new_row)
 
@@ -84,17 +88,18 @@ class Main(PiconGame):
 
 
     def render(self):
+        # Pixel wall
+        w = len(self.pixel_wall)
+        for i in range(w):
+            row = self.pixel_wall[i]
+            x = 128 - ((w - i) * 4)
+            for j in range(16):
+                y = j * 4
+                self.display.fill_rect(x, y, 4, 4, row[j])
+
         # Shooting animation
         if self.last_shot_ms:
             self.display.fill_rect(self.bullet_xy[0], self.bullet_xy[1], 4, 4, 1)
-
-        # Pixel wall
-        for i, row in enumerate(self.pixel_wall[::-1]):
-            for j in range(16):
-                x = 128 - (i * 4)
-                y = j * 4
-                is_filled = row[j]
-                self.display.fill_rect(x, y, 4, 4, is_filled)
 
         # Shooter
         self.shooter.draw(self.display)
