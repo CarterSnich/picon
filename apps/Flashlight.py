@@ -1,5 +1,3 @@
-from time import ticks_ms
-
 from machine import Pin
 
 from core import PiconApp, has_elapsed
@@ -45,7 +43,7 @@ class Main(PiconApp):
             self.led.on()
         elif self.led_state == LED_STROBE:
             if has_elapsed(self.current_ms, self.last_strobe_ms, self.strobe_delay):
-                self.last_strobe_ms = ticks_ms()
+                self.last_strobe_ms = self.current_ms
                 self.led.value(not self.led.value())
 
 
