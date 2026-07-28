@@ -5,7 +5,7 @@ from apps.SnakeGame.food import Food
 from apps.SnakeGame.snake import Snake
 from core import PiconGame, has_elapsed
 from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
-from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
+from core.input import Key
 
 INITIAL_HEAD_X = 52
 INITIAL_HEAD_Y = 48
@@ -30,13 +30,13 @@ class Main(PiconGame):
 
 
     def inputs(self):
-        if self.input.is_pressed(DPAD_UP) and self.snake.direction != Direction.SOUTH:
+        if self.input.is_pressed(Key.UP) and self.snake.direction != Direction.SOUTH:
             self.snake.redirect(Direction.NORTH)
-        elif self.input.is_pressed(DPAD_RIGHT) and self.snake.direction != Direction.WEST:
+        elif self.input.is_pressed(Key.RIGHT) and self.snake.direction != Direction.WEST:
             self.snake.redirect(Direction.EAST)
-        elif self.input.is_pressed(DPAD_DOWN) and self.snake.direction != Direction.NORTH:
+        elif self.input.is_pressed(Key.DOWN) and self.snake.direction != Direction.NORTH:
             self.snake.redirect(Direction.SOUTH)
-        elif self.input.is_pressed(DPAD_LEFT) and self.snake.direction != Direction.EAST:
+        elif self.input.is_pressed(Key.LEFT) and self.snake.direction != Direction.EAST:
             self.snake.redirect(Direction.WEST)
 
 

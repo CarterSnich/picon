@@ -1,7 +1,7 @@
 from time import ticks_ms, ticks_diff
 
 from core import PiconApp
-from core.input import KEY_B, DPAD_UP, DPAD_DOWN, DPAD_LEFT, DPAD_RIGHT
+from core.input import Key
 
 DEFAULT_BPM = 120
 MIN_BPM = 1
@@ -29,16 +29,16 @@ class Main(PiconApp):
 
 
     def inputs(self):
-        if self.input.is_pressed(KEY_B):
+        if self.input.is_pressed(Key.B):
             self.quit()
 
-        if self.input.is_pressed(DPAD_UP):
+        if self.input.is_pressed(Key.UP):
             self.increase_bpm(BPM_SMALL_STEP)
-        elif self.input.is_pressed(DPAD_DOWN):
+        elif self.input.is_pressed(Key.DOWN):
             self.decrease_bpm(BPM_SMALL_STEP)
-        elif self.input.is_pressed(DPAD_RIGHT):
+        elif self.input.is_pressed(Key.RIGHT):
             self.increase_bpm(BPM_LARGE_STEP)
-        elif self.input.is_pressed(DPAD_LEFT):
+        elif self.input.is_pressed(Key.LEFT):
             self.decrease_bpm(BPM_LARGE_STEP)
 
 

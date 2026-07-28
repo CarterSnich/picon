@@ -6,7 +6,7 @@ from apps.BattleCity.enemy_tank import EnemyTank
 from apps.BattleCity.player_tank import PlayerTank
 from core import PiconGame, has_elapsed, randbool
 from core.helper import get_center_y
-from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT, KEY_A
+from core.input import Key
 
 PLAYER_MOVE_INTERVAL_MS = 20
 PLAYER_SHOOT_INTERVAL_MS = 300
@@ -46,21 +46,21 @@ class Main(PiconGame):
 
     def inputs(self):
         if has_elapsed(self.current_ms, self.last_player_move_ms, PLAYER_MOVE_INTERVAL_MS):
-            if self.input.is_pressed(DPAD_UP):
+            if self.input.is_pressed(Key.UP):
                 self.player.move(Direction.NORTH, self.enemy_tanks)
                 self.last_player_move_ms = self.current_ms
-            elif self.input.is_pressed(DPAD_RIGHT):
+            elif self.input.is_pressed(Key.RIGHT):
                 self.player.move(Direction.EAST, self.enemy_tanks)
                 self.last_player_move_ms = self.current_ms
-            elif self.input.is_pressed(DPAD_DOWN):
+            elif self.input.is_pressed(Key.DOWN):
                 self.player.move(Direction.SOUTH, self.enemy_tanks)
                 self.last_player_move_ms = self.current_ms
-            elif self.input.is_pressed(DPAD_LEFT):
+            elif self.input.is_pressed(Key.LEFT):
                 self.player.move(Direction.WEST, self.enemy_tanks)
                 self.last_player_move_ms = self.current_ms
 
         if has_elapsed(self.current_ms, self.last_player_shoot_ms, PLAYER_SHOOT_INTERVAL_MS):
-            if self.input.is_pressed(KEY_A) and self.player.bullet_count < 3:
+            if self.input.is_pressed(Key.A) and self.player.bullet_count < 3:
                 self.bullets.append(Bullet(self.player))
                 self.player.bullet_count += 1
                 self.last_player_shoot_ms = self.current_ms

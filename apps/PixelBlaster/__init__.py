@@ -1,7 +1,7 @@
 from apps.PixelBlaster.shooter import Shooter
 from apps.PixelBlaster.utils import get_row_y
 from core import PiconGame, has_not_elapsed, randbool
-from core.input import DPAD_UP, DPAD_DOWN, KEY_A
+from core.input import Key
 
 MAX_INTERVAL = 1000
 MIN_INTERVAL = 150
@@ -29,12 +29,12 @@ class Main(PiconGame):
 
 
     def inputs(self):
-        if self.input.is_pressed(KEY_A):
+        if self.input.is_pressed(Key.A):
             self.has_fired = True
 
-        if self.input.is_pressed(DPAD_UP):
+        if self.input.is_pressed(Key.UP):
             self.shooter.move(-1)
-        elif self.input.is_pressed(DPAD_DOWN):
+        elif self.input.is_pressed(Key.DOWN):
             self.shooter.move(1)
 
 

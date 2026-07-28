@@ -1,7 +1,7 @@
 from assets.menu_sprites import ARROW_UP, ARROW_DOWN
 from core import PiconApp, ms_to_hms, has_elapsed
 from core.helper.countdown import *
-from core.input import DPAD_LEFT, DPAD_RIGHT, DPAD_UP, DPAD_DOWN, KEY_A, KEY_B
+from core.input import Key
 
 BLINK_INTERVAL_MS = 1_000
 
@@ -23,15 +23,15 @@ class Main(PiconApp):
 
 
     def inputs(self):
-        if self.input.is_pressed(DPAD_LEFT):
+        if self.input.is_pressed(Key.LEFT):
             self.cursor = (self.cursor - 1) % 3
-        elif self.input.is_pressed(DPAD_RIGHT):
+        elif self.input.is_pressed(Key.RIGHT):
             self.cursor = (self.cursor + 1) % 3
-        elif self.input.is_pressed(DPAD_UP):
+        elif self.input.is_pressed(Key.UP):
             self.delta = 1
-        elif self.input.is_pressed(DPAD_DOWN):
+        elif self.input.is_pressed(Key.DOWN):
             self.delta = -1
-        elif self.input.is_pressed(KEY_A):
+        elif self.input.is_pressed(Key.A):
             if self.countdown.state == STATE_TICKING:
                 self.countdown.pause()
             elif self.countdown.state == STATE_PAUSED:
@@ -42,7 +42,7 @@ class Main(PiconApp):
                 self.sound.stop()
             else:
                 self.start_timer()
-        elif self.input.is_pressed(KEY_B):
+        elif self.input.is_pressed(Key.B):
             if self.countdown.state in (STATE_TICKING, STATE_PAUSED):
                 self.countdown.stop()
             else:

@@ -4,7 +4,7 @@ from machine import Pin
 
 from core import PiconApp, has_elapsed
 from core.config import FLASH, SCREEN_HEIGHT, SCREEN_WIDTH
-from core.input import KEY_A, KEY_B, DPAD_UP, DPAD_DOWN
+from core.input import Key
 
 LED_OFF = 0
 LED_ON = 1
@@ -26,15 +26,15 @@ class Main(PiconApp):
 
 
     def inputs(self):
-        if self.input.is_pressed(KEY_B):
+        if self.input.is_pressed(Key.B):
             self.led_state = LED_OFF
             self.quit()
-        elif self.input.is_pressed(KEY_A):
+        elif self.input.is_pressed(Key.A):
             self.led_state = (self.led_state + 1) % 3
         elif self.led_state == LED_STROBE:
-            if self.input.is_pressed(DPAD_UP) and self.strobe_delay < 3000:
+            if self.input.is_pressed(Key.UP) and self.strobe_delay < 3000:
                 self.strobe_delay += 50
-            elif self.input.is_pressed(DPAD_DOWN) and self.strobe_delay > 50:
+            elif self.input.is_pressed(Key.DOWN) and self.strobe_delay > 50:
                 self.strobe_delay -= 50
 
 

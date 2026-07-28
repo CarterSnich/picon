@@ -2,7 +2,7 @@ from random import choice
 
 from apps.SlidePuzzle.resources import *
 from core import PiconGame, has_elapsed
-from core.input import DPAD_UP, DPAD_RIGHT, DPAD_DOWN, DPAD_LEFT
+from core.input import Key
 
 MOVE_UP = -4
 MOVE_DOWN = 4
@@ -79,13 +79,13 @@ class Main(PiconGame):
 
 
     def inputs(self):
-        if self.input.is_pressed(DPAD_UP):
+        if self.input.is_pressed(Key.UP):
             self.move(MOVE_UP)
-        elif self.input.is_pressed(DPAD_DOWN):
+        elif self.input.is_pressed(Key.DOWN):
             self.move(MOVE_DOWN)
-        elif self.input.is_pressed(DPAD_LEFT):
+        elif self.input.is_pressed(Key.LEFT):
             self.move(MOVE_LEFT)
-        elif self.input.is_pressed(DPAD_RIGHT):
+        elif self.input.is_pressed(Key.RIGHT):
             self.move(MOVE_RIGHT)
 
 

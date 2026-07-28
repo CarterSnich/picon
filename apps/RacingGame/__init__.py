@@ -5,7 +5,7 @@ from apps.RacingGame.racer import Racer
 from core.app import PiconGame
 from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
 from core.helper import has_not_elapsed
-from core.input import DPAD_UP, DPAD_DOWN, KEY_A
+from core.input import Key
 
 STARTING_INTERVAL = 50
 MAX_CIVILLIANS = 3
@@ -39,11 +39,11 @@ class Main(PiconGame):
 
 
     def inputs(self):
-        if self.input.is_pressed(DPAD_UP):
+        if self.input.is_pressed(Key.UP):
             self.racer.up()
-        if self.input.is_pressed(DPAD_DOWN):
+        if self.input.is_pressed(Key.DOWN):
             self.racer.down()
-        if self.input.is_pressed(KEY_A):
+        if self.input.is_pressed(Key.A):
             self.nos_on = True
         else:
             self.nos_on = False

@@ -2,7 +2,7 @@ from time import sleep_ms, ticks_ms
 from sys import print_exception
 
 from core import Sound, Display
-from core.input import Input, DPAD_UP, DPAD_DOWN, KEY_A, KEY_B
+from core.input import Input, Key
 from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 
@@ -36,11 +36,11 @@ class Picon:
             return
 
         if self.is_main_menu:
-            if self.input.is_pressed(DPAD_UP):
+            if self.input.is_pressed(Key.UP):
                 self.main_menu_selection = "games"
-            elif self.input.is_pressed(DPAD_DOWN):
+            elif self.input.is_pressed(Key.DOWN):
                 self.main_menu_selection = "tools"
-            elif self.input.is_pressed(KEY_A):
+            elif self.input.is_pressed(Key.A):
                 self.is_main_menu = False
 
                 self.sub_items = apps[self.main_menu_selection]
@@ -52,7 +52,7 @@ class Picon:
                 self.split_end_index = self.sub_items_count
 
         else:
-            if self.input.is_pressed(KEY_A) and len(self.sub_items):
+            if self.input.is_pressed(Key.A) and len(self.sub_items):
                 try:
                     item = self.sub_items[self.current_index]
                     app = __import__("apps." + item[1], None, None, ("*",))
@@ -63,11 +63,11 @@ class Picon:
                 self.sound.stop()
                 self.input.restore_debounce()
                 sleep_ms(200)
-            elif self.input.is_pressed(KEY_B):
+            elif self.input.is_pressed(Key.B):
                 self.is_main_menu = True
-            elif self.input.is_pressed(DPAD_UP):
+            elif self.input.is_pressed(Key.UP):
                 self.scroll(-1)
-            elif self.input.is_pressed(DPAD_DOWN):
+            elif self.input.is_pressed(Key.DOWN):
                 self.scroll(1)
 
 
