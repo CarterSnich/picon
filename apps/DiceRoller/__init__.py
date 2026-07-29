@@ -91,24 +91,24 @@ class Main(PiconApp):
     def render(self):
         if self.dice_count == 1:
             # Second dice
-            self.sprites[self.numbers[1] - 1].draw(self.display, 52, 20)
+            self.sprites[self.numbers[1] - 1].draw(self.display, 48, 16)
 
         elif self.dice_count == 2:
             # First dice
-            self.sprites[self.numbers[0] - 1].draw(self.display, 26, 20)
+            self.sprites[self.numbers[0] - 1].draw(self.display, 23, 16)
 
             # Third dice
-            self.sprites[self.numbers[2] - 1].draw(self.display, 78, 20)
+            self.sprites[self.numbers[2] - 1].draw(self.display, 73, 16)
 
         else:
             # First dice
-            self.sprites[self.numbers[0] - 1].draw(self.display, 14, 20)
+            self.sprites[self.numbers[0] - 1].draw(self.display, 8, 16)
 
             # Second dice
-            self.sprites[self.numbers[1] - 1].draw(self.display, 52, 20)
+            self.sprites[self.numbers[1] - 1].draw(self.display, 48, 16)
 
             # Third dice
-            self.sprites[self.numbers[2] - 1].draw(self.display, 90, 20)
+            self.sprites[self.numbers[2] - 1].draw(self.display, 88, 16)
 
 
     def randomize(self):
