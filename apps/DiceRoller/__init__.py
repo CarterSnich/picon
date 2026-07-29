@@ -35,6 +35,9 @@ class Main(PiconApp):
 
 
     def inputs(self):
+        if self.input.is_pressed(Key.B):
+            self.quit()
+
         if self.is_rolled:
             return
 
@@ -46,7 +49,7 @@ class Main(PiconApp):
             self.randomize()
             self.sound.tone()
             self.last_tone_ms = self.current_ms
-        elif self.input.is_pressed(Key.B):
+        elif self.input.is_pressed(Key.X):
             self.dice_count = (self.dice_count % 3) + 1
 
 
