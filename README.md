@@ -35,6 +35,7 @@ replacing the WaveShare RP2040 Zero used during the project's early development.
 - ~~**Neopixel Controller** — Toy tool for controlling the onboard NeoPixel LED on the WaveShare RP2040 Zero.~~
 - **Notepad** *(WIP)* — A simple text editor.
 - **Timer** — A simple countdown timer.
+- **Dice Roller** — Roll up to three dice.
 
 > **Neopixel Controller:**  
 > The project was migrated from the WaveShare RP2040 Zero to the Raspberry Pi Pico during a hardware redesign. The
