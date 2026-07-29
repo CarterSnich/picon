@@ -28,6 +28,10 @@ def randbool():
     return bool(getrandbits(1))
 
 
+def elapsed(current, last):
+    return ticks_diff(current, last)
+
+
 def has_elapsed(current, last, interval):
     return ticks_diff(current, last) >= interval
 

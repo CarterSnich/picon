@@ -1,5 +1,6 @@
 from framebuf import FrameBuffer, MONO_HLSB
 
+from core import Display
 from core.config import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
@@ -13,7 +14,7 @@ class Sprite:
             self.data, self.width, self.height, MONO_HLSB)
 
 
-    def draw(self, display, x, y, key=-1):
+    def draw(self, display: Display, x: int, y: int, key=-1):
         display.blit(self.framebuffer, x, y, key)
 
 

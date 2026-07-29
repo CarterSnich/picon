@@ -158,8 +158,8 @@ if __name__ == '__main__':
             ("Notepad", "Notepad"),
             ("Key Test", "KeyTest"),
             ("Timer", "Timer"),
+            ("Dice Roller", "DiceRoller"),
         ]
-
     }
 
     Picon(apps).run()

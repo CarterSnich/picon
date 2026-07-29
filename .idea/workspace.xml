@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51ba6048-5cff-4492-b326-75a385e22425" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/DiceRoller/assets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/core/input.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/input.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/helper/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/helper/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +55,7 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/LovaRM/Desktop/picon&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
     &quot;settings.editor.splitter.proportion&quot;: &quot;0.22425249&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
