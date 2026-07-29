@@ -35,7 +35,10 @@ class Main(PiconApp):
 
 
     def inputs(self):
-        if self.input.is_pressed(Key.A) and not self.is_rolled:
+        if self.is_rolled:
+            return
+
+        if self.input.is_pressed(Key.A):
             self.is_rolled = True
             self.roll_start_ms = self.current_ms
             self.last_roll_ms = self.current_ms
