@@ -151,6 +151,7 @@ if __name__ == '__main__':
             ("Racing Game", "RacingGame"),
             ("Slide Puzzle", "SlidePuzzle"),
             ("Pixel Blaster", "PixelBlaster"),
+            ("Dino Game", "DinoGame"),
         ],
         "tools": [
             ("Flashlight", "Flashlight"),

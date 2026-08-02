@@ -79,12 +79,12 @@ class PiconGame(PiconApp):
         self.render()
 
         if self.game_state == PiconGame.WINNER_STATE:
-            self.display.center_text("WINNER", True)
+            self.display.center_text("WINNER", banner=True)
             self.display.show()
             sleep_ms(1000)
             self.quit()
         elif self.game_state == PiconGame.GAME_OVER_STATE:
-            self.display.center_text("GAME OVER", True)
+            self.display.center_text("GAME OVER", banner=True)
             self.display.show()
             sleep_ms(1000)
             self.quit()

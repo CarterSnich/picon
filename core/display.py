@@ -26,9 +26,9 @@ class Display(SSD1309_SPI):
                          cs=Pin(config.CS))
 
 
-    def center_text(self, text, banner=False):
-        x = int(SCREEN_WIDTH / 2) - int((len(text) / 2) * 8)
-        y = int(SCREEN_HEIGHT / 2) - 4
+    def center_text(self, text, x=None, y=None, banner=False):
+        x = x or int(SCREEN_WIDTH / 2) - int((len(text) / 2) * 8)
+        y = y or int(SCREEN_HEIGHT / 2) - 4
         if banner:
             self.fill_rect(0, y - 1, SCREEN_WIDTH, 9, 1)
         self.text(text, x, y, not banner)

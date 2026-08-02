@@ -52,15 +52,30 @@ class GameObject:
 
 
     def draw(self, display, x=None, y=None, key=-1):
-        self.sprite.draw(
-            display,
-            self.x if x is None else x,
-            self.y if y is None else y,
-            key)
+        self.sprite.draw(display,
+                         self.x if x is None else x,
+                         self.y if y is None else y,
+                         key)
+
+
+    def is_offscreen_left(self):
+        return self.x + self.sprite.width <= 0
+
+
+    def is_offscreen_right(self):
+        return self.x >= SCREEN_WIDTH
+
+
+    def is_offscreen_top(self):
+        return self.y + self.sprite.height <= 0
+
+
+    def is_offscreen_bottom(self):
+        return self.y >= SCREEN_HEIGHT
 
 
     def is_offscreen(self):
-        return (self.x + self.sprite.width <= 0 or
-                self.x >= SCREEN_WIDTH or
-                self.y + self.sprite.height <= 0 or
-                self.y >= SCREEN_HEIGHT)
+        return (self.is_offscreen_left() or
+                self.is_offscreen_right() or
+                self.is_offscreen_top() or
+                self.is_offscreen_bottom())

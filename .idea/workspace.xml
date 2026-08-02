@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51ba6048-5cff-4492-b326-75a385e22425" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/DinoGame/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/DinoGame/assets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/DinoGame/dino.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/DinoGame/obstacles.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/sound.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/sound.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/sprite.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/sprite.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,6 +21,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Python Stub" />
         <option value="Python Script" />
       </list>
     </option>

@@ -7,8 +7,6 @@ DEFAULT_FREQUENCY = 500
 
 
 class Sound:
-    is_active: bool
-
 
     def __init__(self):
         self.buzzer = PWM(Pin(SPEAKER))
