@@ -160,6 +160,7 @@ if __name__ == '__main__':
             ("Key Test", "KeyTest"),
             ("Timer", "Timer"),
             ("Dice Roller", "DiceRoller"),
+            ("DVD Logo", "DVDLogo")
         ]
     }
 
