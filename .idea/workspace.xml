@@ -3,21 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="51ba6048-5cff-4492-b326-75a385e22425" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/BattleCity/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/BattleCity/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/DVDLogo/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DVDLogo/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/DinoGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DinoGame/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/Flashlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Flashlight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/KeyTest/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/KeyTest/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/Metronome.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Metronome.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/Notepad.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/.excluded/Notepad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/PixelBlaster/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/PixelBlaster/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/RacingGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/RacingGame/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/SlidePuzzle/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/FifteenPuzzle/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/SlidePuzzle/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/FifteenPuzzle/resources.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/SnakeGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/SnakeGame/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apps/Timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Timer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

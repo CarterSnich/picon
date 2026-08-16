@@ -149,8 +149,7 @@ if __name__ == '__main__':
         "tools": []
     }
 
-    for path in os.listdir("/apps"):
-        name = path[:-3] if path.endswith(".py") else path
+    for name in os.listdir("/apps"):
         module_path = f"/apps/{name}"
         module = __import__(module_path)
 
@@ -158,7 +157,6 @@ if __name__ == '__main__':
         app_category = module.__CATEGORY__
 
         apps[app_category].append((name, app_name))
-
         unload_module(module_path)
 
     for category in apps:
