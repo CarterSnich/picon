@@ -1,6 +1,9 @@
+__NAME__ = "15 Puzzle"
+__CATEGORY__ = "games"
+
 from random import choice
 
-from apps.SlidePuzzle.resources import *
+from apps.FifteenPuzzle.resources import *
 from core import PiconGame, has_elapsed
 from core.input import Key
 

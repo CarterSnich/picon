@@ -1,3 +1,6 @@
+__NAME__ = "DVD Logo"
+__CATEGORY__ = "tools"
+
 from apps.DVDLogo.assets import DVD_LOGO
 from core import PiconApp, has_not_elapsed, SCREEN_WIDTH, SCREEN_HEIGHT
 from core.input import Key

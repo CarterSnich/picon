@@ -1,3 +1,6 @@
+__NAME__ = "Racing Game"
+__CATEGORY__ = "games"
+
 from random import randrange
 
 from apps.RacingGame.civilian import Civilian

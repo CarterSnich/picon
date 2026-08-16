@@ -1,3 +1,6 @@
+__NAME__ = "Flashlight"
+__CATEGORY__ = "tools"
+
 from machine import Pin
 
 from core import PiconApp, has_elapsed

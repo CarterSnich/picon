@@ -1,3 +1,6 @@
+__NAME__ = "Pixel Blaster"
+__CATEGORY__ = "games"
+
 from apps.PixelBlaster.shooter import Shooter
 from apps.PixelBlaster.utils import get_row_y
 from core import PiconGame, has_not_elapsed, randbool

@@ -1,3 +1,6 @@
+__NAME__ = "Snake"
+__CATEGORY__ = "games"
+
 from random import randrange
 
 from apps.SnakeGame.direction import Direction

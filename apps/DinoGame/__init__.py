@@ -1,3 +1,6 @@
+__NAME__ = "Dino Game"
+__CATEGORY__ = "games"
+
 from random import randrange
 
 from apps.DinoGame.assets import REPEAT_ICON

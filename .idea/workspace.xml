@@ -2,9 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51ba6048-5cff-4492-b326-75a385e22425" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/apps/DVDLogo/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apps/DVDLogo/assets.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/BattleCity/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/BattleCity/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/DVDLogo/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DVDLogo/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DiceRoller/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/DinoGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/DinoGame/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/Flashlight.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Flashlight.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/KeyTest/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/KeyTest/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/Metronome.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Metronome.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/Notepad.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/.excluded/Notepad.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/PixelBlaster/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/PixelBlaster/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/RacingGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/RacingGame/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/SlidePuzzle/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/FifteenPuzzle/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/SlidePuzzle/resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/FifteenPuzzle/resources.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/SnakeGame/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/SnakeGame/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apps/Timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/apps/Timer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,31 +53,31 @@
     <option name="sortByType" value="true" />
     <option name="sortKey" value="BY_TYPE" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "MicroPython Tools.Sync sources.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/LovaRM/Desktop/picon",
-    "settings.editor.selected.configurable": "advanced.settings",
-    "settings.editor.splitter.proportion": "0.22425249",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;MicroPython Tools.Sync sources.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LovaRM/Desktop/picon&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.22425249&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LovaRM\Desktop\picon\apps\.excluded" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\core\helper" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\apps\.excluded" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\core" />
       <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon" />
-      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\games" />
     </key>
   </component>
   <component name="SharedIndexes">

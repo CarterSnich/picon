@@ -1,3 +1,6 @@
+__NAME__ = "Key Test"
+__CATEGORY__ = "tools"
+
 from random import randrange
 
 from apps.DiceRoller.assets import *

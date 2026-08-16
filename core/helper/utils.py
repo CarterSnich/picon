@@ -1,3 +1,4 @@
+import sys
 from random import getrandbits
 from time import ticks_diff
 
@@ -38,3 +39,7 @@ def has_elapsed(current, last, interval):
 
 def has_not_elapsed(current, last, interval):
     return ticks_diff(current, last) < interval
+
+
+def unload_module(path):
+    del sys.modules[path]

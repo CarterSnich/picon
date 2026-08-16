@@ -1,3 +1,6 @@
+__NAME__ = "Metronome"
+__CATEGORY__ = "tools"
+
 from time import ticks_ms, ticks_diff
 
 from core import PiconApp

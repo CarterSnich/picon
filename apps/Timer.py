@@ -1,3 +1,6 @@
+__NAME__ = "Countdown Timer"
+__CATEGORY__ = "tools"
+
 from assets.menu_sprites import ARROW_UP, ARROW_DOWN
 from core import PiconApp, ms_to_hms, has_elapsed
 from core.helper.countdown import *

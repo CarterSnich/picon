@@ -1,3 +1,6 @@
+__NAME__ = "Battle City"
+__CATEGORY__ = "games"
+
 from random import randrange
 
 from apps.BattleCity.bullet import Bullet

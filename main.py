@@ -1,34 +1,33 @@
+import os
 from time import sleep_ms, ticks_ms
 from sys import print_exception
 
-from core import Sound, Display
+from core import Sound, Display, unload_module
 from core.input import Input, Key
 from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 
 class Picon:
-    display = Display()
-    input = Input()
-    sound = Sound()
-
-    apps = {}
-
-    is_main_menu = True
-    main_menu_selection = "games"
-
-    # item selection
-    sub_items = []
-    sub_items_count = 0
-    current_index = 0
-    split_start_index = 0
-    split_end_index = 0
-    current_row = 0
-
-    current_ms = 0
-
 
     def __init__(self, apps):
+        self.display = Display()
+        self.input = Input()
+        self.sound = Sound()
+
         self.apps = apps
+
+        self.is_main_menu = True
+        self.main_menu_selection = "games"
+
+        # item selection
+        self.sub_items = []
+        self.sub_items_count = 0
+        self.current_index = 0
+        self.split_start_index = 0
+        self.split_end_index = 0
+        self.current_row = 0
+
+        self.current_ms = 0
 
 
     def inputs(self):
@@ -55,8 +54,9 @@ class Picon:
             if self.input.is_pressed(Key.A) and len(self.sub_items):
                 try:
                     item = self.sub_items[self.current_index]
-                    app = __import__("apps." + item[1], None, None, ("*",))
-                    app.Main(self.display, self.input, self.sound).run()
+                    path = f"/apps/{item[0]}"
+                    __import__(path).Main(self.display, self.input, self.sound).run()
+                    unload_module(path)
                 except BaseException as e:
                     print_exception(e)
                     self.modal("Failed to open")
@@ -87,7 +87,7 @@ class Picon:
                 y = i * 8
                 if self.current_row == i:
                     self.display.blit(ARROW_RIGHT.framebuffer, 0, y)
-                self.display.text(item[0], 8, y)
+                self.display.text(item[1], 8, y)
 
         self.display.show()
 
@@ -145,23 +145,23 @@ if __name__ == '__main__':
     sleep_ms(200)
 
     apps = {
-        "games": [
-            ("Snake", "SnakeGame"),
-            ("Battle City", "BattleCity"),
-            ("Racing Game", "RacingGame"),
-            ("Slide Puzzle", "SlidePuzzle"),
-            ("Pixel Blaster", "PixelBlaster"),
-            ("Dino Game", "DinoGame"),
-        ],
-        "tools": [
-            ("Flashlight", "Flashlight"),
-            ("Metronome", "Metronome"),
-            ("Notepad", "Notepad"),
-            ("Key Test", "KeyTest"),
-            ("Timer", "Timer"),
-            ("Dice Roller", "DiceRoller"),
-            ("DVD Logo", "DVDLogo")
-        ]
+        "games": [],
+        "tools": []
     }
+
+    for path in os.listdir("/apps"):
+        name = path[:-3] if path.endswith(".py") else path
+        module_path = f"/apps/{name}"
+        module = __import__(module_path)
+
+        app_name = module.__NAME__
+        app_category = module.__CATEGORY__
+
+        apps[app_category].append((name, app_name))
+
+        unload_module(module_path)
+
+    for category in apps:
+        apps[category].sort(key=lambda app: app[1].lower())
 
     Picon(apps).run()

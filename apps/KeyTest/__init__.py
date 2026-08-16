@@ -1,3 +1,6 @@
+__NAME__ = "Key Test"
+__CATEGORY__ = "tools"
+
 from apps.KeyTest.sprites import *
 from core import PiconApp
 from core.helper.countdown import Countdown, STATE_FINISHED, STATE_IDLE, STATE_TICKING
