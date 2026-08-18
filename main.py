@@ -141,8 +141,6 @@ class Picon:
 
 
 if __name__ == '__main__':
-    # this delay saves the world
-    sleep_ms(200)
 
     apps = {
         "games": [],

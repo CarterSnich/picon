@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="51ba6048-5cff-4492-b326-75a385e22425" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/apps/ResistorColorCode/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/ResistorColorCode/assets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apps/ResistorColorCode/values.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/display.py" beforeDir="false" afterPath="$PROJECT_DIR$/core/display.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,11 +63,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\LovaRM\Desktop\picon\apps\CountdownTimer" />
+      <recent name="C:\Users\LovaRM\Desktop\picon\apps\Metronome" />
+      <recent name="C:\Users\LovaRM\Desktop\picon\apps" />
+      <recent name="C:\Users\LovaRM\Desktop\picon\apps\Flashlight" />
       <recent name="C:\Users\LovaRM\Desktop\picon\apps\.excluded" />
-      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\core\helper" />
-      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\apps\.excluded" />
-      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon\core" />
-      <recent name="C:\Users\LovaRM\Desktop\micropython-projects\picon" />
     </key>
   </component>
   <component name="SharedIndexes">
