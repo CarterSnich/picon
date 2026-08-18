@@ -2,6 +2,7 @@ import os
 from time import sleep_ms, ticks_ms
 from sys import print_exception
 
+from assets.boot_logo import BOOT_LOGO
 from core import Sound, Display, unload_module
 from core.input import Input, Key
 from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
@@ -9,10 +10,10 @@ from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
 
 class Picon:
 
-    def __init__(self, apps):
-        self.display = Display()
-        self.input = Input()
-        self.sound = Sound()
+    def __init__(self, apps, display, input, sound):
+        self.display = display
+        self.input = input
+        self.sound = sound
 
         self.apps = apps
 
@@ -141,6 +142,12 @@ class Picon:
 
 
 if __name__ == '__main__':
+    display = Display()
+    input = Input()
+    sound = Sound()
+
+    BOOT_LOGO.draw(display, 52, 15)
+    display.show()
 
     apps = {
         "games": [],
@@ -160,4 +167,4 @@ if __name__ == '__main__':
     for category in apps:
         apps[category].sort(key=lambda app: app[1].lower())
 
-    Picon(apps).run()
+    Picon(apps, display, input, sound).run()
