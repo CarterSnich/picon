@@ -80,11 +80,11 @@ class Main(PiconApp):
             band_value = band_value * multiplier
 
             if band_value >= 1_000_000:
-                value = f"{band_value // 1_000_000}M"
+                value = f"{band_value / 1_000_000}M"
             elif band_value >= 1000:
-                value = f"{band_value // 1000}K"
+                value = f"{band_value / 1000}K"
             else:
-                value = f"{band_value:,}"
+                value = f"{band_value:g}"
             tolerance = f"{TOLERANCE_VALUES[self.bands[4]]}%"
 
             self.output = (value, tolerance)
