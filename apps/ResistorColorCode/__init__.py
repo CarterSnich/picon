@@ -27,7 +27,6 @@ class Main(PiconApp):
 
 
     def inputs(self):
-
         if self.state == 0:
             if self.input.is_pressed(Key.A):
                 self.state = 1

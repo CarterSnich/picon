@@ -1,4 +1,4 @@
-__NAME__ = "Key Test"
+__NAME__ = "Dice Roller"
 __CATEGORY__ = "tools"
 
 from random import randrange
@@ -22,7 +22,7 @@ class Main(PiconApp):
 
     def __init__(self, display, input, sound):
         super().__init__(display, input, sound)
-        self.sprites = [ONE, TWO, THREE, FOUR, FIVE, SIX]
+        self.sprites = (ONE, TWO, THREE, FOUR, FIVE, SIX)
 
         self.dice_count = 3
         self.numbers = []
