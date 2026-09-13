@@ -1,12 +1,13 @@
-import os, gc
-from math import ceil
+import os
 from time import sleep_ms, ticks_ms, sleep
+
 from sys import print_exception
 
 from assets.boot_logo import BOOT_LOGO
+from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
 from core import Sound, Display, unload_module
 from core.input import Input, Key
-from assets.menu_sprites import GAMES_OR_TOOLS, ARROW_RIGHT
+from core.helper.utils import get_percentage
 
 
 class Picon:
@@ -151,11 +152,11 @@ if __name__ == '__main__':
     display.show()
     sleep(1)
 
+    apps_dirs = os.listdir("/apps")
     apps = {
         "games": [],
         "tools": []
     }
-    apps_dirs = os.listdir("/apps")
     process_count = len(apps_dirs) + len(apps.keys())
 
     # Loading bar
@@ -173,9 +174,7 @@ if __name__ == '__main__':
         apps[app_category].append((name, app_name))
         unload_module(module_path)
 
-        current_progress = i / process_count
-        percentage = ceil(current_progress * 100)
-
+        percentage = get_percentage(i, process_count)
         display.rect(14, 54, percentage, 4, 1, 1)
         display.show()
 
@@ -184,9 +183,7 @@ if __name__ == '__main__':
     for category in apps:
         apps[category].sort(key=lambda app: app[1].lower())
 
-        current_progress = i / process_count
-        percentage = ceil(current_progress * 100)
-
+        percentage = get_percentage(i, process_count)
         display.fill_rect(14, 54, percentage, 4, 1)
         display.show()
 

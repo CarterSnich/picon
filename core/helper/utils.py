@@ -1,6 +1,8 @@
-import sys
+from math import ceil
 from random import getrandbits
 from time import ticks_diff
+
+from sys import modules
 
 from core.config import SCREEN_HEIGHT, SCREEN_WIDTH
 
@@ -42,4 +44,8 @@ def has_not_elapsed(current, last, interval):
 
 
 def unload_module(path):
-    del sys.modules[path]
+    del modules[path]
+
+
+def get_percentage(n, of):
+    return ceil((n / of) * 100)
