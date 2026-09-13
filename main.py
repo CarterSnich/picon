@@ -1,5 +1,6 @@
-import os
-from time import sleep_ms, ticks_ms
+import os, gc
+from math import ceil
+from time import sleep_ms, ticks_ms, sleep
 from sys import print_exception
 
 from assets.boot_logo import BOOT_LOGO
@@ -146,15 +147,23 @@ if __name__ == '__main__':
     input = Input()
     sound = Sound()
 
-    BOOT_LOGO.draw(display, 52, 15)
+    BOOT_LOGO.draw(display, 52, 10)
     display.show()
+    sleep(1)
 
     apps = {
         "games": [],
         "tools": []
     }
+    apps_dirs = os.listdir("/apps")
+    process_count = len(apps_dirs) + len(apps.keys())
 
-    for name in os.listdir("/apps"):
+    # Loading bar
+    display.rect(12, 52, 104, 8, 1)
+    display.show()
+
+    i = 1
+    for name in apps_dirs:
         module_path = f"/apps/{name}"
         module = __import__(module_path)
 
@@ -164,7 +173,23 @@ if __name__ == '__main__':
         apps[app_category].append((name, app_name))
         unload_module(module_path)
 
+        current_progress = i / process_count
+        percentage = ceil(current_progress * 100)
+
+        display.rect(14, 54, percentage, 4, 1, 1)
+        display.show()
+
+        i += 1
+
     for category in apps:
         apps[category].sort(key=lambda app: app[1].lower())
+
+        current_progress = i / process_count
+        percentage = ceil(current_progress * 100)
+
+        display.fill_rect(14, 54, percentage, 4, 1)
+        display.show()
+
+        i += 1
 
     Picon(apps, display, input, sound).run()
