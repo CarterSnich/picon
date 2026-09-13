@@ -192,4 +192,6 @@ if __name__ == '__main__':
 
         i += 1
 
+    sleep_ms(500)
+
     Picon(apps, display, input, sound).run()
